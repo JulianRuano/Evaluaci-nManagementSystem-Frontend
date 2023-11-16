@@ -5,9 +5,14 @@ import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { loginSchema } from '../../helpers/schemas/loginSchema'
 import { useNavigate } from 'react-router-dom'
 import Snackbar from '@mui/material/Snackbar'
+import { useDispatch } from 'react-redux'
+import { login } from '../../redux/slices/authSlice'
 
 const LoginScreen = () => {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
+  const dispatch = useDispatch()
+
   const [messageSnackbar, setMessageSnackbar] = useState('second')
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -16,11 +21,11 @@ const LoginScreen = () => {
 
     setOpen(false)
   }
-  const navigate = useNavigate()
   const loginMutation = useMutation({
     mutationFn: loginFunction,
     onSuccess: (data) => {
       console.log(data)
+      dispatch(login(data.payload))
       setOpen(true)
       navigate('/')
     },
