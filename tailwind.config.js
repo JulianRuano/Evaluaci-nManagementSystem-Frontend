@@ -4,9 +4,15 @@ module.exports = {
   content: ['./src/**/*.{js,jsx}'],
   theme: {
     fontFamily: {
-      sans: ['Manrope', 'sans-serif']
+      sans: ['Mulish', 'sans-serif']
     },
-    extend: {}
+    extend: {
+      colors: {
+        primary: '#E6E6E6',
+        secondary: '#777777',
+        highlightColor: '#49ACD7'
+      }
+    }
   },
   plugins: []
 }

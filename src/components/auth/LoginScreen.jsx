@@ -49,7 +49,7 @@ const LoginScreen = () => {
           </h2>
         </div>
         <Formik
-          initialValues={{ email: 'test@example.com', password: '123456' }}
+          initialValues={{ email: 'george@email.com', password: 'password123' }}
           validationSchema={loginSchema}
           onSubmit={handleLoginMutation}
         >
