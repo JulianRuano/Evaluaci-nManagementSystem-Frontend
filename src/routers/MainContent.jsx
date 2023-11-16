@@ -5,6 +5,7 @@ import Dashboard from '../components/coordinator/Dashboard'
 import PublicRoute from './PublicRoute'
 import { useSelector } from 'react-redux'
 import PrivateRoute from './PrivateRoute'
+import ConfigureAutoEvaluation from '../components/coordinator/ConfigureAutoEvaluation'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -18,7 +19,12 @@ const MainContent = () => {
             isAuthenticated={isAuthenticated}
           />
         }
-      />
+      >
+        <Route
+          path="/configureAutoevaluation"
+          element={<ConfigureAutoEvaluation />}
+        />
+      </Route>
       <Route
         path="/auth/login"
         element={
