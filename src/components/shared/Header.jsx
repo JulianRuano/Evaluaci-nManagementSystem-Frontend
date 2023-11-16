@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux'
 import propTypes from 'prop-types'
 
 const Header = ({ toggleSidebar }) => {
-  const userName = useSelector((state) => state.auth.user.firstName)
+  const userName = useSelector(
+    (state) => state.auth?.user?.firstName || 'Usuario'
+  )
   const items = [
     {
       label: (
