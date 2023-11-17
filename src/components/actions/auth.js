@@ -6,7 +6,10 @@ export const startHandleLogout = () => {
   return async (dispatch) => {
     try {
       // Llamar al endpoint de deslogueo de la API para eliminar la cookie JWT
-      const response = await axios.post(`${apiUrl}/auth/logout`)
+      const config = {
+        withCredentials: true
+      }
+      const response = await axios.post(`${apiUrl}/auth/logout`, null, config)
       if (response.status === 200) {
         console.log('Logout successful')
         dispatch(logout())

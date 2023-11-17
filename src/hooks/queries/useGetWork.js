@@ -3,7 +3,10 @@ import axios from 'axios'
 import { apiUrl } from '../../helpers/apiUrl'
 
 async function fetchWork() {
-  const response = await axios.get(`${apiUrl}/works/getWork`)
+  const config = {
+    withCredentials: true
+  }
+  const response = await axios.get(`${apiUrl}/works/getWork`, config)
   return response.data
 }
 
