@@ -21,7 +21,7 @@ const MainContent = () => {
         }
       >
         <Route
-          path="/configureAutoevaluation"
+          path="/gestionar-autoevaluaciones"
           element={<ConfigureAutoEvaluation />}
         />
       </Route>

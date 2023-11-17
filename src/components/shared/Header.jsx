@@ -43,10 +43,10 @@ const Header = ({ toggleSidebar }) => {
     }
   ]
   return (
-    <header className="bg-primary  py-4">
-      <div className="container mx-auto flex justify-end items-center relative px-3">
+    <header className="bg-primary  py-4 z-50 px-5">
+      <div className="container mx-auto flex justify-end items-center relative ">
         <i
-          className="fa-solid fa-bars text-3xl lg:hidden lg:block absolute cursor-pointer left-0 pl-1 "
+          className="fa-solid fa-bars text-3xl   absolute cursor-pointer left-0 pl-1 text-white md:hidden"
           onClick={toggleSidebar}
         ></i>
         <nav>
