@@ -9,6 +9,7 @@ import ConfigureAutoEvaluation from '../components/coordinator/ConfigureAutoEval
 import ManageAcademicPeriod from '../components/coordinator/ManageAcademicPeriod'
 import LaborManagement from '../components/coordinator/LaborManagement'
 import ManageDocent from '../components/coordinator/ManageDocent'
+import HomePage from '../components/HomePage'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -23,6 +24,7 @@ const MainContent = () => {
           />
         }
       >
+        <Route index element={<HomePage />} />
         <Route
           path="/gestionar-autoevaluaciones"
           element={<ConfigureAutoEvaluation />}

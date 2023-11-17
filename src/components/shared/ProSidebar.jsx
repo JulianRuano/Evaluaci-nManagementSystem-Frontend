@@ -1,16 +1,69 @@
 import React from 'react'
 import { Sidebar } from 'react-pro-sidebar'
 import propTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
-import { startHandleLogout } from '../actions/auth'
-import { useDispatch } from 'react-redux'
+
+import {
+  BookOutlined,
+  AuditOutlined,
+  SettingOutlined,
+  TeamOutlined,
+  InsertRowBelowOutlined
+} from '@ant-design/icons'
+import { Menu } from 'antd'
 
 const ProSidebar = ({ toggled, setToggled }) => {
-  const dispatch = useDispatch()
-
-  const handleSignOut = () => {
-    dispatch(startHandleLogout())
+  function getItem(label, key, icon, children, type) {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      type
+    }
   }
+  const items = [
+    getItem('Docentes', 'sub1', <TeamOutlined />, [
+      getItem('Crear docente', '1'),
+      getItem('Editar docente', '2'),
+      getItem('Consultar docente', '3'),
+      getItem('Inactivar docente', '2')
+    ]),
+    {
+      type: 'divider'
+    },
+    getItem('Autoevaluaciones', 'sub2', <AuditOutlined />, [
+      getItem('Configurar autoevaluación', '4'),
+      getItem('Asignar autoevaluación', '5'),
+      getItem('Revisar autoevaluaciones', '6'),
+      getItem('Notificar a docentes', '7'),
+      getItem('Reportes de autoevaluaciones:', '8')
+    ]),
+    {
+      type: 'divider'
+    },
+    getItem('Labores', 'sub3', <BookOutlined />, [
+      getItem('Crear labor ', '9'),
+      getItem('Editar labor', '10'),
+      getItem('Consultar labor ', '11'),
+      getItem('Inactivar labor', '12')
+    ]),
+    {
+      type: 'divider'
+    },
+    getItem('Periodo académico', 'sub4', <InsertRowBelowOutlined />, [
+      getItem('Crear periodo académico ', '13'),
+      getItem('Editar periodo académico', '14'),
+      getItem('Consultar periodo académico', '15')
+    ]),
+    {
+      type: 'divider'
+    },
+    getItem('Configuración', 'sub5', <SettingOutlined />, [
+      getItem('Cambiar contraseña', '16'),
+      getItem('Cambiar correo electrónico', '17'),
+      getItem('Subir foto de perfil', '18')
+    ])
+  ]
 
   return (
     <div
@@ -21,84 +74,31 @@ const ProSidebar = ({ toggled, setToggled }) => {
       }}
     >
       <Sidebar
-        backgroundColor="#E6E6E6"
+        backgroundColor="#FFFFFF"
         onBackdropClick={() => setToggled(false)}
         toggled={toggled}
         breakPoint="md"
+        rootStyles={{
+          color: 'white'
+        }}
       >
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom: '1rem',
             borderRadius: '10px'
           }}
-        >
-          <img
-            src="https://res.cloudinary.com/dzxhdnqm4/image/upload/v1700164038/bandera_unicauca.png"
-            style={{ width: '105px', height: '114px' }}
-            alt="Bandera Unicauca"
-            className={`hidden md:block`}
-          />
-        </div>
+        ></div>
 
-        <ul className="ml-4">
-          <li className="my-3">
-            <NavLink
-              to="/gestionar-autoevaluaciones"
-              className="text-secondary text-sm"
-              onClick={() => setToggled(false)}
-            >
-              <i className="fa-solid fa-book text-secondary pr-1"></i>
-              Gestionar Autoevaluaciones
-            </NavLink>
-          </li>
-
-          <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="my-3">
-            <NavLink
-              to="/gestionar-labores"
-              className="text-secondary text-sm"
-              onClick={() => setToggled(false)}
-            >
-              <i className="fa-solid fa-chalkboard-user text-secondary pr-1"></i>
-              Gestionar labores
-            </NavLink>
-          </li>
-          <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="my-3">
-            <NavLink
-              to="/gestionar-periodos"
-              className="text-secondary text-sm"
-              onClick={() => setToggled(false)}
-            >
-              <i className="fa-solid fa-school text-secondary pr-1"></i>
-              Gestionar Periodo Académico
-            </NavLink>
-          </li>
-          <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="my-3">
-            <NavLink
-              to="/gestionar-docentes"
-              className="text-secondary text-sm"
-              onClick={() => setToggled(false)}
-            >
-              <i className="fa-solid fa-users-line text-secondary pr-1"></i>
-              Gestionar docentes
-            </NavLink>
-          </li>
-          <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="mb-3 mt-3 text-secondary text-sm">
-            <p
-              className="text-secondary text-sm cursor-pointer"
-              onClick={handleSignOut}
-            >
-              <i className="fa-solid fa-right-to-bracket text-secondary pr-1"></i>
-              Cerrar sesión
-            </p>
-          </li>
-        </ul>
+        <Menu
+          style={{
+            width: 256,
+            minHeight: '100vh'
+          }}
+          mode="inline"
+          items={items}
+        />
       </Sidebar>
     </div>
   )
