@@ -31,7 +31,8 @@ const ProSidebar = ({ toggled, setToggled }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom: '1rem'
+            marginBottom: '1rem',
+            borderRadius: '10px'
           }}
         >
           <img
@@ -43,10 +44,11 @@ const ProSidebar = ({ toggled, setToggled }) => {
         </div>
 
         <ul className="ml-4">
-          <li className="my-3" onClick={() => setToggled(false)}>
+          <li className="my-3">
             <NavLink
               to="/gestionar-autoevaluaciones"
               className="text-secondary text-sm"
+              onClick={() => setToggled(false)}
             >
               <i className="fa-solid fa-book text-secondary pr-1"></i>
               Gestionar Autoevaluaciones
@@ -54,38 +56,44 @@ const ProSidebar = ({ toggled, setToggled }) => {
           </li>
 
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="my-3" onClick={() => setToggled(false)}>
-            <NavLink to="/gestionar-labores" className="text-secondary text-sm">
+          <li className="my-3">
+            <NavLink
+              to="/gestionar-labores"
+              className="text-secondary text-sm"
+              onClick={() => setToggled(false)}
+            >
               <i className="fa-solid fa-chalkboard-user text-secondary pr-1"></i>
               Gestionar labores
             </NavLink>
           </li>
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="my-3" onClick={() => setToggled(false)}>
+          <li className="my-3">
             <NavLink
               to="/gestionar-periodos"
               className="text-secondary text-sm"
+              onClick={() => setToggled(false)}
             >
               <i className="fa-solid fa-school text-secondary pr-1"></i>
               Gestionar Periodo Académico
             </NavLink>
           </li>
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="my-3" onClick={() => setToggled(false)}>
+          <li className="my-3">
             <NavLink
               to="/gestionar-docentes"
               className="text-secondary text-sm"
+              onClick={() => setToggled(false)}
             >
               <i className="fa-solid fa-users-line text-secondary pr-1"></i>
               Gestionar docentes
             </NavLink>
           </li>
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li
-            className="mb-3 mt-3 text-secondary text-sm cursor-pointer"
-            onClick={handleSignOut}
-          >
-            <p className="text-secondary text-sm">
+          <li className="mb-3 mt-3 text-secondary text-sm">
+            <p
+              className="text-secondary text-sm cursor-pointer"
+              onClick={handleSignOut}
+            >
               <i className="fa-solid fa-right-to-bracket text-secondary pr-1"></i>
               Cerrar sesión
             </p>
