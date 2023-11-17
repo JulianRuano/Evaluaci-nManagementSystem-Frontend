@@ -3,6 +3,13 @@ import { apiUrl } from '../../helpers/apiUrl'
 
 // SOLO POST,DELETE,PUT
 export async function createLabourFunction(body) {
-  const response = await axios.post(`${apiUrl}/autoEvaluations/labour`, body)
+  const config = {
+    withCredentials: true
+  }
+  const response = await axios.post(
+    `${apiUrl}/autoEvaluations/labour`,
+    body,
+    config
+  )
   return response.data
 }

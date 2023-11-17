@@ -5,7 +5,10 @@ import { apiUrl } from '../../helpers/apiUrl'
 // SOLO GET
 
 async function fetchLabours() {
-  const response = await axios.get(`${apiUrl}/labours`)
+  const config = {
+    withCredentials: true
+  }
+  const response = await axios.get(`${apiUrl}/labours`, config)
   return response.data
 }
 
