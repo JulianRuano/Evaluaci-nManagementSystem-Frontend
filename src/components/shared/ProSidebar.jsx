@@ -2,8 +2,16 @@ import React from 'react'
 import { Sidebar } from 'react-pro-sidebar'
 import propTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+import { startHandleLogout } from '../actions/auth'
+import { useDispatch } from 'react-redux'
 
 const ProSidebar = ({ toggled, setToggled }) => {
+  const dispatch = useDispatch()
+
+  const handleSignOut = () => {
+    dispatch(startHandleLogout())
+  }
+
   return (
     <div
       style={{
@@ -35,9 +43,8 @@ const ProSidebar = ({ toggled, setToggled }) => {
         </div>
 
         <ul className="ml-4">
-          <li className="mb-3">
+          <li className="my-3" onClick={() => setToggled(false)}>
             <NavLink
-              exact
               to="/gestionar-autoevaluaciones"
               className="text-secondary text-sm"
             >
@@ -47,28 +54,41 @@ const ProSidebar = ({ toggled, setToggled }) => {
           </li>
 
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="mb-3 mt-3 text-sm">
-            <a href="#" className=" text-secondary">
-              <i className="fa-solid fa-chalkboard-user"></i> Gestionar labores
-            </a>
+          <li className="my-3" onClick={() => setToggled(false)}>
+            <NavLink to="/gestionar-labores" className="text-secondary text-sm">
+              <i className="fa-solid fa-chalkboard-user text-secondary pr-1"></i>
+              Gestionar labores
+            </NavLink>
           </li>
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="mb-3 mt-3">
-            <a href="#" className=" text-secondary text-sm ">
-              <i className="fa-solid fa-school"></i> Gestionar Periodo Académico
-            </a>
+          <li className="my-3" onClick={() => setToggled(false)}>
+            <NavLink
+              to="/gestionar-periodos"
+              className="text-secondary text-sm"
+            >
+              <i className="fa-solid fa-school text-secondary pr-1"></i>
+              Gestionar Periodo Académico
+            </NavLink>
           </li>
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="mb-3 mt-3">
-            <a href="#" className=" text-secondary text-sm">
-              <i className="fa-solid fa-users-line"></i> Gestionar docentes
-            </a>
+          <li className="my-3" onClick={() => setToggled(false)}>
+            <NavLink
+              to="/gestionar-docentes"
+              className="text-secondary text-sm"
+            >
+              <i className="fa-solid fa-users-line text-secondary pr-1"></i>
+              Gestionar docentes
+            </NavLink>
           </li>
           <hr className="border-t-1 border-secondary text-sm opacity-20" />
-          <li className="mb-3 mt-3">
-            <a href="#" className=" text-secondary text-sm">
-              <i className="fa-solid fa-right-to-bracket"></i> Cerrar Sesión
-            </a>
+          <li
+            className="mb-3 mt-3 text-secondary text-sm cursor-pointer"
+            onClick={handleSignOut}
+          >
+            <p className="text-secondary text-sm">
+              <i className="fa-solid fa-right-to-bracket text-secondary pr-1"></i>
+              Cerrar sesión
+            </p>
           </li>
         </ul>
       </Sidebar>

@@ -6,6 +6,9 @@ import PublicRoute from './PublicRoute'
 import { useSelector } from 'react-redux'
 import PrivateRoute from './PrivateRoute'
 import ConfigureAutoEvaluation from '../components/coordinator/ConfigureAutoEvaluation'
+import ManageAcademicPeriod from '../components/coordinator/ManageAcademicPeriod'
+import LaborManagement from '../components/coordinator/LaborManagement'
+import ManageDocent from '../components/coordinator/ManageDocent'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -24,6 +27,9 @@ const MainContent = () => {
           path="/gestionar-autoevaluaciones"
           element={<ConfigureAutoEvaluation />}
         />
+        <Route path="/gestionar-labores" element={<LaborManagement />} />
+        <Route path="/gestionar-periodos" element={<ManageAcademicPeriod />} />
+        <Route path="/gestionar-docentes" element={<ManageDocent />} />
       </Route>
       <Route
         path="/auth/login"
