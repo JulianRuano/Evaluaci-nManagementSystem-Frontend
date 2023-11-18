@@ -10,6 +10,7 @@ import {
   InsertRowBelowOutlined
 } from '@ant-design/icons'
 import { Menu } from 'antd'
+import { NavLink } from 'react-router-dom'
 
 const ProSidebar = ({ toggled, setToggled }) => {
   function getItem(label, key, icon, children, type) {
@@ -22,39 +23,43 @@ const ProSidebar = ({ toggled, setToggled }) => {
     }
   }
   const items = [
-    getItem('Docentes', 'sub1', <TeamOutlined />, [
-      getItem('Crear docente', '1'),
-      getItem('Editar docente', '2'),
-      getItem('Consultar docente', '3'),
-      getItem('Inactivar docente', '2')
-    ]),
-    {
-      type: 'divider'
-    },
-    getItem('Autoevaluaciones', 'sub2', <AuditOutlined />, [
-      getItem('Configurar autoevaluación', '4'),
-      getItem('Asignar autoevaluación', '5'),
-      getItem('Revisar autoevaluaciones', '6'),
-      getItem('Notificar a docentes', '7'),
-      getItem('Reportes de autoevaluaciones:', '8')
-    ]),
-    {
-      type: 'divider'
-    },
-    getItem('Labores', 'sub3', <BookOutlined />, [
-      getItem('Crear labor ', '9'),
-      getItem('Editar labor', '10'),
-      getItem('Consultar labor ', '11'),
-      getItem('Inactivar labor', '12')
-    ]),
-    {
-      type: 'divider'
-    },
-    getItem('Periodo académico', 'sub4', <InsertRowBelowOutlined />, [
-      getItem('Crear periodo académico ', '13'),
-      getItem('Editar periodo académico', '14'),
-      getItem('Consultar periodo académico', '15')
-    ]),
+    getItem(
+      'Menú',
+      'grp',
+      null,
+      [
+        getItem(
+          <NavLink to="docentes">Docentes</NavLink>,
+          '13',
+          <TeamOutlined />
+        ),
+        {
+          type: 'divider'
+        },
+        getItem(
+          <NavLink to="autoevaluaciones">Autoevaluaciones</NavLink>,
+          '14',
+          <AuditOutlined />
+        ),
+        {
+          type: 'divider'
+        },
+        getItem(
+          <NavLink to="labores">Labores</NavLink>,
+          '15',
+          <BookOutlined />
+        ),
+        {
+          type: 'divider'
+        },
+        getItem(
+          <NavLink to="periodos">Periodo académico</NavLink>,
+          '16',
+          <InsertRowBelowOutlined />
+        )
+      ],
+      'group'
+    ),
     {
       type: 'divider'
     },
