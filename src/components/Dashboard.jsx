@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../shared/Header'
-import ProSidebar from '../shared/ProSidebar'
+import Header from './shared/Header'
+import ProSidebar from './shared/ProSidebar'
 import { Outlet } from 'react-router-dom'
 
 const Dashboard = () => {
