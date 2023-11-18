@@ -2,26 +2,33 @@ import React, { useState } from 'react'
 import { Modal } from 'antd'
 import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { docentSchema } from '../helpers/formikSchemas/docentSchema'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createDocentFunction } from '../hooks/mutations/useCreateDocent'
 import { useDispatch } from 'react-redux'
 import { addEducators } from '../redux/slices/workSlice'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import DocentTable from './tables/DocentTable'
+import { useGetDocents } from '../hooks/queries/useGetDocents'
 
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const dispatch = useDispatch()
-  const notify = (message) =>
+  // const dispatch = useDispatch()
+  const { data, isLoading, isError } = useGetDocents()
+  const queryClient = useQueryClient()
+  const notifySuccess = (message) =>
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000,
+      hideProgressBar: true,
+      pauseOnHover: false
+    })
+  const notifyError = (message) =>
     toast.error(message, {
       position: 'bottom-right',
       autoClose: 3000,
       hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnFocusLoss: true,
-      pauseOnHover: false,
-      draggable: true,
-      theme: 'light'
+      pauseOnHover: false
     })
   const showModal = () => {
     setIsModalOpen(true)
@@ -36,22 +43,42 @@ const Docent = () => {
     mutationFn: createDocentFunction,
     onSuccess: (data) => {
       console.log(data)
-      dispatch(addEducators(data.payload))
-      notify('Docente creado con éxito')
+      queryClient.invalidateQueries('docents')
+      // dispatch(addEducators(data.payload))
+      notifySuccess('Docente creado con éxito')
     },
     onError: (error) => {
       console.log(error)
-      notify(error.response.data.message)
+      console.log('xd')
+      notifyError(error.response.data.message)
     }
   })
 
-  const handleCreateDocentMutation = (values) => {
-    console.log('first')
-    docentMutation.mutate(values)
+  const handleCreateDocentMutation = (values, actions) => {
+    const actionsRef = actions
+
+    docentMutation.mutate(values, {
+      onSuccess: () => {
+        actionsRef.resetForm({
+          firstName: '',
+          lastName: '',
+          role: '',
+          title: '',
+          identification: '',
+          idType: '',
+          email: '',
+          password: '',
+          docentType: '',
+          labour: ''
+        })
+      }
+    })
   }
+  if (isLoading) return 'Cargando…'
+  if (isError) return `Error: `
   return (
-    <div className="pt-4 text-center">
-      <div className="flex justify-between px-10 container">
+    <div className="pt-4 px-3 text-center">
+      <div className="flex justify-between px-10 container pb-5">
         <h1 className="font-semibold pt-1 text-xl">Docentes</h1>
         <button
           className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 font-semibold"
@@ -60,6 +87,7 @@ const Docent = () => {
           Crear nuevo
         </button>
       </div>
+      <DocentTable data={data.data} />
       <Modal
         open={isModalOpen}
         onOk={handleOk}
@@ -74,7 +102,18 @@ const Docent = () => {
         centered={true}
       >
         <Formik
-          initialValues={{}}
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            role: '',
+            title: '',
+            identification: '',
+            idType: '',
+            email: '',
+            password: '',
+            docentType: '',
+            labour: ''
+          }}
           validationSchema={docentSchema}
           onSubmit={handleCreateDocentMutation}
         >
@@ -143,11 +182,11 @@ const Docent = () => {
                         id="role"
                         name="role"
                         className="w-full -10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                        placeholder="Castaño Gómez"
                       >
                         <option value="">Select a role</option>
-                        <option value="role1">Role 1</option>
-                        <option value="role2">Role 2</option>
+                        <option value="Docente">Docente</option>
+                        <option value="Coordinador">Coordinador</option>
+                        <option value="Decano">Decano</option>
                       </Field>
                       <ErrorMessage
                         className="text-red-600 text-sm pl-2 py-1"
@@ -187,14 +226,14 @@ const Docent = () => {
                     <div className="flex flex-col">
                       <Field
                         type="text"
-                        id="id"
-                        name="id"
+                        id="identification"
+                        name="identification"
                         className="w-full  pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="100986587"
                       />
                       <ErrorMessage
                         className="text-red-600 text-sm pl-2 pt-1"
-                        name="id"
+                        name="identification"
                         component="div"
                       />
                     </div>
@@ -285,9 +324,9 @@ const Docent = () => {
                         placeholder="jdoe@gmail.com"
                       >
                         <option value="">Elige un tipo</option>
-                        <option value="role1">Tiempo completo</option>
-                        <option value="role2">Planta</option>
-                        <option value="role3">Cátedra</option>
+                        <option value="Tiempo Completo">Tiempo completo</option>
+                        <option value="Planta">Planta</option>
+                        <option value="Cátedra">Cátedra</option>
                       </Field>
                       <ErrorMessage
                         className="text-red-600 text-sm pl-2 pt-1"

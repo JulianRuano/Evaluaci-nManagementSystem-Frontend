@@ -1,16 +1,30 @@
 import * as Yup from 'yup'
 
 export const docentSchema = Yup.object().shape({
-  firstName: Yup.string().required('Nombre(s) requerido(s)'),
-  lastName: Yup.string().required('Apellido(s) requerido(s)'),
-  idType: Yup.string().required('Tipo de identificación requerido'),
-  id: Yup.string().required('Número de identificación requerido'),
-  docentType: Yup.string().required('Tipo de docente requerido'),
-  password: Yup.string().required('Contraseña requerida'),
-  email: Yup.string()
-    .email('Correo electrónico inválido')
-    .required('Correo electrónico requerido'),
-  title: Yup.string().required('Último título académico requerido'),
-  role: Yup.string().required('Rol requerido')
+  identification: Yup.string()
+    .min(5, 'La identificación debe tener al menos 5 caracteres')
+    .max(11, 'La identificación debe tener como máximo 11 caracteres'),
+  email: Yup.string().email('No es un correo electrónico válido'),
+  password: Yup.string()
+    .min(5, 'La contraseña debe tener al menos 5 caracteres')
+    .max(15, 'La contraseña debe tener como máximo 15 caracteres'),
+  docentType: Yup.string().oneOf(
+    ['Tiempo Completo', 'Planta', 'Cátedra'],
+    'El tipo de docente no es válido'
+  ),
+  idType: Yup.string()
+    .min(2, 'El tipo de ID debe tener al menos 2 caracteres')
+    .max(10, 'El tipo de ID debe tener como máximo 10 caracteres'),
+  title: Yup.string(),
+  firstName: Yup.string()
+    .min(1, 'El nombre debe tener al menos 1 caracter')
+    .max(50, 'El nombre debe tener como máximo 50 caracteres'),
+  lastName: Yup.string()
+    .min(3, 'El apellido debe tener al menos 3 caracteres')
+    .max(50, 'El apellido debe tener como máximo 50 caracteres'),
+  role: Yup.string().oneOf(
+    ['Coordinador', 'Decano', 'Docente'],
+    'El rol no es válido'
+  )
   // labour: Yup.string().required('Labor requerida')
 })

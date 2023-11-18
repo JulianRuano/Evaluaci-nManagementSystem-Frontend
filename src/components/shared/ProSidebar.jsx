@@ -29,7 +29,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
       null,
       [
         getItem(
-          <NavLink to="docentes">Docentes</NavLink>,
+          <NavLink to="docentes" onClick={() => setToggled(false)}>
+            Docentes
+          </NavLink>,
           '13',
           <TeamOutlined />
         ),
@@ -37,7 +39,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
           type: 'divider'
         },
         getItem(
-          <NavLink to="autoevaluaciones">Autoevaluaciones</NavLink>,
+          <NavLink to="autoevaluaciones" onClick={() => setToggled(false)}>
+            Autoevaluaciones
+          </NavLink>,
           '14',
           <AuditOutlined />
         ),
@@ -45,7 +49,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
           type: 'divider'
         },
         getItem(
-          <NavLink to="labores">Labores</NavLink>,
+          <NavLink to="labores" onClick={() => setToggled(false)}>
+            Labores
+          </NavLink>,
           '15',
           <BookOutlined />
         ),
@@ -53,7 +59,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
           type: 'divider'
         },
         getItem(
-          <NavLink to="periodos">Periodo académico</NavLink>,
+          <NavLink to="periodos" onClick={() => setToggled(false)}>
+            Periodo académico
+          </NavLink>,
           '16',
           <InsertRowBelowOutlined />
         )
