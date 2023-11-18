@@ -1,20 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal } from 'antd'
 import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { docentSchema } from '../helpers/formikSchemas/docentSchema'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createDocentFunction } from '../hooks/mutations/useCreateDocent'
-import { useDispatch } from 'react-redux'
-import { addEducators } from '../redux/slices/workSlice'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import DocentTable from './tables/DocentTable'
 import { useGetDocents } from '../hooks/queries/useGetDocents'
+import ShowDocentModal from './docents/ShowDocentModal'
+import { setEducators } from '../redux/slices/educatorSlice'
+import { useDispatch } from 'react-redux'
 
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  // const dispatch = useDispatch()
+  const [isModalOpenShowDocent, setIsModalOpenShowDocent] = useState(false)
+
+  const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetDocents()
+  useEffect(() => {
+    dispatch(setEducators(data))
+  }, [data])
+
   const queryClient = useQueryClient()
   const notifySuccess = (message) =>
     toast.success(message, {
@@ -33,6 +40,7 @@ const Docent = () => {
   const showModal = () => {
     setIsModalOpen(true)
   }
+
   const handleOk = () => {
     setIsModalOpen(false)
   }
@@ -76,6 +84,7 @@ const Docent = () => {
   }
   if (isLoading) return 'Cargando…'
   if (isError) return `Error: `
+
   return (
     <div className="pt-4 px-3 text-center">
       <div className="flex justify-between px-10 container pb-5">
@@ -87,7 +96,15 @@ const Docent = () => {
           Crear nuevo
         </button>
       </div>
-      <DocentTable data={data.data} />
+      <DocentTable data={data.data} setIsModalOpen={setIsModalOpenShowDocent} />
+
+      {isModalOpenShowDocent && (
+        <ShowDocentModal
+          setIsModalOpen={setIsModalOpenShowDocent}
+          isModalOpen={isModalOpenShowDocent}
+        />
+      )}
+
       <Modal
         open={isModalOpen}
         onOk={handleOk}

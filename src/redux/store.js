@@ -4,9 +4,11 @@ import { persistReducer, persistStore } from 'redux-persist'
 import { combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import authSlice from './slices/authSlice'
+import educatorSlice from './slices/educatorSlice'
 
 const rootReducer = combineReducers({
-  auth: authSlice
+  auth: authSlice,
+  educators: educatorSlice
 })
 
 const persistConfig = {

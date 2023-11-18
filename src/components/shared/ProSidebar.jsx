@@ -72,9 +72,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
       type: 'divider'
     },
     getItem('Configuración', 'sub5', <SettingOutlined />, [
-      getItem('Cambiar contraseña', '16'),
-      getItem('Cambiar correo electrónico', '17'),
-      getItem('Subir foto de perfil', '18')
+      getItem('Cambiar contraseña', '17'),
+      getItem('Cambiar correo electrónico', '18'),
+      getItem('Subir foto de perfil', '19')
     ])
   ]
 
