@@ -1,17 +1,20 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import LoginScreen from '../components/auth/LoginScreen'
 import React from 'react'
-import Dashboard from '../components/coordinator/Dashboard'
 import PublicRoute from './PublicRoute'
 import { useSelector } from 'react-redux'
 import PrivateRoute from './PrivateRoute'
-import ConfigureAutoEvaluation from '../components/coordinator/ConfigureAutoEvaluation'
-import ManageAcademicPeriod from '../components/coordinator/ManageAcademicPeriod'
-import LaborManagement from '../components/coordinator/LaborManagement'
-import ManageDocent from '../components/coordinator/ManageDocent'
+import Dashboard from '../components/Dashboard'
+import HomePage from '../components/HomePage'
+import AutoEvaluation from '../components/AutoEvaluation'
+import Labour from '../components/Labour'
+import Period from '../components/Period'
+import Docent from '../components/Docent'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const role = useSelector((state) => state.auth?.user?.role)
+
   return (
     <Routes>
       <Route
@@ -23,13 +26,15 @@ const MainContent = () => {
           />
         }
       >
+        <Route index element={<HomePage />} role={role} />
         <Route
-          path="/gestionar-autoevaluaciones"
-          element={<ConfigureAutoEvaluation />}
+          path="autoevaluaciones"
+          element={<AutoEvaluation />}
+          role={role}
         />
-        <Route path="/gestionar-labores" element={<LaborManagement />} />
-        <Route path="/gestionar-periodos" element={<ManageAcademicPeriod />} />
-        <Route path="/gestionar-docentes" element={<ManageDocent />} />
+        <Route path="labores" element={<Labour />} role={role} />
+        <Route path="periodos" element={<Period />} role={role} />
+        <Route path="docentes" element={<Docent />} role={role} />
       </Route>
       <Route
         path="/auth/login"
@@ -44,4 +49,5 @@ const MainContent = () => {
     </Routes>
   )
 }
+
 export default MainContent

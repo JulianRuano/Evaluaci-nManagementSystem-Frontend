@@ -1,0 +1,11 @@
+import axios from 'axios'
+import { apiUrl } from '../../helpers/apiUrl'
+
+// SOLO POST,DELETE,PUT
+export async function createDocentFunction(body) {
+  const config = {
+    withCredentials: true
+  }
+  const response = await axios.post(`${apiUrl}/auth/register`, body, config)
+  return response.data
+}
