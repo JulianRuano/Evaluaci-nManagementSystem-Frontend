@@ -8,7 +8,6 @@ async function fetchDocent(uid) {
   const config = {
     withCredentials: true
   }
-  console.log('uid:', uid)
   const response = await axios.get(
     `${apiUrl}/educators/getEducator/${uid}`,
     config
