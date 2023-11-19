@@ -57,14 +57,14 @@ const LoginScreen = () => {
           <div className="w-full md:w-1/2 py-10 px-10">
             <Formik
               initialValues={{
-                email: 'george@email.com',
-                password: 'password123'
+                email: 'pmajin@gmail.com',
+                password: '12345'
               }}
               validationSchema={loginSchema}
               onSubmit={handleLoginMutation}
             >
               {({ isSubmitting }) => (
-                <Form classNameNameName="mt-8 space-y-6">
+                <Form className="mt-8 space-y-6">
                   <div className="text-center mb-10">
                     <h1 className="font-bold text-3xl text-gray-900 ">
                       Inicio de Sesión
@@ -93,7 +93,7 @@ const LoginScreen = () => {
                             placeholder="john@example.com"
                           />
                           <ErrorMessage
-                            classNameNameName="text-red-600 text-sm pl-2 py-1"
+                            className="text-red-600 text-sm pl-2 py-1"
                             name="email"
                             component="div"
                           />
@@ -120,7 +120,7 @@ const LoginScreen = () => {
                             placeholder="Contraseña"
                           />
                           <ErrorMessage
-                            classNameNameName="text-red-600 text-sm pl-2 pt-1"
+                            className="text-red-600 text-sm pl-2 pt-1"
                             name="password"
                             component="div"
                           />

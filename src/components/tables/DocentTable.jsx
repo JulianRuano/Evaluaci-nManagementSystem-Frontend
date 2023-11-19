@@ -1,14 +1,13 @@
 import React from 'react'
 import { Space, Table } from 'antd'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
-import { selectEducatorUid } from '../../redux/slices/educatorSlice'
+import { EyeOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom'
 
-const DocentTable = ({ data, setIsModalOpen }) => {
-  const dispatch = useDispatch()
+const DocentTable = ({ educators }) => {
+  const navigate = useNavigate()
   const handleSelectEducator = async (uid) => {
-    dispatch(selectEducatorUid(uid))
-    setIsModalOpen(true)
+    navigate(uid)
   }
   const columns = [
     {
@@ -56,17 +55,29 @@ const DocentTable = ({ data, setIsModalOpen }) => {
       key: 'actions',
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => handleSelectEducator(record.uid)}>Ver docente</a>
+          <a
+            onClick={() => handleSelectEducator(record.uid)}
+            className="text-highlightColor"
+          >
+            <EyeOutlined /> Ver
+          </a>
         </Space>
       )
     }
   ]
-  return <Table columns={columns} dataSource={data} />
+  return (
+    <Table
+      pagination={{
+        position: ['topRight']
+      }}
+      columns={columns}
+      dataSource={educators}
+    />
+  )
 }
 
 export default DocentTable
 
 DocentTable.propTypes = {
-  data: propTypes.array.isRequired,
-  setIsModalOpen: propTypes.func.isRequired
+  educators: propTypes.array.isRequired
 }

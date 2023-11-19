@@ -10,6 +10,8 @@ import AutoEvaluation from '../components/AutoEvaluation'
 import Labour from '../components/Labour'
 import Period from '../components/Period'
 import Docent from '../components/Docent'
+import DocentInfo from '../components/DocentInfo'
+import DocentRoute from './DocentRoute'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -34,7 +36,10 @@ const MainContent = () => {
         />
         <Route path="labores" element={<Labour />} role={role} />
         <Route path="periodos" element={<Period />} role={role} />
-        <Route path="docentes" element={<Docent />} role={role} />
+        <Route path="docentes" element={<DocentRoute />} role={role}>
+          <Route index element={<Docent />} role={role} />
+          <Route path=":uid" element={<DocentInfo />} role={role} />
+        </Route>
       </Route>
       <Route
         path="/auth/login"

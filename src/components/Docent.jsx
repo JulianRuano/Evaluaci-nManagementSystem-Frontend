@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Modal } from 'antd'
+import { Modal, Skeleton } from 'antd'
 import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { docentSchema } from '../helpers/formikSchemas/docentSchema'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -8,13 +8,11 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import DocentTable from './tables/DocentTable'
 import { useGetDocents } from '../hooks/queries/useGetDocents'
-import ShowDocentModal from './docents/ShowDocentModal'
 import { setEducators } from '../redux/slices/educatorSlice'
 import { useDispatch } from 'react-redux'
 
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isModalOpenShowDocent, setIsModalOpenShowDocent] = useState(false)
 
   const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetDocents()
@@ -82,7 +80,16 @@ const Docent = () => {
       }
     })
   }
-  if (isLoading) return 'Cargando…'
+  if (isLoading)
+    return (
+      <div className="px-5 py-5">
+        <Skeleton active />
+        <br />
+        <Skeleton active />
+        <br />
+        <Skeleton active />
+      </div>
+    )
   if (isError) return `Error: `
 
   return (
@@ -96,14 +103,7 @@ const Docent = () => {
           Crear nuevo
         </button>
       </div>
-      <DocentTable data={data.data} setIsModalOpen={setIsModalOpenShowDocent} />
-
-      {isModalOpenShowDocent && (
-        <ShowDocentModal
-          setIsModalOpen={setIsModalOpenShowDocent}
-          isModalOpen={isModalOpenShowDocent}
-        />
-      )}
+      <DocentTable educators={data.educators} />
 
       <Modal
         open={isModalOpen}
