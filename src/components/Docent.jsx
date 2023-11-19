@@ -10,10 +10,10 @@ import DocentTable from './tables/DocentTable'
 import { useGetDocents } from '../hooks/queries/useGetDocents'
 import { setEducators } from '../redux/slices/educatorSlice'
 import { useDispatch } from 'react-redux'
+import { startHandleLogout } from './actions/auth'
 
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-
   const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetDocents()
   useEffect(() => {
@@ -53,9 +53,12 @@ const Docent = () => {
       // dispatch(addEducators(data.payload))
       notifySuccess('Docente creado con éxito')
     },
-    onError: (error) => {
+    onError: async (error) => {
+      if (error?.response?.status === 401) {
+        await dispatch(startHandleLogout())
+        return
+      }
       console.log(error)
-      console.log('xd')
       notifyError(error.response.data.message)
     }
   })

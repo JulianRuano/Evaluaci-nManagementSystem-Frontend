@@ -11,8 +11,10 @@ import {
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const ProSidebar = ({ toggled, setToggled }) => {
+  const role = useSelector((state) => state.auth.user.role)
   function getItem(label, key, icon, children, type) {
     return {
       key,
@@ -28,16 +30,6 @@ const ProSidebar = ({ toggled, setToggled }) => {
       'grp',
       null,
       [
-        getItem(
-          <NavLink to="docentes" onClick={() => setToggled(false)}>
-            Docentes
-          </NavLink>,
-          '13',
-          <TeamOutlined />
-        ),
-        {
-          type: 'divider'
-        },
         getItem(
           <NavLink to="autoevaluaciones" onClick={() => setToggled(false)}>
             Autoevaluaciones
@@ -77,6 +69,21 @@ const ProSidebar = ({ toggled, setToggled }) => {
       getItem('Subir foto de perfil', '19')
     ])
   ]
+  // Si el rol es 'admin', añadir opciones de administrador
+  if (role === 'Coordinador') {
+    items[0].children.unshift(
+      getItem(
+        <NavLink to="docentes" onClick={() => setToggled(false)}>
+          Docentes
+        </NavLink>,
+        '13',
+        <TeamOutlined />
+      ),
+      {
+        type: 'divider'
+      }
+    )
+  }
 
   return (
     <div

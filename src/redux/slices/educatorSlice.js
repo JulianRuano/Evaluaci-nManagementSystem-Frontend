@@ -10,10 +10,13 @@ const educatorSlice = createSlice({
   reducers: {
     setEducators: (state, action) => {
       state.educators = action.payload
+    },
+    clearEducators: (state) => {
+      state.educators = []
     }
   }
 })
 
-export const { setEducators } = educatorSlice.actions
+export const { setEducators, clearEducators } = educatorSlice.actions
 
 export default educatorSlice.reducer

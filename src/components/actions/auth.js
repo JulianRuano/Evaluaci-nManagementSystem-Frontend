@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { apiUrl } from '../../helpers/apiUrl'
 import { logout } from '../../redux/slices/authSlice'
+import { clearEducators } from '../../redux/slices/educatorSlice'
 
 export const startHandleLogout = () => {
   return async (dispatch) => {
@@ -13,6 +14,7 @@ export const startHandleLogout = () => {
       if (response.status === 200) {
         console.log('Logout successful')
         dispatch(logout())
+        dispatch(clearEducators())
         return true
       }
     } catch (error) {
