@@ -13,5 +13,5 @@ async function fetchDocents() {
 }
 
 export function useGetDocents() {
-  return useQuery({ queryKey: 'docents', queryFn: fetchDocents })
+  return useQuery({ queryKey: ['docents'], queryFn: fetchDocents })
 }

@@ -3,10 +3,11 @@ import axios from 'axios'
 import { apiUrl } from '../../helpers/apiUrl'
 
 async function fetchPeriods() {
+ 
   const config = {
     withCredentials: true
   }
-  const response = await axios.get(`${apiUrl}/periods`, config)
+   const response = await axios.get(`${apiUrl}/autoEvaluations/periods`,config)
   return response.data
 }
 

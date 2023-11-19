@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import LoginScreen from '../components/auth/LoginScreen'
 import React from 'react'
 import PublicRoute from './PublicRoute'
@@ -10,6 +10,9 @@ import AutoEvaluation from '../components/AutoEvaluation'
 import Labour from '../components/Labour'
 import Period from '../components/Period'
 import Docent from '../components/Docent'
+import DocentInfo from '../components/DocentInfo'
+import DocentRoute from './DocentRoute'
+import NotFoundPage from '../components/NotFoundPage'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -26,15 +29,16 @@ const MainContent = () => {
           />
         }
       >
-        <Route index element={<HomePage />} role={role} />
-        <Route
-          path="autoevaluaciones"
-          element={<AutoEvaluation />}
-          role={role}
-        />
-        <Route path="labores" element={<Labour />} role={role} />
-        <Route path="periodos" element={<Period />} role={role} />
-        <Route path="docentes" element={<Docent />} role={role} />
+        <Route index element={<HomePage />} />
+        <Route path="autoevaluaciones" element={<AutoEvaluation />} />
+        <Route path="labores" element={<Labour />} />
+        <Route path="periodos" element={<Period />} />
+        <Route path="docentes" element={<DocentRoute role={role} />}>
+          <Route index element={<Docent />} />
+          <Route path=":id" element={<DocentInfo />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route
         path="/auth/login"
@@ -45,7 +49,6 @@ const MainContent = () => {
           />
         }
       />
-      <Route path="*" element={<Navigate to="/" replace={true} />} />
     </Routes>
   )
 }

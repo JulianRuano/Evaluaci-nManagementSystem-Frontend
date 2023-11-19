@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-export const docentSchema = Yup.object().shape({
+export const docentUpdateSchema = Yup.object().shape({
   identification: Yup.string()
     .required('El numero de identificación es obligatorio')
     .min(5, 'La identificación debe tener al menos 5 caracteres')
@@ -8,10 +8,6 @@ export const docentSchema = Yup.object().shape({
   email: Yup.string()
     .required('El email es obligatorio')
     .email('No es un correo electrónico válido'),
-  password: Yup.string()
-    .required('La contraseña es obligatoria')
-    .min(5, 'La contraseña debe tener al menos 5 caracteres')
-    .max(15, 'La contraseña debe tener como máximo 15 caracteres'),
   docentType: Yup.string()
     .required('El tipo de docente es obligatorio')
     .oneOf(
@@ -33,6 +29,7 @@ export const docentSchema = Yup.object().shape({
     .max(50, 'El apellido debe tener como máximo 50 caracteres'),
   role: Yup.string()
     .required('El rol es obligatorio')
-    .oneOf(['Coordinador', 'Decano', 'Docente'], 'El rol no es válido')
+    .oneOf(['Coordinador', 'Decano', 'Docente'], 'El rol no es válido'),
+  isActive: Yup.boolean().required('El estado es obligatorio')
   // labour: Yup.string().required('Labor requerida')
 })

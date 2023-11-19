@@ -11,8 +11,10 @@ import {
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const ProSidebar = ({ toggled, setToggled }) => {
+  const role = useSelector((state) => state.auth.user.role)
   function getItem(label, key, icon, children, type) {
     return {
       key,
@@ -29,15 +31,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
       null,
       [
         getItem(
-          <NavLink to="docentes">Docentes</NavLink>,
-          '13',
-          <TeamOutlined />
-        ),
-        {
-          type: 'divider'
-        },
-        getItem(
-          <NavLink to="autoevaluaciones">Autoevaluaciones</NavLink>,
+          <NavLink to="autoevaluaciones" onClick={() => setToggled(false)}>
+            Autoevaluaciones
+          </NavLink>,
           '14',
           <AuditOutlined />
         ),
@@ -45,7 +41,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
           type: 'divider'
         },
         getItem(
-          <NavLink to="labores">Labores</NavLink>,
+          <NavLink to="labores" onClick={() => setToggled(false)}>
+            Labores
+          </NavLink>,
           '15',
           <BookOutlined />
         ),
@@ -53,7 +51,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
           type: 'divider'
         },
         getItem(
-          <NavLink to="periodos">Periodo académico</NavLink>,
+          <NavLink to="periodos" onClick={() => setToggled(false)}>
+            Periodo académico
+          </NavLink>,
           '16',
           <InsertRowBelowOutlined />
         )
@@ -64,11 +64,26 @@ const ProSidebar = ({ toggled, setToggled }) => {
       type: 'divider'
     },
     getItem('Configuración', 'sub5', <SettingOutlined />, [
-      getItem('Cambiar contraseña', '16'),
-      getItem('Cambiar correo electrónico', '17'),
-      getItem('Subir foto de perfil', '18')
+      getItem('Cambiar contraseña', '17'),
+      getItem('Cambiar correo electrónico', '18'),
+      getItem('Subir foto de perfil', '19')
     ])
   ]
+  // Si el rol es 'admin', añadir opciones de administrador
+  if (role === 'Coordinador') {
+    items[0].children.unshift(
+      getItem(
+        <NavLink to="docentes" onClick={() => setToggled(false)}>
+          Docentes
+        </NavLink>,
+        '13',
+        <TeamOutlined />
+      ),
+      {
+        type: 'divider'
+      }
+    )
+  }
 
   return (
     <div
