@@ -14,6 +14,6 @@ const labourSlice = createSlice({
   }
 })
 
-export const { addLabours } = labourSlice.actions
+export const { setLabour, clearLabour } = labourSlice.actions
 
 export default labourSlice.reducer

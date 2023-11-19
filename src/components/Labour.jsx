@@ -1,26 +1,35 @@
 import React, { useState } from 'react'
-import { Modal } from 'antd'
+import { Modal, Skeleton } from 'antd'
 import { useDispatch } from 'react-redux'
 import { createLabourFunction } from '../hooks/mutations/useCreateLabour'
-import { addLabours } from '../redux/slices/labourSlice'
 import { toast } from 'react-toastify'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { labourSchema } from '../helpers/formikSchemas/labourSchema'
+import LabourTable from './tables/LabourTable'
+
+import { useGetLabours } from '../hooks/queries/useGetLabours'
+import { startHandleLogout } from './actions/auth'
 
 const Labour = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const dispatch = useDispatch()
-  const notify = (message) =>
+  const { data, isLoading, isError } = useGetLabours()
+
+  const queryClient = useQueryClient()
+  const notifySuccess = (message) =>
     toast.error(message, {
       position: 'bottom-right',
       autoClose: 3000,
       hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnFocusLoss: true,
-      pauseOnHover: false,
-      draggable: true,
-      theme: 'light'
+      pauseOnHover: false
+    })
+  const notifyError = (message) =>
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000,
+      hideProgressBar: true,
+      pauseOnHover: false
     })
   const showModal = () => {
     setIsModalOpen(true)
@@ -35,18 +44,45 @@ const Labour = () => {
     mutationFn: createLabourFunction,
     onSuccess: (data) => {
       console.log(data)
-      dispatch(addLabours(data.payload))
-      notify('Labor creado con éxito')
+      queryClient.invalidateQueries('docents')
+      // dispatch(addLabours(data.payload))
+      notifySuccess('Labor creado con éxito')
     },
-    onError: (error) => {
+    onError: async (error) => {
+      if (error?.response?.status === 401) {
+        await dispatch(startHandleLogout())
+        return
+      }
       console.log(error)
-      notify(error.response.data.message)
+      notifyError(error.response.data.message)
     }
   })
-  const handleCreateLabourMutation = (values) => {
-    console.log('first')
-    labourMutation.mutate(values)
+  const handleCreateLabourMutation = (values, actions) => {
+    const actionsRef = actions
+    labourMutation.mutate(values, {
+      onSuccess: () => {
+        actionsRef.resetForm({
+          nameWork: '',
+          LabourType: '',
+          code: '',
+          description: '',
+          assignedHours: '',
+          isActive: ''
+        })
+      }
+    })
   }
+  if (isLoading)
+    return (
+      <div className="px-5 py-5">
+        <Skeleton active />
+        <br />
+        <Skeleton active />
+        <br />
+        <Skeleton active />
+      </div>
+    )
+  if (isError) return <p>Ha ocurrido un error</p>
   return (
     <div className="pt-4 text-center">
       <div className="flex justify-between px-10 container">
@@ -58,6 +94,7 @@ const Labour = () => {
           Crear nuevo
         </button>
       </div>
+      <LabourTable labours={data} />
       <Modal
         open={isModalOpen}
         onOk={handleOk}
@@ -84,6 +121,7 @@ const Labour = () => {
                 </h1>
                 <p>A continuacion ingrese los datos de la Labor</p>
               </div>
+
               <div className="space-y-12">
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
