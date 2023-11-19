@@ -8,10 +8,10 @@ async function fetchLabours() {
   const config = {
     withCredentials: true
   }
-  const response = await axios.get(`${apiUrl}/labours`, config)
+  const response = await axios.get(`${apiUrl}/autoEvaluations/labours`, config)
   return response.data
 }
 
 export function useGetLabours() {
-  return useQuery({ queryKey: 'todos', queryFn: fetchLabours })
+  return useQuery({ queryKey: 'labours', queryFn: fetchLabours })
 }
