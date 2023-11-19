@@ -29,21 +29,13 @@ const MainContent = () => {
           />
         }
       >
-        <Route index element={<HomePage />} role={role} />
-        <Route
-          path="autoevaluaciones"
-          element={<AutoEvaluation />}
-          role={role}
-        />
-        <Route path="labores" element={<Labour />} role={role} />
-        <Route path="periodos" element={<Period />} role={role} />
-        <Route
-          path="docentes"
-          element={<DocentRoute role={role} />}
-          role={role}
-        >
-          <Route index element={<Docent />} role={role} />
-          <Route path=":uid" element={<DocentInfo />} role={role} />
+        <Route index element={<HomePage />} />
+        <Route path="autoevaluaciones" element={<AutoEvaluation />} />
+        <Route path="labores" element={<Labour />} />
+        <Route path="periodos" element={<Period />} />
+        <Route path="docentes" element={<DocentRoute role={role} />}>
+          <Route index element={<Docent />} />
+          <Route path=":uid" element={<DocentInfo />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />

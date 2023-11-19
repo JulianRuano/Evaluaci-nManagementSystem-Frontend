@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 import NotFoundPage from '../components/NotFoundPage'
 
 const DocentRoute = ({ role }) => {
-  if (role === 'Docente') {
+  if (role !== 'Coordinador') {
     return <NotFoundPage />
   }
   return <Outlet />
@@ -13,5 +13,5 @@ const DocentRoute = ({ role }) => {
 export default DocentRoute
 
 DocentRoute.propTypes = {
-  role: propTypes.string.isRequired
+  role: propTypes.string
 }
