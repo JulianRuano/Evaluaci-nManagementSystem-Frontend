@@ -9,14 +9,25 @@ const educatorSlice = createSlice({
   initialState,
   reducers: {
     setEducators: (state, action) => {
-      state.educators = action.payload
+      return { ...state, educators: action.payload }
     },
     clearEducators: (state) => {
-      state.educators = []
+      return { ...state, educators: [] }
+    },
+    updateEducator: (state, action) => {
+      const { id, values } = action.payload
+      const index = state.educators.findIndex((docent) => docent.uid === id)
+      const newEducators = [...state.educators]
+      newEducators[index] = { ...newEducators[index], ...values }
+      return { ...state, educators: newEducators }
+    },
+    addEducator: (state, action) => {
+      state.educators = [...state.educators, action.payload]
     }
   }
 })
 
-export const { setEducators, clearEducators } = educatorSlice.actions
+export const { setEducators, clearEducators, updateEducator, addEducator } =
+  educatorSlice.actions
 
 export default educatorSlice.reducer

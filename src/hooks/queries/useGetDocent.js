@@ -8,6 +8,7 @@ async function fetchDocent(uid) {
   const config = {
     withCredentials: true
   }
+  console.log('se lo trajo del back')
   const response = await axios.get(
     `${apiUrl}/educators/getEducator/${uid}`,
     config
@@ -16,6 +17,10 @@ async function fetchDocent(uid) {
   return response.data
 }
 
-export function useGetDocent(uid) {
-  return useQuery({ queryKey: ['docent'], queryFn: () => fetchDocent(uid) })
+export function useGetDocent(uid, isEnabled) {
+  return useQuery({
+    queryKey: ['docent'],
+    queryFn: () => fetchDocent(uid),
+    enabled: isEnabled
+  })
 }
