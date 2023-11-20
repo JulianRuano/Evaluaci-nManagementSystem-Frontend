@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Modal, Skeleton } from 'antd'
+import { DatePicker, Modal, Skeleton } from 'antd'
 import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { docentSchema } from '../helpers/formikSchemas/docentSchema'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -11,9 +11,15 @@ import { useGetDocents } from '../hooks/queries/useGetDocents'
 import { setEducators } from '../redux/slices/educatorSlice'
 import { useDispatch } from 'react-redux'
 import { startHandleLogout } from './actions/auth'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [values, setValues] = useState(new Date())
+  useEffect(() => {
+    console.log(values)
+  }, [values, setValues])
+
   const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetDocents()
   useEffect(() => {
@@ -144,6 +150,10 @@ const Docent = () => {
                 <h1 className="font-bold text-3xl text-gray-900 ">
                   Nuevo docente
                 </h1>
+                <DatePicker
+                  onChange={(value) => setValues(new Date(value))}
+                  selected={values}
+                />
                 <p>A continuacion ingrese los datos del docente</p>
               </div>
               <div>
