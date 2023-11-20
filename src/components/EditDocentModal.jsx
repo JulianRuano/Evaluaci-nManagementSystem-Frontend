@@ -214,8 +214,12 @@ const EditDocentModal = ({
                       placeholder="jdoe@gmail.com"
                       onChange={(event) => {
                         const value = event.target.value
-                        const booleanValue = value === 'true'
-                        setFieldValue('isActive', booleanValue)
+                        if (value === '') {
+                          setFieldValue('isActive', '') // Cambia null a "" o undefined
+                        } else {
+                          const booleanValue = value === 'true'
+                          setFieldValue('isActive', booleanValue)
+                        }
                       }}
                     >
                       <option value="">Elige una opción</option>

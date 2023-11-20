@@ -150,10 +150,6 @@ const Docent = () => {
                 <h1 className="font-bold text-3xl text-gray-900 ">
                   Nuevo docente
                 </h1>
-                <DatePicker
-                  onChange={(value) => setValues(new Date(value))}
-                  selected={values}
-                />
                 <p>A continuacion ingrese los datos del docente</p>
               </div>
               <div>

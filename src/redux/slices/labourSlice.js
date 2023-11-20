@@ -14,7 +14,7 @@ const labourSlice = createSlice({
       state.labours = action.payload
     },
     addLabourTypes: (state, action) => {
-      state.labourTypes = [...state.labourTypes, action.payload]
+      state.labourTypes = action.payload
     },
     addLabour: (state, action) => {
       state.labours = [...state.labours, action.payload]

@@ -1,35 +1,24 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Modal, Skeleton } from 'antd'
 import propTypes from 'prop-types'
-import { labourUpdateSchema } from '../helpers/formikSchemas/labourUpdateSchema'
 import { useDispatch, useSelector } from 'react-redux'
-import { useGetLabourTypes } from '../hooks/queries/useGetLabourTypes'
-import { addLabourTypes } from '../redux/slices/labourSlice'
+import { labourSchema } from '../helpers/formikSchemas/labourSchema'
 
 const EditLabourModal = ({
   isModalOpen,
   handleOk,
   handleCancel,
   handleUpdateLabourMutation,
-  labourUpdateMutation
+  labourUpdateMutation,
+  labourTypesLoading,
+  labourTypesError
 }) => {
-  const {
-    data: labourTypeData,
-    isLoading: labourTypesLoading,
-    isError: labourTypesError
-  } = useGetLabourTypes()
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (labourTypeData) {
-      dispatch(addLabourTypes(labourTypeData))
-    }
-  }, [labourTypeData])
   const id = useSelector((state) => state.labours.labourTypeUidToEdit)
   const labour = useSelector((state) =>
     state.labours.labours.find((labour) => labour.uid === id)
   )
+  const labourTypeData = useSelector((state) => state.labours.labourTypes)
 
   if (labourTypesLoading)
     return (
@@ -68,7 +57,7 @@ const EditLabourModal = ({
           assignedHours: labour.assignedHours,
           isActive: labour.isActive
         }}
-        validationSchema={labourUpdateSchema}
+        validationSchema={labourSchema}
         onSubmit={handleUpdateLabourMutation}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -146,26 +135,33 @@ const EditLabourModal = ({
                       name="labourType.description"
                       className="w-full pl-3 pr-3 py-0.5 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       onChange={(event) => {
-                        const selectedLabourType = labourTypeData.find(
-                          (labourType) =>
-                            labourType.description === event.target.value
-                        )
-                        setFieldValue(
-                          'labourType.description',
-                          selectedLabourType.description
-                        )
-                        setFieldValue(
-                          'labourType.code',
-                          selectedLabourType.code
-                        )
-                        setFieldValue(
-                          'labourType.labourTypeUid',
-                          selectedLabourType.uid
-                        )
-                        setFieldValue(
-                          'labourType.idLabourType',
-                          selectedLabourType.idLabourType
-                        )
+                        const value = event.target.value
+                        if (value === '') {
+                          setFieldValue('labourType.description', '')
+                          setFieldValue('labourType.code', '')
+                          setFieldValue('labourType.labourTypeUid', '')
+                          setFieldValue('labourType.idLabourType', '')
+                        } else {
+                          const selectedLabourType = labourTypeData.find(
+                            (labourType) => labourType.description === value
+                          )
+                          setFieldValue(
+                            'labourType.description',
+                            selectedLabourType.description
+                          )
+                          setFieldValue(
+                            'labourType.code',
+                            selectedLabourType.code
+                          )
+                          setFieldValue(
+                            'labourType.labourTypeUid',
+                            selectedLabourType.uid
+                          )
+                          setFieldValue(
+                            'labourType.idLabourType',
+                            selectedLabourType.idLabourType
+                          )
+                        }
                       }}
                     >
                       <option value="">Elige una labor</option>
@@ -180,7 +176,7 @@ const EditLabourModal = ({
                     </Field>
                     <ErrorMessage
                       className="text-red-600 text-sm py-1"
-                      name="role"
+                      name="labourType.description"
                       component="div"
                     />
                   </div>
@@ -230,8 +226,12 @@ const EditLabourModal = ({
                       className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       onChange={(event) => {
                         const value = event.target.value
-                        const booleanValue = value === 'true'
-                        setFieldValue('isActive', booleanValue)
+                        if (value === '') {
+                          setFieldValue('isActive', '') // Cambia null a "" o undefined
+                        } else {
+                          const booleanValue = value === 'true'
+                          setFieldValue('isActive', booleanValue)
+                        }
                       }}
                     >
                       <option value="">Elige una opción</option>
@@ -282,5 +282,7 @@ EditLabourModal.propTypes = {
   handleCancel: propTypes.func.isRequired,
   labourId: propTypes.string.isRequired,
   handleUpdateLabourMutation: propTypes.func.isRequired,
-  labourUpdateMutation: propTypes.object.isRequired
+  labourUpdateMutation: propTypes.object.isRequired,
+  labourTypesLoading: propTypes.bool.isRequired,
+  labourTypesError: propTypes.bool.isRequired
 }

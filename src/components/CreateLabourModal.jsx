@@ -1,32 +1,20 @@
-import React, { useEffect } from 'react'
-import { useGetLabourTypes } from '../hooks/queries/useGetLabourTypes'
+import React from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Modal } from 'antd'
 import { labourSchema } from '../helpers/formikSchemas/labourSchema'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
-import { addLabourTypes } from '../redux/slices/labourSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const CreateLabourModal = ({
   isModalOpen,
   handleOk,
   handleCancel,
   handleCreateLabourMutation,
-  labourMutation
+  labourMutation,
+  labourTypesLoading,
+  labourTypesError
 }) => {
-  const {
-    data: labourTypeData,
-    isLoading: labourTypesLoading,
-    isError: labourTypesError
-  } = useGetLabourTypes()
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (labourTypeData) {
-      dispatch(addLabourTypes(labourTypeData))
-    }
-  }, [labourTypeData])
+  const labourTypeData = useSelector((state) => state.labours.labourTypes)
 
   if (labourTypesLoading) {
     return <div>Cargando</div>
@@ -136,26 +124,33 @@ const CreateLabourModal = ({
                       name="labourType.description"
                       className="w-full pl-3 pr-3 py-0.5 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       onChange={(event) => {
-                        const selectedLabourType = labourTypeData.find(
-                          (labourType) =>
-                            labourType.description === event.target.value
-                        )
-                        setFieldValue(
-                          'labourType.description',
-                          selectedLabourType.description
-                        )
-                        setFieldValue(
-                          'labourType.code',
-                          selectedLabourType.code
-                        )
-                        setFieldValue(
-                          'labourType.labourTypeUid',
-                          selectedLabourType.uid
-                        )
-                        setFieldValue(
-                          'labourType.idLabourType',
-                          selectedLabourType.idLabourType
-                        )
+                        const value = event.target.value
+                        if (value === '') {
+                          setFieldValue('labourType.description', '')
+                          setFieldValue('labourType.code', '')
+                          setFieldValue('labourType.labourTypeUid', '')
+                          setFieldValue('labourType.idLabourType', '')
+                        } else {
+                          const selectedLabourType = labourTypeData.find(
+                            (labourType) => labourType.description === value
+                          )
+                          setFieldValue(
+                            'labourType.description',
+                            selectedLabourType.description
+                          )
+                          setFieldValue(
+                            'labourType.code',
+                            selectedLabourType.code
+                          )
+                          setFieldValue(
+                            'labourType.labourTypeUid',
+                            selectedLabourType.uid
+                          )
+                          setFieldValue(
+                            'labourType.idLabourType',
+                            selectedLabourType.idLabourType
+                          )
+                        }
                       }}
                     >
                       <option value="">Elige una labor</option>
@@ -170,7 +165,7 @@ const CreateLabourModal = ({
                     </Field>
                     <ErrorMessage
                       className="text-red-600 text-sm py-1"
-                      name="role"
+                      name="labourType.description"
                       component="div"
                     />
                   </div>
@@ -263,5 +258,7 @@ CreateLabourModal.propTypes = {
   handleOk: propTypes.func.isRequired,
   handleCancel: propTypes.func.isRequired,
   handleCreateLabourMutation: propTypes.func.isRequired,
-  labourMutation: propTypes.object.isRequired
+  labourMutation: propTypes.object.isRequired,
+  labourTypesLoading: propTypes.bool.isRequired,
+  labourTypesError: propTypes.bool.isRequired
 }

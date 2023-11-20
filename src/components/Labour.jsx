@@ -9,17 +9,18 @@ import _ from 'lodash'
 import { useGetLabours } from '../hooks/queries/useGetLabours'
 import { startHandleLogout } from './actions/auth'
 import CreateLabourModal from './CreateLabourModal'
-import { setLabours } from '../redux/slices/labourSlice'
+import { addLabourTypes, setLabours } from '../redux/slices/labourSlice'
 import EditLabourModal from './EditLabourModal'
 import { updateLabourFunction } from '../hooks/mutations/useUpdateLabour'
+import { useGetLabourTypes } from '../hooks/queries/useGetLabourTypes'
 
 const Labour = () => {
   const [isCreateLabourModalOpen, setIsCreateModalOpen] = useState(false)
   const [isEditLabourModalOpen, setIsEditModalOpen] = useState(false)
+  const oldLabour = useRef({})
   const labourIdToEdit = useSelector(
     (state) => state.labours.labourTypeUidToEdit
   )
-
   const labour = useSelector((state) =>
     state.labours.labours.find((labour) => labour.uid === labourIdToEdit)
   )
@@ -37,6 +38,18 @@ const Labour = () => {
       dispatch(setLabours(labourData))
     }
   }, [labourData])
+
+  const {
+    data: labourTypeData,
+    isLoading: labourTypesLoading,
+    isError: labourTypesError
+  } = useGetLabourTypes()
+
+  useEffect(() => {
+    if (labourTypeData) {
+      dispatch(addLabourTypes(labourTypeData))
+    }
+  }, [labourTypeData])
 
   const queryClient = useQueryClient()
 
@@ -130,7 +143,12 @@ const Labour = () => {
       notifyError('Ocurrió un error al actualizar la labor')
     }
   })
-
+  oldLabour.current = {
+    nameWork: labour.nameWork,
+    labourType: labour.labourType._id,
+    assignedHours: labour.assignedHours,
+    isActive: labour.isActive
+  }
   const handleUpdateLabourMutation = (values, actions) => {
     const newValues = {
       nameWork: values.nameWork,
@@ -138,7 +156,11 @@ const Labour = () => {
       assignedHours: values.assignedHours,
       isActive: values.isActive
     }
-
+    console.log(oldLabour.current, newValues)
+    if (_.isEqual(oldLabour.current, newValues)) {
+      notifyError('No se han modificado datos')
+      return
+    }
     const actionsRef = actions
     labourUpdateMutation.mutate(
       { values: newValues, id: labourIdToEdit },
@@ -187,6 +209,8 @@ const Labour = () => {
           handleCancel={handleCancelCreateLabour}
           handleCreateLabourMutation={handleCreateLabourMutation}
           labourMutation={labourMutation}
+          labourTypesLoading={labourTypesLoading}
+          labourTypesError={labourTypesError}
         />
       )}
       {isEditLabourModalOpen && (
@@ -196,6 +220,8 @@ const Labour = () => {
           handleCancel={handleCancelEditLabour}
           handleUpdateLabourMutation={handleUpdateLabourMutation}
           labourUpdateMutation={labourUpdateMutation}
+          labourTypesLoading={labourTypesLoading}
+          labourTypesError={labourTypesError}
         />
       )}
 

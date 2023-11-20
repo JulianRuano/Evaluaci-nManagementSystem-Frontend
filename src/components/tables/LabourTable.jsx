@@ -5,11 +5,7 @@ import { EditOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { setlabourTypeUidToEdit } from '../../redux/slices/labourSlice'
 
-const LabourTable = ({
-  labours,
-  setIsEditModalOpen,
-  setLabourSelectedToEdit
-}) => {
+const LabourTable = ({ labours, setIsEditModalOpen }) => {
   const dispatch = useDispatch()
   const columns = [
     {
