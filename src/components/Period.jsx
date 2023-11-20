@@ -123,8 +123,8 @@ const Period = () => {
             name: '',
             year: '',
             semester: '',
-            startDate: '',
-            endDate: ''
+            startDate: new Date(),
+            endDate: new Date()
           }}
           validationSchema={periodSchema}
           onSubmit={handleCreatePeriodMutation}
@@ -195,6 +195,11 @@ const Period = () => {
                         type="text"
                         id="semester"
                         name="semester"
+                        onChange={(event) => {
+                          const value = event.target.value
+                          const intValue = parseInt(value, 10)
+                          setFieldValue('semester', intValue)
+                        }}
                         className="w-full pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       >
                         <option value="">Elige un semestre</option>
@@ -215,10 +220,13 @@ const Period = () => {
                     >
                       Fecha de inicio
                     </label>
+                    .startDate
                     <div className="flex flex-col">
                       <DatePicker
-                        onChange={(value) => setFieldValue('startDate', value)}
-                        value={values.startDate}
+                        onChange={(value) =>
+                          setFieldValue('startDate', new Date(value))
+                        }
+                        selected={values.startDate}
                       />
                       <ErrorMessage
                         className="text-red-600 text-sm  pt-1"
@@ -238,8 +246,10 @@ const Period = () => {
                     </label>
                     <div className="flex flex-col">
                       <DatePicker
-                        onChange={(value) => setFieldValue('endDate', value)}
-                        value={values.endDate}
+                        onChange={(value) =>
+                          setFieldValue('endDate', new Date(value))
+                        }
+                        selected={values.endDate}
                       />
                       <ErrorMessage
                         className="text-red-600 text-sm  pt-1"

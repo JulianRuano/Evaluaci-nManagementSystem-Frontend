@@ -106,6 +106,7 @@ const Docent = () => {
           Crear nuevo
         </button>
       </div>
+
       <DocentTable educators={data.educators} />
 
       <Modal
