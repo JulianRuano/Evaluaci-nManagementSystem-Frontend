@@ -9,3 +9,9 @@
     color: #6366F1 !important;
     font-weight: bold !important;
 }
+.ant-descriptions-item-content {
+  white-space: normal !important;
+}
+.ant-descriptions-item-label {
+  white-space: nowrap !important;
+}

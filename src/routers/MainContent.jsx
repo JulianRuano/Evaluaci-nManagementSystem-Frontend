@@ -35,7 +35,7 @@ const MainContent = () => {
         <Route path="periodos" element={<Period />} />
         <Route path="docentes" element={<DocentRoute role={role} />}>
           <Route index element={<Docent />} />
-          <Route path=":uid" element={<DocentInfo />} />
+          <Route path=":id" element={<DocentInfo />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
