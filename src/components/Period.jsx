@@ -48,7 +48,7 @@ const Period = () => {
     setIsModalOpen(false)
   }
   const periodMutation = useMutation({
-    mutationFn: createPeriodFunction(),
+    mutationFn: createPeriodFunction,
     onSuccess: (data) => {
       console.log(data)
       queryClient.invalidateQueries('periods')
@@ -213,7 +213,7 @@ const Period = () => {
                       htmlFor="title"
                       className="text-xs font-semibold px-1"
                     >
-                      Título
+                      Fecha de inicio
                     </label>
                     <div className="flex flex-col">
                       <DatePicker
