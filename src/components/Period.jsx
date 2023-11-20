@@ -19,7 +19,7 @@ const Period = () => {
   const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetPeriods()
   useEffect(() => {
-    dispatch(setPeriods(data?.educators))
+    dispatch(setPeriods(data))
   }, [data])
 
   const queryClient = useQueryClient()
@@ -103,7 +103,7 @@ const Period = () => {
           Crear nuevo
         </button>
       </div>
-      <PeriodTable periods={data.periods} />
+      <PeriodTable periods={data} />
 
       <Modal
         open={isModalOpen}
