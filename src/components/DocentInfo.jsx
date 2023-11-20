@@ -89,7 +89,7 @@ const DocentInfo = () => {
         return
       }
       console.log(error)
-      notifyError(error.response.data.message)
+      notifyError('Ha ocurrido un error al actualizar el docente')
     }
   })
   const handleUpdateDocentMutation = (values) => {
@@ -117,6 +117,10 @@ const DocentInfo = () => {
         <Skeleton active />
       </div>
     )
+
+  if (isError) {
+    return <p>Ha ocurrido un error</p>
+  }
 
   if (!finalEducator) {
     return (
