@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Descriptions, Skeleton, Tag } from 'antd'
 import { format } from 'date-fns'
 import ElementNotFound from './ElementNotFound'
@@ -63,7 +63,7 @@ const DocentInfo = () => {
     setIsModalOpen(false)
   }
   // const queryClient = useQueryClient()
-  const formEditInitialValues = {
+  const formEditInitialValuesRef = useRef({
     firstName: finalEducator.firstName,
     lastName: finalEducator.lastName,
     role: finalEducator.role,
@@ -73,7 +73,7 @@ const DocentInfo = () => {
     email: finalEducator.email,
     docentType: finalEducator.docentType,
     isActive: finalEducator.isActive
-  }
+  })
   const docentUpdateMutation = useMutation({
     mutationFn: updateDocentFunction,
     onSuccess: (data) => {
@@ -93,7 +93,7 @@ const DocentInfo = () => {
     }
   })
   const handleUpdateDocentMutation = (values) => {
-    if (_.isEqual(values, formEditInitialValues)) {
+    if (_.isEqual(values, formEditInitialValuesRef.current)) {
       notifyError('No han modificado datos')
       return
     }
@@ -101,6 +101,7 @@ const DocentInfo = () => {
       { id, values },
       {
         onSuccess: () => {
+          formEditInitialValuesRef.current = values
           dispatch(updateEducator({ id, values }))
         }
       }
@@ -157,8 +158,8 @@ const DocentInfo = () => {
       key: '6',
       label: 'Estado',
       children: (
-        <Tag color={finalEducator.isActive === 'true' ? 'green' : 'red'}>
-          {finalEducator.isActive === 'true' ? 'Activo' : 'Inactivo'}
+        <Tag color={finalEducator.isActive ? 'green' : 'red'}>
+          {finalEducator.isActive ? 'Activo' : 'Inactivo'}
         </Tag>
       )
     },

@@ -41,7 +41,7 @@ const EditDocentModal = ({
         validationSchema={docentUpdateSchema}
         onSubmit={handleUpdateDocentMutation}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form className=" space-y-6">
             <div className="text-center">
               <h1 className="font-bold text-3xl text-gray-900 ">
@@ -212,6 +212,11 @@ const EditDocentModal = ({
                       name="isActive"
                       className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       placeholder="jdoe@gmail.com"
+                      onChange={(event) => {
+                        const value = event.target.value
+                        const booleanValue = value === 'true'
+                        setFieldValue('isActive', booleanValue)
+                      }}
                     >
                       <option value="">Elige una opción</option>
                       <option value="true">Si</option>
