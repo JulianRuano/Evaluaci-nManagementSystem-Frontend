@@ -13,6 +13,7 @@ import Docent from '../components/Docent'
 import DocentInfo from '../components/DocentInfo'
 import DocentRoute from './DocentRoute'
 import NotFoundPage from '../components/NotFoundPage'
+import AssignLabours from '../components/AssignLabours'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -36,6 +37,7 @@ const MainContent = () => {
         <Route path="docentes" element={<DocentRoute role={role} />}>
           <Route index element={<Docent />} />
           <Route path=":id" element={<DocentInfo />} />
+          <Route path="asignar-labores" element={<AssignLabours />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />

@@ -12,6 +12,7 @@ import { setEducators } from '../redux/slices/educatorSlice'
 import { useDispatch } from 'react-redux'
 import { startHandleLogout } from './actions/auth'
 import 'react-datepicker/dist/react-datepicker.css'
+import DocentNav from './DocentNav'
 
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -360,32 +361,6 @@ const Docent = () => {
                       <ErrorMessage
                         className="text-red-600 text-sm pt-1"
                         name="docentType"
-                        component="div"
-                      />
-                    </div>
-                  </div>
-                  <div className="sm:w-1/2 w-full px-3 mb-2">
-                    <label
-                      htmlFor="labour"
-                      className="text-xs font-semibold px-1"
-                    >
-                      Labor
-                    </label>
-                    <div className="flex flex-col">
-                      <Field
-                        as="select"
-                        id="labour"
-                        name="labour"
-                        className="w-full  pl-3 pr-3 py-0.5 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      >
-                        <option value="">Elige una labor</option>
-                        <option value="role1">Tiempo completo</option>
-                        <option value="role2">Planta</option>
-                        <option value="role3">Cátedra</option>
-                      </Field>
-                      <ErrorMessage
-                        className="text-red-600 text-sm  pt-1"
-                        name="labour"
                         component="div"
                       />
                     </div>
