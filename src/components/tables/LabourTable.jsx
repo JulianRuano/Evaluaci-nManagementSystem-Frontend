@@ -1,7 +1,7 @@
 import React from 'react'
-import { Table, Space } from 'antd'
+import { Table } from 'antd'
 import propTypes from 'prop-types'
-import { StopOutlined, EditOutlined } from '@ant-design/icons'
+import { EditOutlined } from '@ant-design/icons'
 
 const LabourTable = ({ labours }) => {
   const columns = [
@@ -11,7 +11,7 @@ const LabourTable = ({ labours }) => {
       key: 'nameWork'
     },
     {
-      title: 'Tipo de Labor',
+      title: 'Descripción',
       dataIndex: ['labourType', 'description'],
       key: 'description'
     },
@@ -46,15 +46,9 @@ const LabourTable = ({ labours }) => {
       title: 'Acciones',
       key: 'actions',
       render: (_, record) => (
-        <Space size="middle">
-          <a className="text-highlightColor">
-            <StopOutlined /> Inactivar
-          </a>
-
-          <a className="text-highlightColor">
-            <EditOutlined /> Editar
-          </a>
-        </Space>
+        <a className="text-highlightColor">
+          <EditOutlined /> Editar
+        </a>
       )
     }
   ]
