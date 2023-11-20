@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Space } from 'antd'
 import propTypes from 'prop-types'
-import { EyeOutlined } from '@ant-design/icons'
+import { StopOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 const LabourTable = ({ labours }) => {
   const columns = [
@@ -46,11 +46,14 @@ const LabourTable = ({ labours }) => {
       key: 'actions',
       render: (_, record) => (
         <Space size="middle">
-          <a
-            //  onClick={() => handleSelectEducator(record._id)}
-            className="text-highlightColor"
-          >
-            <EyeOutlined /> Ver
+          <a className="text-highlightColor">
+            <StopOutlined /> Inactivar
+          </a>
+          <a className="text-highlightColor">
+            <EditOutlined /> Editar
+          </a>
+          <a className="text-highlightColor">
+            <DeleteOutlined /> Eliminar
           </a>
         </Space>
       )
