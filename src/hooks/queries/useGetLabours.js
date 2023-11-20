@@ -13,5 +13,5 @@ async function fetchLabours() {
 }
 
 export function useGetLabours() {
-  return useQuery({ queryKey: 'labours', queryFn: fetchLabours })
+  return useQuery({ queryKey: ['labours'], queryFn: fetchLabours })
 }

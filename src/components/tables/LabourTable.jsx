@@ -1,30 +1,31 @@
 import React from 'react'
 import { Table, Space } from 'antd'
 import propTypes from 'prop-types'
-import { StopOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { StopOutlined, EditOutlined } from '@ant-design/icons'
 
 const LabourTable = ({ labours }) => {
   const columns = [
     {
-      title: 'Tipo de Trabajo',
-      dataIndex: ['labourType', 'description'],
-      key: 'labourType'
-    },
-    {
-      title: 'ID de Trabajo',
-      dataIndex: ['labourType', 'idlabourType'],
-      key: 'idlabourType'
-    },
-    {
-      title: 'Código de Trabajo',
-      dataIndex: ['labourType', 'code'],
-      key: 'code'
-    },
-    {
-      title: 'Nombre del Trabajo',
+      title: 'Nombre de la Labor',
       dataIndex: 'nameWork',
       key: 'nameWork'
     },
+    {
+      title: 'Tipo de Labor',
+      dataIndex: ['labourType', 'description'],
+      key: 'description'
+    },
+    {
+      title: 'ID de Labor',
+      dataIndex: ['labourType', 'idLabourType'],
+      key: 'idlabourType'
+    },
+    {
+      title: 'Código de la Labor',
+      dataIndex: ['labourType', 'code'],
+      key: 'labourTypeCode'
+    },
+
     {
       title: 'Horas Asignadas',
       dataIndex: 'assignedHours',
@@ -49,11 +50,9 @@ const LabourTable = ({ labours }) => {
           <a className="text-highlightColor">
             <StopOutlined /> Inactivar
           </a>
+
           <a className="text-highlightColor">
             <EditOutlined /> Editar
-          </a>
-          <a className="text-highlightColor">
-            <DeleteOutlined /> Eliminar
           </a>
         </Space>
       )
