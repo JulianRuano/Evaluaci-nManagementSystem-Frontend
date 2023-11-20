@@ -1,25 +1,24 @@
 import React, { useEffect } from 'react'
-import { useGetLabourTypes } from '../hooks/queries/useGetLabourTypes'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { Modal } from 'antd'
-import { labourSchema } from '../helpers/formikSchemas/labourSchema'
+import { Modal, Skeleton } from 'antd'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { labourUpdateSchema } from '../helpers/formikSchemas/labourUpdateSchema'
+import { useDispatch, useSelector } from 'react-redux'
+import { useGetLabourTypes } from '../hooks/queries/useGetLabourTypes'
 import { addLabourTypes } from '../redux/slices/labourSlice'
 
-const CreateLabourModal = ({
+const EditLabourModal = ({
   isModalOpen,
   handleOk,
   handleCancel,
-  handleCreateLabourMutation,
-  labourMutation
+  handleUpdateLabourMutation,
+  labourUpdateMutation
 }) => {
   const {
     data: labourTypeData,
     isLoading: labourTypesLoading,
     isError: labourTypesError
   } = useGetLabourTypes()
-
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -27,13 +26,22 @@ const CreateLabourModal = ({
       dispatch(addLabourTypes(labourTypeData))
     }
   }, [labourTypeData])
+  const id = useSelector((state) => state.labours.labourTypeUidToEdit)
+  const labour = useSelector((state) =>
+    state.labours.labours.find((labour) => labour.uid === id)
+  )
 
-  if (labourTypesLoading) {
-    return <div>Cargando</div>
-  }
-  if (labourTypesError) {
-    return <div>Error al cargar los tipos de labores</div>
-  }
+  if (labourTypesLoading)
+    return (
+      <div className="px-5 py-5">
+        <Skeleton active />
+        <br />
+        <Skeleton active />
+        <br />
+        <Skeleton active />
+      </div>
+    )
+  if (labourTypesError) return <p>Ha ocurrido un error</p>
   return (
     <Modal
       open={isModalOpen}
@@ -50,23 +58,25 @@ const CreateLabourModal = ({
     >
       <Formik
         initialValues={{
-          nameWork: '',
+          nameWork: labour.nameWork,
           labourType: {
-            idLabourType: '',
-            code: '',
-            description: '',
-            labourTypeUid: ''
+            idLabourType: labour.labourType.idLabourType,
+            code: labour.labourType.code,
+            description: labour.labourType.description,
+            labourTypeUid: labour.labourType._id
           },
-          assignedHours: '',
-          isActive: ''
+          assignedHours: labour.assignedHours,
+          isActive: labour.isActive
         }}
-        validationSchema={labourSchema}
-        onSubmit={handleCreateLabourMutation}
+        validationSchema={labourUpdateSchema}
+        onSubmit={handleUpdateLabourMutation}
       >
         {({ isSubmitting, setFieldValue }) => (
           <Form className=" space-y-6">
             <div className="text-center">
-              <h1 className="font-bold text-3xl text-gray-900 ">Nueva labor</h1>
+              <h1 className="font-bold text-3xl text-gray-900 ">
+                Actualizar labor
+              </h1>
               <p>A continuacion ingrese los datos de la labor</p>
             </div>
             <div>
@@ -238,15 +248,22 @@ const CreateLabourModal = ({
                 </div>
               </div>
 
-              <div className="w-full mt-2">
+              <div className="w-full gap-3 mt-2 flex">
+                <button
+                  type="reset"
+                  className={`block w-1/2 mx-auto  bg-red-400 hover:bg-red-500 text-white rounded-lg py-2  font-semibold `}
+                  onClick={() => handleCancel()}
+                >
+                  Cancelar
+                </button>
                 <button
                   type="submit"
-                  disabled={labourMutation.isPending}
-                  className={`block w-full max-w-xs mx-auto  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg py-2  font-semibold ${
-                    labourMutation.isPending ? 'opacity-50' : ''
+                  disabled={labourUpdateMutation.isPending}
+                  className={`block w-1/2 mx-auto  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg py-2  font-semibold ${
+                    labourUpdateMutation.isPending ? 'opacity-50' : ''
                   }`}
                 >
-                  Agregar
+                  Actualizar
                 </button>
               </div>
             </div>
@@ -257,11 +274,13 @@ const CreateLabourModal = ({
   )
 }
 
-export default CreateLabourModal
-CreateLabourModal.propTypes = {
+export default EditLabourModal
+
+EditLabourModal.propTypes = {
   isModalOpen: propTypes.bool.isRequired,
   handleOk: propTypes.func.isRequired,
   handleCancel: propTypes.func.isRequired,
-  handleCreateLabourMutation: propTypes.func.isRequired,
-  labourMutation: propTypes.object.isRequired
+  labourId: propTypes.string.isRequired,
+  handleUpdateLabourMutation: propTypes.func.isRequired,
+  labourUpdateMutation: propTypes.object.isRequired
 }

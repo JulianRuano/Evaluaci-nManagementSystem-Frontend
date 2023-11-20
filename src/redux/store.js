@@ -5,16 +5,18 @@ import { combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import authSlice from './slices/authSlice'
 import educatorSlice from './slices/educatorSlice'
+import labourSlice from './slices/labourSlice'
 
 const rootReducer = combineReducers({
   auth: authSlice,
-  educators: educatorSlice
+  educators: educatorSlice,
+  labours: labourSlice
 })
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'educators'] // Solo persiste el estado de 'auth', agrega otros estados aquí si es necesario
+  whitelist: ['auth', 'educators', 'labours'] // Solo persiste el estado de 'auth', agrega otros estados aquí si es necesario
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

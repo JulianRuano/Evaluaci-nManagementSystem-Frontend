@@ -2,8 +2,15 @@ import React from 'react'
 import { Table } from 'antd'
 import propTypes from 'prop-types'
 import { EditOutlined } from '@ant-design/icons'
+import { useDispatch } from 'react-redux'
+import { setlabourTypeUidToEdit } from '../../redux/slices/labourSlice'
 
-const LabourTable = ({ labours }) => {
+const LabourTable = ({
+  labours,
+  setIsEditModalOpen,
+  setLabourSelectedToEdit
+}) => {
+  const dispatch = useDispatch()
   const columns = [
     {
       title: 'Nombre de la Labor',
@@ -46,7 +53,13 @@ const LabourTable = ({ labours }) => {
       title: 'Acciones',
       key: 'actions',
       render: (_, record) => (
-        <a className="text-highlightColor">
+        <a
+          className="text-highlightColor"
+          onClick={() => {
+            dispatch(setlabourTypeUidToEdit(record.uid))
+            setIsEditModalOpen(true)
+          }}
+        >
           <EditOutlined /> Editar
         </a>
       )
@@ -65,5 +78,6 @@ const LabourTable = ({ labours }) => {
 
 export default LabourTable
 LabourTable.propTypes = {
-  labours: propTypes.array.isRequired
+  labours: propTypes.array.isRequired,
+  setIsEditModalOpen: propTypes.func.isRequired
 }

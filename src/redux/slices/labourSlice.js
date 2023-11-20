@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   labours: [],
-  labourTypes: []
+  labourTypes: [],
+  labourTypeUidToEdit: ''
 }
 
 const labourSlice = createSlice({
@@ -10,7 +11,7 @@ const labourSlice = createSlice({
   initialState,
   reducers: {
     setLabours: (state, action) => {
-      state.labours = [...state.labours, action.payload]
+      state.labours = action.payload
     },
     addLabourTypes: (state, action) => {
       state.labourTypes = [...state.labourTypes, action.payload]
@@ -18,14 +19,21 @@ const labourSlice = createSlice({
     addLabour: (state, action) => {
       state.labours = [...state.labours, action.payload]
     },
+    setlabourTypeUidToEdit: (state, action) => {
+      state.labourTypeUidToEdit = action.payload
+    },
     clearLabourState: (state) => {
-      state.labours = []
-      state.labourTypes = []
+      state = initialState
     }
   }
 })
 
-export const { setLabours, clearLabourState, addLabourTypes, addLabour } =
-  labourSlice.actions
+export const {
+  setLabours,
+  clearLabourState,
+  addLabourTypes,
+  addLabour,
+  setlabourTypeUidToEdit
+} = labourSlice.actions
 
 export default labourSlice.reducer

@@ -1,25 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Skeleton } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createLabourFunction } from '../hooks/mutations/useCreateLabour'
 import { toast } from 'react-toastify'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import LabourTable from './tables/LabourTable'
-
+import _ from 'lodash'
 import { useGetLabours } from '../hooks/queries/useGetLabours'
 import { startHandleLogout } from './actions/auth'
 import CreateLabourModal from './CreateLabourModal'
+import { setLabours } from '../redux/slices/labourSlice'
+import EditLabourModal from './EditLabourModal'
+import { updateLabourFunction } from '../hooks/mutations/useUpdateLabour'
 
 const Labour = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isCreateLabourModalOpen, setIsCreateModalOpen] = useState(false)
+  const [isEditLabourModalOpen, setIsEditModalOpen] = useState(false)
+  const labourIdToEdit = useSelector(
+    (state) => state.labours.labourTypeUidToEdit
+  )
+
+  const labour = useSelector((state) =>
+    state.labours.labours.find((labour) => labour.uid === labourIdToEdit)
+  )
+
   const dispatch = useDispatch()
+
   const {
     data: labourData,
     isLoading: labourLoading,
     isError: labourError
   } = useGetLabours()
 
+  useEffect(() => {
+    if (labourData) {
+      dispatch(setLabours(labourData))
+    }
+  }, [labourData])
+
   const queryClient = useQueryClient()
+
   const notifySuccess = (message) =>
     toast.success(message, {
       position: 'bottom-right',
@@ -34,14 +54,21 @@ const Labour = () => {
       hideProgressBar: true,
       pauseOnHover: false
     })
-  const showModal = () => {
-    setIsModalOpen(true)
+  const showCreateLabourModal = () => {
+    setIsCreateModalOpen(true)
   }
-  const handleOk = () => {
-    setIsModalOpen(false)
+  const handleOkCreateLabour = () => {
+    setIsCreateModalOpen(false)
   }
-  const handleCancel = () => {
-    setIsModalOpen(false)
+  const handleCancelCreateLabour = () => {
+    setIsCreateModalOpen(false)
+  }
+
+  const handleOkEditLabour = () => {
+    setIsEditModalOpen(false)
+  }
+  const handleCancelEditLabour = () => {
+    setIsEditModalOpen(false)
   }
   const labourMutation = useMutation({
     mutationFn: createLabourFunction,
@@ -60,6 +87,7 @@ const Labour = () => {
       notifyError('Ocurrió un error al crear la labor')
     }
   })
+
   const handleCreateLabourMutation = (values, actions) => {
     const newValues = {
       nameWork: values.nameWork,
@@ -83,6 +111,53 @@ const Labour = () => {
       }
     })
   }
+
+  const labourUpdateMutation = useMutation({
+    mutationFn: updateLabourFunction,
+    onSuccess: (labourData) => {
+      console.log(labourData)
+      queryClient.invalidateQueries('labours')
+      // dispatch(addLabours(data.payload))
+      notifySuccess('Labor actualizada con éxito')
+      setIsEditModalOpen(false)
+    },
+    onError: async (error) => {
+      if (error?.response?.status === 401) {
+        await dispatch(startHandleLogout())
+        return
+      }
+      console.log(error)
+      notifyError('Ocurrió un error al actualizar la labor')
+    }
+  })
+
+  const handleUpdateLabourMutation = (values, actions) => {
+    const newValues = {
+      nameWork: values.nameWork,
+      labourType: values.labourType.labourTypeUid,
+      assignedHours: values.assignedHours,
+      isActive: values.isActive
+    }
+
+    const actionsRef = actions
+    labourUpdateMutation.mutate(
+      { values: newValues, id: labourIdToEdit },
+      {
+        onSuccess: () => {
+          actionsRef.resetForm({
+            nameWork: '',
+            labourType: {
+              idLabourType: '',
+              code: '',
+              description: ''
+            },
+            assignedHours: '',
+            isActive: ''
+          })
+        }
+      }
+    )
+  }
   if (labourLoading)
     return (
       <div className="px-5 py-5">
@@ -100,21 +175,34 @@ const Labour = () => {
         <h1 className="font-semibold pt-1 text-xl">Labores</h1>
         <button
           className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 font-semibold"
-          onClick={showModal}
+          onClick={showCreateLabourModal}
         >
           Crear nuevo
         </button>
       </div>
-      {isModalOpen && (
+      {isCreateLabourModalOpen && (
         <CreateLabourModal
-          isModalOpen={isModalOpen}
-          handleOk={handleOk}
-          handleCancel={handleCancel}
+          isModalOpen={isCreateLabourModalOpen}
+          handleOk={handleOkCreateLabour}
+          handleCancel={handleCancelCreateLabour}
           handleCreateLabourMutation={handleCreateLabourMutation}
           labourMutation={labourMutation}
         />
       )}
-      <LabourTable labours={labourData} />
+      {isEditLabourModalOpen && (
+        <EditLabourModal
+          isModalOpen={isEditLabourModalOpen}
+          handleOk={handleOkEditLabour}
+          handleCancel={handleCancelEditLabour}
+          handleUpdateLabourMutation={handleUpdateLabourMutation}
+          labourUpdateMutation={labourUpdateMutation}
+        />
+      )}
+
+      <LabourTable
+        labours={labourData}
+        setIsEditModalOpen={setIsEditModalOpen}
+      />
     </div>
   )
 }

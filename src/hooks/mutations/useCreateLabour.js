@@ -13,10 +13,3 @@ export async function createLabourFunction(body) {
   )
   return response.data
 }
-export async function deleteLabourFunction(){
-
-}
-export async function updateLabourFunction() {
-  
-}
-
