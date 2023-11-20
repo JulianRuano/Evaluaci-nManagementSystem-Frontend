@@ -123,8 +123,8 @@ const Period = () => {
             name: '',
             year: '',
             semester: '',
-            startDate: '',
-            endDate: ''
+            startDate: new Date(),
+            endDate: new Date()
           }}
           validationSchema={periodSchema}
           onSubmit={handleCreatePeriodMutation}
@@ -215,10 +215,11 @@ const Period = () => {
                     >
                       Fecha de inicio
                     </label>
+                    .startDate
                     <div className="flex flex-col">
                       <DatePicker
                         onChange={(value) => setFieldValue('startDate', value)}
-                        value={values.startDate}
+                        selected={values.startDate}
                       />
                       <ErrorMessage
                         className="text-red-600 text-sm  pt-1"
@@ -239,7 +240,7 @@ const Period = () => {
                     <div className="flex flex-col">
                       <DatePicker
                         onChange={(value) => setFieldValue('endDate', value)}
-                        value={values.endDate}
+                        selected={values.startDate}
                       />
                       <ErrorMessage
                         className="text-red-600 text-sm  pt-1"
