@@ -145,7 +145,7 @@ const Labour = () => {
   })
   oldLabour.current = {
     nameWork: labour.nameWork,
-    labourType: labour.labourType._id,
+    labourType: labour.labourTypeuid,
     assignedHours: labour.assignedHours,
     isActive: labour.isActive
   }

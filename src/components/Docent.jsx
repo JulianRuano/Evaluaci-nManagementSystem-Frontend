@@ -24,7 +24,7 @@ const Docent = () => {
   const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetDocents()
   useEffect(() => {
-    dispatch(setEducators(data?.educators))
+    dispatch(setEducators(data))
   }, [data])
 
   const queryClient = useQueryClient()
@@ -114,7 +114,7 @@ const Docent = () => {
         </button>
       </div>
 
-      <DocentTable educators={data.educators} />
+      <DocentTable educators={data} />
 
       <Modal
         open={isModalOpen}

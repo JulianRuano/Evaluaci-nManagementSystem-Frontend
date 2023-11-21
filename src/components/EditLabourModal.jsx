@@ -52,7 +52,7 @@ const EditLabourModal = ({
             idLabourType: labour.labourType.idLabourType,
             code: labour.labourType.code,
             description: labour.labourType.description,
-            labourTypeUid: labour.labourType._id
+            labourTypeUid: labour.labourType.uid
           },
           assignedHours: labour.assignedHours,
           isActive: labour.isActive

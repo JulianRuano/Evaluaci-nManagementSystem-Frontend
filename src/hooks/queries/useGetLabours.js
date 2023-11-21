@@ -4,7 +4,7 @@ import { apiUrl } from '../../helpers/apiUrl'
 
 // SOLO GET
 
-async function fetchLabours() {
+export async function fetchLabours() {
   const config = {
     withCredentials: true
   }

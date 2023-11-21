@@ -13,7 +13,7 @@ import Docent from '../components/Docent'
 import DocentInfo from '../components/DocentInfo'
 import DocentRoute from './DocentRoute'
 import NotFoundPage from '../components/NotFoundPage'
-import AssignLabours from '../components/AssignLabours'
+import AssignLabours from '../components/AssignLabourModal'
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)

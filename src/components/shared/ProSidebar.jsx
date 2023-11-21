@@ -97,7 +97,7 @@ const ProSidebar = ({ toggled, setToggled }) => {
         backgroundColor="#FFFFFF"
         onBackdropClick={() => setToggled(false)}
         toggled={toggled}
-        breakPoint="md"
+        breakPoint="lg"
         rootStyles={{
           color: 'white'
         }}

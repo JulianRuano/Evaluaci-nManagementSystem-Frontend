@@ -17,10 +17,9 @@ async function fetchDocent(uid) {
   return response.data
 }
 
-export function useGetDocent(uid, isEnabled) {
+export function useGetDocent(uid) {
   return useQuery({
     queryKey: ['docent'],
-    queryFn: () => fetchDocent(uid),
-    enabled: isEnabled
+    queryFn: () => fetchDocent(uid)
   })
 }

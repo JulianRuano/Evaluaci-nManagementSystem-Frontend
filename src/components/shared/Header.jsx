@@ -44,7 +44,7 @@ const Header = ({ toggleSidebar }) => {
     <header className="bg-indigo-500 text-white   py-4 z-50 px-5">
       <div className="container mx-auto flex justify-end items-center relative ">
         <i
-          className="fa-solid fa-bars text-3xl   absolute cursor-pointer left-0 pl-1 text-white md:hidden"
+          className="fa-solid fa-bars text-3xl   absolute cursor-pointer left-0 pl-1 text-white lg:hidden"
           onClick={() => toggleSidebar((prev) => !prev)}
         ></i>
         <nav>
