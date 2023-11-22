@@ -95,9 +95,11 @@ const Period = () => {
   return (
     <div className="pt-4 text-center">
       <div className="flex justify-between px-10 container pb-5">
-        <h1 className="font-semibold pt-1 text-xl">Periodos</h1>
+        <h1 className="font-semibold pt-1 md:pl-12 text-2xl text-stone-700">
+          Periodos
+        </h1>
         <button
-          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 font-semibold"
+          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 font-semibold text-sm"
           onClick={showModal}
         >
           Crear nuevo
@@ -132,7 +134,7 @@ const Period = () => {
           {({ values, setFieldValue }) => (
             <Form className=" space-y-6">
               <div className="text-center">
-                <h1 className="font-bold text-3xl text-gray-900 ">
+                <h1 className="font-bold text-2xl text-stone-700 ">
                   Nuevo periodo
                 </h1>
                 <p>A continuacion ingrese los datos del periodo</p>

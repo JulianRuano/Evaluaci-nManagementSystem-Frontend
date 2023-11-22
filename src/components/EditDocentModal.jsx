@@ -44,7 +44,7 @@ const EditDocentModal = ({
         {({ isSubmitting, setFieldValue }) => (
           <Form className=" space-y-6">
             <div className="text-center">
-              <h1 className="font-bold text-3xl text-gray-900 ">
+              <h1 className="font-bold text-2xl text-stone-700 ">
                 Editar docente
               </h1>
               <p>A continuacion ingrese los datos del docente</p>

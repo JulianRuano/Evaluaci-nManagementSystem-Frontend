@@ -8,27 +8,27 @@ const PeriodTable = ({ periods }) => {
   // const navigate = useNavigate()
   const columns = [
     {
-      title: 'Nombre',
+      title: <div className="text-stone-700">Nombre</div>,
       dataIndex: 'name',
       key: 'name'
     },
     {
-      title: 'Año',
+      title: <div className="text-stone-700">Año</div>,
       dataIndex: 'year',
       key: 'year'
     },
     {
-      title: 'Semestre',
+      title: <div className="text-stone-700">Semestre</div>,
       dataIndex: 'semester',
       key: 'semester'
     },
     {
-      title: 'Fecha de inicio',
+      title: <div className="text-stone-700">Fecha inicio</div>,
       dataIndex: 'startDate',
       key: 'startDate'
     },
     {
-      title: 'Fecha de fin',
+      title: <div className="text-stone-700">Fecha fin</div>,
       dataIndex: 'endDate',
       key: 'endDate'
     },
@@ -38,7 +38,7 @@ const PeriodTable = ({ periods }) => {
       className: 'hidden'
     },
     {
-      title: 'Acciones',
+      title: <div className="text-stone-700">Acciones</div>,
       key: 'actions',
       render: (_, record) => (
         <Space size="middle">

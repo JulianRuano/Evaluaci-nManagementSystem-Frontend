@@ -241,8 +241,10 @@ const DocentInfo = () => {
     }
   ]
   return (
-    <div className="px-4 py-4">
-      <h1 className="text-3xl pb-6 font-semibold">Información del docente</h1>
+    <div className="px-4 pt-6 md:pl-12">
+      <h1 className="text-2xl pb-6 font-semibold text-stone-700">
+        Información del docente
+      </h1>
       <Descriptions items={items} />
       <EditDocentModal
         isModalOpen={isModalOpenEditDocentOpen}

@@ -9,23 +9,33 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
   const dispatch = useDispatch()
   const columns = [
     {
-      title: 'Nombre de la Labor',
+      title: <div className="text-stone-700">Nombre</div>,
       dataIndex: 'nameWork',
       key: 'nameWork'
     },
     {
-      title: 'Descripción',
+      title: <div className="text-stone-700">Descripción</div>,
       dataIndex: ['labourType', 'description'],
       key: 'description'
     },
+    {
+      title: <div className="text-stone-700">ID de Labor</div>,
+      dataIndex: ['labourType', 'idLabourType'],
+      key: 'idlabourType'
+    },
+    {
+      title: <div className="text-stone-700">Código de Labor</div>,
+      dataIndex: ['labourType', 'code'],
+      key: 'labourTypeCode'
+    },
 
     {
-      title: 'Horas Asignadas',
+      title: <div className="text-stone-700">Horas Asignadas</div>,
       dataIndex: 'assignedHours',
       key: 'assignedHours'
     },
     {
-      title: 'Estado',
+      title: <div className="text-stone-700">Estado</div>,
       dataIndex: 'isActive',
       key: 'isActive',
       render: (_, record) => (
@@ -44,7 +54,7 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
       className: 'hidden'
     },
     {
-      title: 'Acciones',
+      title: <div className="text-stone-700">Acciones</div>,
       key: 'actions',
       width: 5,
       render: (_, record) => (
