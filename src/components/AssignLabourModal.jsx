@@ -10,6 +10,7 @@ import { Modal } from 'antd'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import propTypes from 'prop-types'
 import SelectLaboursInput from './SelectLaboursInput'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const AssignLabourModal = ({
   isModalOpen,
@@ -94,7 +95,13 @@ const AssignLabourModal = ({
                     labourAssignMutation.isPending ? 'opacity-50' : ''
                   }`}
                 >
-                  Aceptar
+                  {labourAssignMutation.isPending ? (
+                    <p>
+                      Guardando <LoadingOutlined />
+                    </p>
+                  ) : (
+                    'Guardar'
+                  )}
                 </button>
               </div>
             </div>

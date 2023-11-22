@@ -16,9 +16,9 @@ const autoevaluacionesMock = [
 
 const Autoevaluacion = () => {
   return (
-    <div className="pt-4 text-center">
-      <div className="flex justify-between px-10 container">
-        <h1 className="font-semibold pt-1 text-xl mb-4">Autoevaluaciones</h1>
+    <div className="pt-4 px-3 text-center">
+      <div className="flex justify-between px-4 container">
+        <h1 className="font-semibold pt-1 text-3xl mb-4">Autoevaluaciones</h1>
       </div>
       <DocentAutoEvaluations autoevaluations={autoevaluacionesMock} />
     </div>

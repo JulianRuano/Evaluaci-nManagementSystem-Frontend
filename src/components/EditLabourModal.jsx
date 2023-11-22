@@ -4,6 +4,7 @@ import { Modal, Skeleton } from 'antd'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { labourSchema } from '../helpers/formikSchemas/labourSchema'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const EditLabourModal = ({
   isModalOpen,
@@ -263,7 +264,13 @@ const EditLabourModal = ({
                     labourUpdateMutation.isPending ? 'opacity-50' : ''
                   }`}
                 >
-                  Actualizar
+                  {labourUpdateMutation.isPending ? (
+                    <p>
+                      Guardando <LoadingOutlined />
+                    </p>
+                  ) : (
+                    'Guardar'
+                  )}
                 </button>
               </div>
             </div>

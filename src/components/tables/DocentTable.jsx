@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Space, Table, Input, Button } from 'antd'
+import { Space, Table, Input, Button, Tag } from 'antd'
 import propTypes from 'prop-types'
 import { EyeOutlined, SearchOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
@@ -19,10 +19,10 @@ const DocentTable = ({ educators }) => {
 
   const handleReset = (clearFilters) => {
     clearFilters()
-    setSearchText(undefined)
+    setSearchText('')
   }
 
-  const getColumnSearchProps = (dataIndex) => ({
+  const getColumnSearchProps = (dataIndex, title) => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -32,7 +32,7 @@ const DocentTable = ({ educators }) => {
       <div style={{ padding: 8 }}>
         <Input
           ref={searchInput}
-          placeholder={`Buscar por ${dataIndex}`}
+          placeholder={`Buscar por ${title}`}
           value={selectedKeys[0]}
           onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -99,7 +99,7 @@ const DocentTable = ({ educators }) => {
       key: 'firstName',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('Nombres')
+      ...getColumnSearchProps('firstName', 'nombres')
     },
     {
       title: 'Apellidos',
@@ -107,7 +107,7 @@ const DocentTable = ({ educators }) => {
       key: 'lastName',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('Apellidos')
+      ...getColumnSearchProps('lastName', 'apellidos')
     },
     {
       title: 'Tipo ID',
@@ -122,7 +122,7 @@ const DocentTable = ({ educators }) => {
       key: 'identification',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('Identificación')
+      ...getColumnSearchProps('identification', 'identificación')
     },
     {
       title: 'Tipo docente',
@@ -137,11 +137,21 @@ const DocentTable = ({ educators }) => {
       className: 'hidden'
     },
     {
-      title: 'Titulo',
-      dataIndex: 'title',
+      title: 'Estado',
+      dataIndex: 'isActive',
       key: 'title',
-      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
-      sortDirections: ['descend', 'ascend']
+      sorter: (a, b) =>
+        a.isActive.toString().localeCompare(b.isActive.toString()),
+      sortDirections: ['descend', 'ascend'],
+      render: (_, record) => (
+        <Space size="middle">
+          <a className="text-highlightColor">
+            <Tag color={record.isActive ? 'green' : 'red'}>
+              {record.isActive ? 'Activo' : 'Inactivo'}
+            </Tag>
+          </a>
+        </Space>
+      )
     },
     {
       title: 'Acciones',
@@ -158,9 +168,7 @@ const DocentTable = ({ educators }) => {
       )
     }
   ]
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra)
-  }
+
   return (
     <Table
       locale={{
@@ -173,7 +181,6 @@ const DocentTable = ({ educators }) => {
       }}
       columns={columns}
       dataSource={educators}
-      onChange={onChange}
     />
   )
 }

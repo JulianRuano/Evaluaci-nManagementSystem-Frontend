@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import { startHandleLogout } from './actions/auth'
 import 'react-datepicker/dist/react-datepicker.css'
 import DocentNav from './DocentNav'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -57,7 +58,7 @@ const Docent = () => {
     onSuccess: (data) => {
       console.log(data)
       queryClient.invalidateQueries('docents')
-      // dispatch(addEducators(data.payload))
+      setIsModalOpen(false)
       notifySuccess('Docente creado con éxito')
     },
     onError: async (error) => {
@@ -104,10 +105,10 @@ const Docent = () => {
 
   return (
     <div className="pt-4 px-3 text-center">
-      <div className="flex justify-between px-10 container pb-5">
-        <h1 className="font-semibold pt-1 text-xl">Docentes</h1>
+      <div className="flex justify-between px-4 container pb-5">
+        <h1 className="font-semibold pt-1 text-3xl">Docentes</h1>
         <button
-          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 font-semibold"
+          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 mt-2 font-semibold"
           onClick={showModal}
         >
           Crear nuevo
@@ -374,7 +375,13 @@ const Docent = () => {
                       docentMutation.isPending ? 'opacity-50' : ''
                     }`}
                   >
-                    Agregar
+                    {docentMutation.isPending ? (
+                      <p>
+                        Guardando <LoadingOutlined />
+                      </p>
+                    ) : (
+                      'Agregar'
+                    )}
                   </button>
                 </div>
               </div>

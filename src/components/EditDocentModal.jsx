@@ -3,6 +3,7 @@ import { docentUpdateSchema } from '../helpers/formikSchemas/docentUpdateSchema'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Modal } from 'antd'
 import propTypes from 'prop-types'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const EditDocentModal = ({
   isModalOpen,
@@ -278,7 +279,13 @@ const EditDocentModal = ({
                     docentUpdateMutation.isPending ? 'opacity-50' : ''
                   }`}
                 >
-                  Actualizar
+                  {docentUpdateMutation.isPending ? (
+                    <p>
+                      Guardando <LoadingOutlined />
+                    </p>
+                  ) : (
+                    'Guardar'
+                  )}
                 </button>
               </div>
             </div>

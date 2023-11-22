@@ -33,30 +33,37 @@ export default function BasicSpeedDial({
     }
   ]
   return (
-    <Box sx={{ height: 120, transform: 'translateZ(0px)', flexGrow: 1 }}>
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: 'fixed', bottom: 20, right: 26 }}
-        icon={
-          <EditOutlined
-            style={{
-              fontSize: '2rem',
-              color: 'white'
-            }}
-          />
+    <SpeedDial
+      ariaLabel="SpeedDial basic example"
+      sx={{
+        position: 'fixed',
+        bottom: 20,
+        right: 26,
+        zIndex: 1,
+        '@media (min-width:1750px)': {
+          right: 'calc(50% - 350px)',
+          bottom: 'calc(70% - 20px)'
         }
-      >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipOpen
-            tooltipTitle={action.name}
-            onClick={action.onClick}
-          />
-        ))}
-      </SpeedDial>
-    </Box>
+      }}
+      icon={
+        <EditOutlined
+          style={{
+            fontSize: '2rem',
+            color: 'white'
+          }}
+        />
+      }
+    >
+      {actions.map((action) => (
+        <SpeedDialAction
+          key={action.name}
+          icon={action.icon}
+          tooltipOpen
+          tooltipTitle={action.name}
+          onClick={action.onClick}
+        />
+      ))}
+    </SpeedDial>
   )
 }
 

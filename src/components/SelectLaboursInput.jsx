@@ -16,7 +16,7 @@ const SelectLaboursInput = ({ data, setFieldValue, initialSelectedItems }) => {
   return (
     <Select
       mode="multiple"
-      placeholder="Inserted are removed"
+      placeholder="Seleccione las labores"
       value={selectedItems}
       onChange={handleChange}
       style={{

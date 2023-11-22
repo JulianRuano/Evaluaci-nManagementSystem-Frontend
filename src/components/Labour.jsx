@@ -108,6 +108,7 @@ const Labour = () => {
       assignedHours: values.assignedHours,
       isActive: values.isActive
     }
+
     const actionsRef = actions
     labourMutation.mutate(newValues, {
       onSuccess: () => {
@@ -143,18 +144,19 @@ const Labour = () => {
       notifyError('Ocurrió un error al actualizar la labor')
     }
   })
-  oldLabour.current = {
-    nameWork: labour.nameWork,
-    labourType: labour.labourTypeuid,
-    assignedHours: labour.assignedHours,
-    isActive: labour.isActive
-  }
+
   const handleUpdateLabourMutation = (values, actions) => {
     const newValues = {
       nameWork: values.nameWork,
       labourType: values.labourType.labourTypeUid,
       assignedHours: values.assignedHours,
       isActive: values.isActive
+    }
+    oldLabour.current = {
+      nameWork: labour.nameWork,
+      labourType: labour.labourType.uid,
+      assignedHours: labour.assignedHours,
+      isActive: labour.isActive
     }
     console.log(oldLabour.current, newValues)
     if (_.isEqual(oldLabour.current, newValues)) {
@@ -192,11 +194,11 @@ const Labour = () => {
     )
   if (labourError) return <p>Ha ocurrido un error</p>
   return (
-    <div className="pt-4 text-center">
-      <div className="flex justify-between px-10 container">
-        <h1 className="font-semibold pt-1 text-xl">Labores</h1>
+    <div className="pt-4 px-3 text-center">
+      <div className="flex justify-between px-4  container">
+        <h1 className="font-semibold pt-1 text-3xl">Labores</h1>
         <button
-          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 font-semibold"
+          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 mt-2 font-semibold"
           onClick={showCreateLabourModal}
         >
           Crear nuevo

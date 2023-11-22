@@ -51,14 +51,14 @@ const DocentInfo = () => {
 
   const notifySuccess = (message) =>
     toast.success(message, {
-      position: 'bottom-right',
+      position: 'bottom-left',
       autoClose: 2000,
       hideProgressBar: true,
       pauseOnHover: false
     })
   const notifyError = (message) =>
     toast.error(message, {
-      position: 'bottom-right',
+      position: 'bottom-left',
       autoClose: 2000,
       hideProgressBar: true,
       pauseOnHover: false
@@ -91,7 +91,7 @@ const DocentInfo = () => {
     onSuccess: (data) => {
       console.log(data)
       queryClient.invalidateQueries('docent')
-
+      setIsModalOpenLabourDocent(false)
       notifySuccess('Docente actualizado con éxito')
     },
     onError: async (error) => {
@@ -125,7 +125,7 @@ const DocentInfo = () => {
 
   const handleUpdateDocentMutation = (values) => {
     if (_.isEqual(values, formEditInitialValuesRef.current)) {
-      notifyError('No han modificado datos')
+      notifyError('No se han modificado datos')
       return
     }
     docentUpdateMutation.mutate(
@@ -245,8 +245,9 @@ const DocentInfo = () => {
   ]
   return (
     <div className="px-4 py-4">
-      <h1 className="text-xl pb-6">Información del docente</h1>
+      <h1 className="text-3xl pb-6 font-semibold">Información del docente</h1>
       <Descriptions items={items} />
+
       <EditDocentModal
         isModalOpen={isModalOpenEditDocentOpen}
         handleOk={handleOkEditDocent}
@@ -263,7 +264,6 @@ const DocentInfo = () => {
         labourAssignMutation={labourAssignMutation}
         educator={data}
       />
-
       <BasicSpeedDial
         showEditModal={showEditModal}
         showAssignLabourModal={showAssignLabourModal}
