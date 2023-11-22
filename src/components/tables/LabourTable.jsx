@@ -18,16 +18,6 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
       dataIndex: ['labourType', 'description'],
       key: 'description'
     },
-    {
-      title: 'ID de Labor',
-      dataIndex: ['labourType', 'idLabourType'],
-      key: 'idlabourType'
-    },
-    {
-      title: 'Código de la Labor',
-      dataIndex: ['labourType', 'code'],
-      key: 'labourTypeCode'
-    },
 
     {
       title: 'Horas Asignadas',
