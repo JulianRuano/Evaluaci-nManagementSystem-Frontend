@@ -9,26 +9,22 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { startHandleLogout } from './actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
-
-import {
-  addEducator,
-  setSelectedEducatorToEdit,
-  updateEducator
-} from '../redux/slices/educatorSlice'
 import EditDocentModal from './EditDocentModal'
-import { useGetDocent } from '../hooks/queries/useGetDocent'
 import _ from 'lodash'
-import { EditOutlined } from '@ant-design/icons'
 import BasicSpeedDial from './SpeedDial'
 import AssignLabourModal from './AssignLabourModal'
 import { assignLabourFunction } from '../hooks/mutations/useAssignLabour'
+import { useGetEducator } from '../hooks/queries/useGetEducator'
+import { updateEducator } from '../redux/slices/educatorSlice'
 
 const DocentInfo = () => {
+  const role = useSelector((state) => state.auth.user.role)
+
   const { id } = useParams()
   const dispatch = useDispatch()
 
   // useQuery hook to fetch the educator from the backend
-  const { data, isLoading, isError } = useGetDocent(id)
+  const { data, isLoading, isError } = useGetEducator(id)
   useEffect(() => {
     console.log(data)
   }, [data])
@@ -128,6 +124,7 @@ const DocentInfo = () => {
       notifyError('No se han modificado datos')
       return
     }
+    console.log(values)
     docentUpdateMutation.mutate(
       { id, values },
       {
@@ -247,7 +244,6 @@ const DocentInfo = () => {
     <div className="px-4 py-4">
       <h1 className="text-3xl pb-6 font-semibold">Información del docente</h1>
       <Descriptions items={items} />
-
       <EditDocentModal
         isModalOpen={isModalOpenEditDocentOpen}
         handleOk={handleOkEditDocent}
@@ -264,10 +260,12 @@ const DocentInfo = () => {
         labourAssignMutation={labourAssignMutation}
         educator={data}
       />
-      <BasicSpeedDial
-        showEditModal={showEditModal}
-        showAssignLabourModal={showAssignLabourModal}
-      />
+      {role === 'Coordinador' && (
+        <BasicSpeedDial
+          showEditModal={showEditModal}
+          showAssignLabourModal={showAssignLabourModal}
+        />
+      )}
     </div>
   )
 }

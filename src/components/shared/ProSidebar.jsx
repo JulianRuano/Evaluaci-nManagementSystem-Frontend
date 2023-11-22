@@ -7,11 +7,13 @@ import {
   AuditOutlined,
   SettingOutlined,
   TeamOutlined,
-  InsertRowBelowOutlined
+  InsertRowBelowOutlined,
+  SnippetsOutlined
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import RoleTag from './RoleTag'
 
 const ProSidebar = ({ toggled, setToggled }) => {
   const role = useSelector((state) => state.auth.user.role)
@@ -30,6 +32,20 @@ const ProSidebar = ({ toggled, setToggled }) => {
       'grp',
       null,
       [
+        ...(role === 'Coordinador' || role === 'Decano'
+          ? [
+              getItem(
+                <NavLink to="docentes" onClick={() => setToggled(false)}>
+                  Docentes
+                </NavLink>,
+                '13',
+                <TeamOutlined />
+              ),
+              {
+                type: 'divider'
+              }
+            ]
+          : []),
         getItem(
           <NavLink to="autoevaluaciones" onClick={() => setToggled(false)}>
             Autoevaluaciones
@@ -37,53 +53,62 @@ const ProSidebar = ({ toggled, setToggled }) => {
           '14',
           <AuditOutlined />
         ),
-        {
-          type: 'divider'
-        },
-        getItem(
-          <NavLink to="labores" onClick={() => setToggled(false)}>
-            Labores
-          </NavLink>,
-          '15',
-          <BookOutlined />
-        ),
-        {
-          type: 'divider'
-        },
-        getItem(
-          <NavLink to="periodos" onClick={() => setToggled(false)}>
-            Periodo académico
-          </NavLink>,
-          '16',
-          <InsertRowBelowOutlined />
-        )
-      ],
+        ...(role === 'Coordinador'
+          ? [
+              {
+                type: 'divider'
+              },
+              getItem(
+                <NavLink to="labores" onClick={() => setToggled(false)}>
+                  Labores
+                </NavLink>,
+                '15',
+                <BookOutlined />
+              ),
+              {
+                type: 'divider'
+              }
+            ]
+          : []),
+        ...(role === 'Coordinador'
+          ? [
+              getItem(
+                <NavLink to="periodos" onClick={() => setToggled(false)}>
+                  Periodo académico
+                </NavLink>,
+                '16',
+                <InsertRowBelowOutlined />
+              ),
+              {
+                type: 'divider'
+              }
+            ]
+          : []),
+        ...(role === 'Decano'
+          ? [
+              getItem(
+                <NavLink to="reportes" onClick={() => setToggled(false)}>
+                  Reportes
+                </NavLink>,
+                '16',
+                <SnippetsOutlined />
+              ),
+              {
+                type: 'divider'
+              }
+            ]
+          : [])
+      ].flat(),
       'group'
     ),
-    {
-      type: 'divider'
-    },
     getItem('Configuración', 'sub5', <SettingOutlined />, [
       getItem('Cambiar contraseña', '17'),
       getItem('Cambiar correo electrónico', '18'),
       getItem('Subir foto de perfil', '19')
     ])
-  ]
+  ].filter((item) => item !== null && item !== false)
+
   // Si el rol es 'admin', añadir opciones de administrador
-  if (role === 'Coordinador') {
-    items[0].children.unshift(
-      getItem(
-        <NavLink to="docentes" onClick={() => setToggled(false)}>
-          Docentes
-        </NavLink>,
-        '13',
-        <TeamOutlined />
-      ),
-      {
-        type: 'divider'
-      }
-    )
-  }
 
   return (
     <div

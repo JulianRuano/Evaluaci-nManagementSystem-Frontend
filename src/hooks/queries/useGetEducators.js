@@ -4,22 +4,21 @@ import { apiUrl } from '../../helpers/apiUrl'
 
 // SOLO GET
 
-async function fetchDocent(uid) {
+export async function fetchEducators(role) {
   const config = {
     withCredentials: true
   }
-  console.log('se lo trajo del back')
   const response = await axios.get(
-    `${apiUrl}/educators/getEducator/${uid}`,
+    `${apiUrl}/educators/getEducators/${role}`,
     config
   )
-  console.log(response)
+
   return response.data
 }
 
-export function useGetDocent(uid) {
+export function useGetEducators(role) {
   return useQuery({
-    queryKey: ['docent'],
-    queryFn: () => fetchDocent(uid)
+    queryKey: ['docents'],
+    queryFn: () => fetchEducators(role)
   })
 }

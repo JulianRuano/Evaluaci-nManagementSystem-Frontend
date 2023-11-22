@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react'
-import { fetchLabours, useGetLabours } from '../hooks/queries/useGetLabours'
+import { useGetLabours } from '../hooks/queries/useGetLabours'
 import { useDispatch } from 'react-redux'
 import { setLabours } from '../redux/slices/labourSlice'
-import { fetchDocents } from '../hooks/queries/useGetDocents'
-import { useQueries } from '@tanstack/react-query'
-import { result } from 'lodash'
-import { setEducators } from '../redux/slices/educatorSlice'
+
 import { Modal } from 'antd'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { Form, Formik } from 'formik'
 import propTypes from 'prop-types'
 import SelectLaboursInput from './SelectLaboursInput'
 import { LoadingOutlined } from '@ant-design/icons'
+import getValidLaboursDocentType from '../helpers/getValidLaboursDocentType'
 
 const AssignLabourModal = ({
   isModalOpen,
@@ -18,7 +16,7 @@ const AssignLabourModal = ({
   handleCancel,
   handleAssignLabours,
   labourAssignMutation,
-  educator: { uid, labours }
+  educator: { uid, labours, docentType }
 }) => {
   const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetLabours()
@@ -31,8 +29,8 @@ const AssignLabourModal = ({
 
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error...</div>
-
-  const uidAndLabourName = data.map((labor) => ({
+  const validLaboursForDocentType = getValidLaboursDocentType(data, docentType)
+  const uidAndLabourName = validLaboursForDocentType.map((labor) => ({
     uid: labor.uid,
     nameWork: labor.nameWork
   }))
@@ -64,8 +62,11 @@ const AssignLabourModal = ({
               <h1 className="font-bold text-3xl text-gray-900 ">
                 Asignar labores
               </h1>
-              <p>
+              <p className="pt-3">
                 A continuacion eliga las labores que se asignarán al docente
+                <p className="text-zinc-400">
+                  (sólo se mostrarán las que cumplen con el tipo de docente)
+                </p>
               </p>
             </div>
             <div>

@@ -201,7 +201,7 @@ const Labour = () => {
           className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 mt-2 font-semibold"
           onClick={showCreateLabourModal}
         >
-          Crear nuevo
+          Crear nueva
         </button>
       </div>
       {isCreateLabourModalOpen && (

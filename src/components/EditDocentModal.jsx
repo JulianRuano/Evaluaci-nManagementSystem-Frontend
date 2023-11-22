@@ -1,9 +1,9 @@
 import React from 'react'
-import { docentUpdateSchema } from '../helpers/formikSchemas/docentUpdateSchema'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Modal } from 'antd'
 import propTypes from 'prop-types'
 import { LoadingOutlined } from '@ant-design/icons'
+import { updateDocentSchema } from '../helpers/formikSchemas/docentSchema'
 
 const EditDocentModal = ({
   isModalOpen,
@@ -31,7 +31,6 @@ const EditDocentModal = ({
         initialValues={{
           firstName: educator.firstName,
           lastName: educator.lastName,
-          role: educator.role,
           title: educator.title,
           identification: educator.identification,
           idType: educator.idType,
@@ -39,7 +38,7 @@ const EditDocentModal = ({
           docentType: educator.docentType,
           isActive: educator.isActive
         }}
-        validationSchema={docentUpdateSchema}
+        validationSchema={updateDocentSchema}
         onSubmit={handleUpdateDocentMutation}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -102,19 +101,19 @@ const EditDocentModal = ({
                   <div className="flex flex-col">
                     <Field
                       as="select"
-                      type="text"
-                      id="role"
-                      name="role"
-                      className="w-full pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      id="docentType"
+                      name="docentType"
+                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      placeholder="jdoe@gmail.com"
                     >
-                      <option value="">Elige un rol</option>
-                      <option value="Docente">Docente</option>
-                      <option value="Coordinador">Coordinador</option>
-                      <option value="Decano">Decano</option>
+                      <option value="">Elige un tipo</option>
+                      <option value="Tiempo Completo">Tiempo completo</option>
+                      <option value="Planta">Planta</option>
+                      <option value="Cátedra">Cátedra</option>
                     </Field>
                     <ErrorMessage
                       className="text-red-600 text-sm py-1"
-                      name="role"
+                      name="docentType"
                       component="div"
                     />
                   </div>
@@ -235,35 +234,7 @@ const EditDocentModal = ({
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap -mx-3">
-                <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label
-                    htmlFor="docentType"
-                    className="text-xs font-semibold px-1"
-                  >
-                    Tipo docente
-                  </label>
-                  <div className="flex flex-col">
-                    <Field
-                      as="select"
-                      id="docentType"
-                      name="docentType"
-                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="jdoe@gmail.com"
-                    >
-                      <option value="">Elige un tipo</option>
-                      <option value="Tiempo Completo">Tiempo completo</option>
-                      <option value="Planta">Planta</option>
-                      <option value="Cátedra">Cátedra</option>
-                    </Field>
-                    <ErrorMessage
-                      className="text-red-600 text-sm pt-1"
-                      name="docentType"
-                      component="div"
-                    />
-                  </div>
-                </div>
-              </div>
+
               <div className="w-full gap-3 mt-2 flex">
                 <button
                   type="reset"

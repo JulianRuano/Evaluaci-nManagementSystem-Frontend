@@ -3,17 +3,23 @@ import axios from 'axios'
 import { apiUrl } from '../../helpers/apiUrl'
 
 // SOLO GET
-async function fetchEducatorById() {
+
+async function fetchEducator(uid) {
   const config = {
     withCredentials: true
   }
-  const response = await axios.get(`${apiUrl}/educators`, config)
+  console.log('se lo trajo del back')
+  const response = await axios.get(
+    `${apiUrl}/educators/getEducator/${uid}`,
+    config
+  )
+  console.log(response)
   return response.data
 }
 
-export function useGetEducatorById(educatorId) {
+export function useGetEducator(uid) {
   return useQuery({
-    queryKey: ['educator', educatorId],
-    queryFn: () => fetchEducatorById(educatorId)
+    queryKey: ['docent'],
+    queryFn: () => fetchEducator(uid)
   })
 }

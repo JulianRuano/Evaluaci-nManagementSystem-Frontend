@@ -7,9 +7,9 @@ import { createDocentFunction } from '../hooks/mutations/useCreateDocent'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import DocentTable from './tables/DocentTable'
-import { useGetDocents } from '../hooks/queries/useGetDocents'
+import { useGetEducators } from '../hooks/queries/useGetEducators'
 import { setEducators } from '../redux/slices/educatorSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { startHandleLogout } from './actions/auth'
 import 'react-datepicker/dist/react-datepicker.css'
 import DocentNav from './DocentNav'
@@ -18,12 +18,14 @@ import { LoadingOutlined } from '@ant-design/icons'
 const Docent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [values, setValues] = useState(new Date())
+  const role = useSelector((state) => state.auth.user.role)
+
   useEffect(() => {
     console.log(values)
   }, [values, setValues])
 
   const dispatch = useDispatch()
-  const { data, isLoading, isError } = useGetDocents()
+  const { data, isLoading, isError } = useGetEducators('docente')
   useEffect(() => {
     dispatch(setEducators(data))
   }, [data])
@@ -107,12 +109,14 @@ const Docent = () => {
     <div className="pt-4 px-3 text-center">
       <div className="flex justify-between px-4 container pb-5">
         <h1 className="font-semibold pt-1 text-3xl">Docentes</h1>
-        <button
-          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 mt-2 font-semibold"
-          onClick={showModal}
-        >
-          Crear nuevo
-        </button>
+        {role === 'Coordinador' ? (
+          <button
+            className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 mt-2 font-semibold"
+            onClick={showModal}
+          >
+            Crear nuevo
+          </button>
+        ) : null}
       </div>
 
       <DocentTable educators={data} />
@@ -134,14 +138,12 @@ const Docent = () => {
           initialValues={{
             firstName: '',
             lastName: '',
-            role: '',
             title: '',
             identification: '',
             idType: '',
             email: '',
             password: '',
-            docentType: '',
-            labour: ''
+            docentType: ''
           }}
           validationSchema={docentSchema}
           onSubmit={handleCreateDocentMutation}
@@ -204,24 +206,24 @@ const Docent = () => {
                       htmlFor="role"
                       className="text-xs font-semibold px-1"
                     >
-                      Rol
+                      Tipo docente
                     </label>
                     <div className="flex flex-col">
                       <Field
                         as="select"
-                        type="text"
-                        id="role"
-                        name="role"
-                        className="w-full pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        id="docentType"
+                        name="docentType"
+                        className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        placeholder="jdoe@gmail.com"
                       >
-                        <option value="">Elige un rol</option>
-                        <option value="Docente">Docente</option>
-                        <option value="Coordinador">Coordinador</option>
-                        <option value="Decano">Decano</option>
+                        <option value="">Elige un tipo</option>
+                        <option value="Tiempo Completo">Tiempo completo</option>
+                        <option value="Planta">Planta</option>
+                        <option value="Cátedra">Cátedra</option>
                       </Field>
                       <ErrorMessage
                         className="text-red-600 text-sm py-1"
-                        name="role"
+                        name="docentType"
                         component="div"
                       />
                     </div>
@@ -338,35 +340,7 @@ const Docent = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-wrap -mx-3">
-                  <div className="sm:w-1/2 w-full px-3 mb-2">
-                    <label
-                      htmlFor="docentType"
-                      className="text-xs font-semibold px-1"
-                    >
-                      Tipo docente
-                    </label>
-                    <div className="flex flex-col">
-                      <Field
-                        as="select"
-                        id="docentType"
-                        name="docentType"
-                        className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                        placeholder="jdoe@gmail.com"
-                      >
-                        <option value="">Elige un tipo</option>
-                        <option value="Tiempo Completo">Tiempo completo</option>
-                        <option value="Planta">Planta</option>
-                        <option value="Cátedra">Cátedra</option>
-                      </Field>
-                      <ErrorMessage
-                        className="text-red-600 text-sm pt-1"
-                        name="docentType"
-                        component="div"
-                      />
-                    </div>
-                  </div>
-                </div>
+
                 <div className="w-full mt-2">
                   <button
                     type="submit"
