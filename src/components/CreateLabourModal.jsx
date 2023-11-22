@@ -97,7 +97,7 @@ const CreateLabourModal = ({
                       id="assignedHours"
                       name="assignedHours"
                       className="w-full pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="35"
+                      placeholder="2-18"
                       onChange={(event) => {
                         const value = event.target.value
                         const intValue = parseInt(value, 10)

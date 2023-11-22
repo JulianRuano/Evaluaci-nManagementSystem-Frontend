@@ -156,6 +156,7 @@ const DocentTable = ({ educators }) => {
     {
       title: 'Acciones',
       key: 'actions',
+
       render: (_, record) => (
         <Space size="middle">
           <a

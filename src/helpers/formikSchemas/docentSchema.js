@@ -11,7 +11,7 @@ export const docentSchema = Yup.object().shape({
   docentType: Yup.string()
     .required('El tipo de docente es obligatorio')
     .oneOf(
-      ['Tiempo Completo', 'Planta', 'Cátedra'],
+      ['Tiempo Completo', 'Planta', 'Cátedra', 'Otro'],
       'El tipo de docente no es válido'
     ),
   idType: Yup.string()
@@ -44,7 +44,7 @@ export const updateDocentSchema = Yup.object().shape({
   docentType: Yup.string()
     .required('El tipo de docente es obligatorio')
     .oneOf(
-      ['Tiempo Completo', 'Planta', 'Cátedra'],
+      ['Tiempo Completo', 'Planta', 'Cátedra', 'Otro'],
       'El tipo de docente no es válido'
     ),
   idType: Yup.string()

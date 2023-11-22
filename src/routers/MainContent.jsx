@@ -65,7 +65,7 @@ const MainContent = () => {
             <CheckRole
               role={role}
               expectedRoles={[Roles.Coordinador]}
-              element={<Labour />}
+              element={<Period />}
             />
           }
         />

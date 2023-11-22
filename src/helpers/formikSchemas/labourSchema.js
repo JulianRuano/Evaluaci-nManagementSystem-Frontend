@@ -11,7 +11,7 @@ export const labourSchema = Yup.object().shape({
   }),
   assignedHours: Yup.number()
     .integer()
-    .min(1, 'El número de horas asignadas no puede ser menor a 1')
-    .max(100, 'El número de horas asignadas no puede ser mayor a 100')
+    .min(2, 'El número de horas asignadas no puede ser menor a 2')
+    .max(18, 'El número de horas asignadas no puede ser mayor a 18')
     .required('Las horas asignadas son obligatorias')
 })

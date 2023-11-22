@@ -8,7 +8,10 @@ const Dashboard = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <Header toggleSidebar={setToggled} />
-      <div style={{ display: 'flex', flexGrow: 1 }}>
+      <div
+        style={{ display: 'flex', flexGrow: 1 }}
+        className="container mx-auto"
+      >
         <ProSidebar toggled={toggled} setToggled={setToggled} />
         <div style={{ flexGrow: 1, overflow: 'auto' }}>
           <Outlet />

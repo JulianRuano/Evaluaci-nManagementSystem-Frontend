@@ -107,7 +107,7 @@ const Docent = () => {
 
   return (
     <div className="pt-4 px-3 text-center">
-      <div className="flex justify-between px-4 container pb-5">
+      <div className="flex justify-between px-4  pb-5">
         <h1 className="font-semibold pt-1 text-3xl">Docentes</h1>
         {role === 'Coordinador' ? (
           <button
@@ -220,6 +220,7 @@ const Docent = () => {
                         <option value="Tiempo Completo">Tiempo completo</option>
                         <option value="Planta">Planta</option>
                         <option value="Cátedra">Cátedra</option>
+                        <option value="Cátedra">Otro</option>
                       </Field>
                       <ErrorMessage
                         className="text-red-600 text-sm py-1"

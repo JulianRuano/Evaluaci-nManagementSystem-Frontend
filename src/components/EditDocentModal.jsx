@@ -110,6 +110,7 @@ const EditDocentModal = ({
                       <option value="Tiempo Completo">Tiempo completo</option>
                       <option value="Planta">Planta</option>
                       <option value="Cátedra">Cátedra</option>
+                      <option value="Cátedra">Otro</option>
                     </Field>
                     <ErrorMessage
                       className="text-red-600 text-sm py-1"

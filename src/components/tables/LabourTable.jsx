@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'antd'
+import { Space, Table, Tag } from 'antd'
 import propTypes from 'prop-types'
 import { EditOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
@@ -35,10 +35,18 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
       key: 'assignedHours'
     },
     {
-      title: 'Activo',
+      title: 'Estado',
       dataIndex: 'isActive',
       key: 'isActive',
-      render: (isActive) => (isActive ? 'Sí' : 'No')
+      render: (_, record) => (
+        <Space size="middle">
+          <a className="text-highlightColor">
+            <Tag color={record.isActive ? 'green' : 'red'}>
+              {record.isActive ? 'Activa' : 'Inactiva'}
+            </Tag>
+          </a>
+        </Space>
+      )
     },
     {
       dataIndex: '_id',
@@ -48,6 +56,7 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
     {
       title: 'Acciones',
       key: 'actions',
+      width: 5,
       render: (_, record) => (
         <a
           className="text-highlightColor"

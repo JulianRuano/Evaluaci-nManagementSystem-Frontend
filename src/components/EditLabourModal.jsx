@@ -108,6 +108,7 @@ const EditLabourModal = ({
                       type="text"
                       id="assignedHours"
                       name="assignedHours"
+                      disabled
                       className="w-full pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       placeholder="35"
                       onChange={(event) => {

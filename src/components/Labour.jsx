@@ -149,13 +149,11 @@ const Labour = () => {
     const newValues = {
       nameWork: values.nameWork,
       labourType: values.labourType.labourTypeUid,
-      assignedHours: values.assignedHours,
       isActive: values.isActive
     }
     oldLabour.current = {
       nameWork: labour.nameWork,
       labourType: labour.labourType.uid,
-      assignedHours: labour.assignedHours,
       isActive: labour.isActive
     }
     console.log(oldLabour.current, newValues)
@@ -195,7 +193,7 @@ const Labour = () => {
   if (labourError) return <p>Ha ocurrido un error</p>
   return (
     <div className="pt-4 px-3 text-center">
-      <div className="flex justify-between px-4  container">
+      <div className="flex justify-between px-4">
         <h1 className="font-semibold pt-1 text-3xl">Labores</h1>
         <button
           className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 mt-2 font-semibold"
@@ -226,11 +224,12 @@ const Labour = () => {
           labourTypesError={labourTypesError}
         />
       )}
-
-      <LabourTable
-        labours={labourData}
-        setIsEditModalOpen={setIsEditModalOpen}
-      />
+      <div className="container mx-auto">
+        <LabourTable
+          labours={labourData}
+          setIsEditModalOpen={setIsEditModalOpen}
+        />
+      </div>
     </div>
   )
 }
