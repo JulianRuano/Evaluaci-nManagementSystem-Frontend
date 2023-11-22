@@ -46,13 +46,20 @@ const ProSidebar = ({ toggled, setToggled }) => {
               }
             ]
           : []),
-        getItem(
-          <NavLink to="autoevaluaciones" onClick={() => setToggled(false)}>
-            Autoevaluaciones
-          </NavLink>,
-          '14',
-          <AuditOutlined />
-        ),
+        ...(role !== 'Decano'
+          ? [
+              getItem(
+                <NavLink
+                  to="autoevaluaciones"
+                  onClick={() => setToggled(false)}
+                >
+                  Autoevaluaciones
+                </NavLink>,
+                '14',
+                <AuditOutlined />
+              )
+            ]
+          : []),
         ...(role === 'Coordinador'
           ? [
               {

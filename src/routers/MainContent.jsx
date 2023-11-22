@@ -14,6 +14,14 @@ import DocentInfo from '../components/DocentInfo'
 import DocentRoute from './DocentRoute'
 import NotFoundPage from '../components/NotFoundPage'
 import AssignLabours from '../components/AssignLabourModal'
+import CheckRole from './CheckRole'
+import Reports from '../components/Reports'
+
+const Roles = {
+  Coordinador: 'Coordinador',
+  Decano: 'Decano',
+  Docente: 'Docente'
+}
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -31,15 +39,61 @@ const MainContent = () => {
         }
       >
         <Route index element={<HomePage />} />
-        <Route path="autoevaluaciones" element={<AutoEvaluation />} />
-        <Route path="labores" element={<Labour />} />
-        <Route path="periodos" element={<Period />} />
-        <Route path="docentes" element={<DocentRoute role={role} />}>
+        <Route
+          path="autoevaluaciones"
+          element={
+            <CheckRole
+              role={role}
+              expectedRoles={[Roles.Docente, Roles.Coordinador]}
+              element={<AutoEvaluation />}
+            />
+          }
+        />
+        <Route
+          path="labores"
+          element={
+            <CheckRole
+              role={role}
+              expectedRoles={[Roles.Coordinador]}
+              element={<Labour />}
+            />
+          }
+        />
+        <Route
+          path="periodos"
+          element={
+            <CheckRole
+              role={role}
+              expectedRoles={[Roles.Coordinador]}
+              element={<Labour />}
+            />
+          }
+        />
+        <Route
+          path="docentes"
+          element={
+            <CheckRole
+              role={role}
+              expectedRoles={[Roles.Coordinador, Roles.Decano]}
+              element={<DocentRoute role={role} />}
+            />
+          }
+        >
           <Route index element={<Docent />} />
           <Route path=":id" element={<DocentInfo />} />
           <Route path="asignar-labores" element={<AssignLabours />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
+        <Route
+          path="reportes"
+          element={
+            <CheckRole
+              role={role}
+              expectedRoles={[Roles.Decano]}
+              element={<Reports />}
+            />
+          }
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route

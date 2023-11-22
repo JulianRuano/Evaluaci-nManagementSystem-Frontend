@@ -57,8 +57,8 @@ const LoginScreen = () => {
           <div className="w-full md:w-1/2 py-10 px-10">
             <Formik
               initialValues={{
-                email: 'geoge@email.com',
-                password: '12345'
+                email: 'julian@singlecode.com',
+                password: '123456'
               }}
               validationSchema={loginSchema}
               onSubmit={handleLoginMutation}
