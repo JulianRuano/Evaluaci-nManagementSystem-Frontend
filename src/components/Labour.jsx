@@ -192,11 +192,11 @@ const Labour = () => {
     )
   if (labourError) return <p>Ha ocurrido un error</p>
   return (
-    <div className="pt-4  text-center">
+    <div className="pt-6 text-center">
       <div className="flex justify-between px-2 mb-2">
-        <h1 className="font-semibold pt-1 text-3xl">Labores</h1>
+        <h1 className="font-semibold pt-1 md:pl-12 text-3xl">Labores</h1>
         <button
-          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2  font-semibold"
+          className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 md:mr-20 font-semibold"
           onClick={showCreateLabourModal}
         >
           Crear nueva

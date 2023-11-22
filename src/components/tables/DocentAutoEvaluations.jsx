@@ -62,7 +62,13 @@ const DocentAutoEvaluations = ({ autoevaluations }) => {
 
   return (
     <>
-      <Table columns={columns} dataSource={autoevaluations} />
+      <Table
+        columns={columns}
+        dataSource={autoevaluations}
+        pagination={{
+          position: ['topRight']
+        }}
+      />
 
       {/* Modal para mostrar la información detallada */}
       <Modal
