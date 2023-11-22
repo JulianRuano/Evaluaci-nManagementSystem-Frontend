@@ -93,7 +93,7 @@ const Period = () => {
   if (isError) return <p>Ha ocurrido un error</p>
 
   return (
-    <div className="pt-4 px-3 text-center">
+    <div className="pt-4 text-center">
       <div className="flex justify-between px-10 container pb-5">
         <h1 className="font-semibold pt-1 text-xl">Periodos</h1>
         <button
