@@ -18,9 +18,11 @@ const Autoevaluacion = () => {
   return (
     <div className="pt-6  text-center">
       <div className="flex justify-between px-2 mb-2  md:pl-12">
-        <h1 className="font-semibold pt-1 text-3xl">Autoevaluaciones</h1>
+        <h1 className="font-semibold pt-1 text-2xl text-stone-700">
+          Autoevaluaciones
+        </h1>
 
-        <button className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 md:mr-20 font-semibold">
+        <button className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 md:mr-20 text-sm font-semibold">
           Crear nueva
         </button>
       </div>

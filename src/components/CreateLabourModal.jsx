@@ -54,7 +54,7 @@ const CreateLabourModal = ({
         {({ isSubmitting, setFieldValue }) => (
           <Form className=" space-y-6">
             <div className="text-center">
-              <h1 className="font-bold text-3xl text-gray-900 ">Nueva labor</h1>
+              <h1 className="font-bold text-2xl text-stone-700">Nueva labor</h1>
               <p>A continuacion ingrese los datos de la labor</p>
             </div>
             <div>

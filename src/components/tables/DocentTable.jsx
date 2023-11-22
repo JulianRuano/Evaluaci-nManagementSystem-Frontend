@@ -94,7 +94,7 @@ const DocentTable = ({ educators }) => {
   }
   const columns = [
     {
-      title: 'Nombres',
+      title: <div className="text-stone-700">Nombres</div>,
       dataIndex: 'firstName',
       key: 'firstName',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
@@ -102,7 +102,7 @@ const DocentTable = ({ educators }) => {
       ...getColumnSearchProps('firstName', 'nombres')
     },
     {
-      title: 'Apellidos',
+      title: <div className="text-stone-700">Apellidos</div>,
       dataIndex: 'lastName',
       key: 'lastName',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
@@ -110,14 +110,14 @@ const DocentTable = ({ educators }) => {
       ...getColumnSearchProps('lastName', 'apellidos')
     },
     {
-      title: 'Tipo ID',
+      title: <div className="text-stone-700">Tipo ID</div>,
       dataIndex: 'idType',
       key: 'idType',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
       sortDirections: ['descend', 'ascend']
     },
     {
-      title: 'Identificación',
+      title: <div className="text-stone-700">Identificación</div>,
       dataIndex: 'identification',
       key: 'identification',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
@@ -125,7 +125,7 @@ const DocentTable = ({ educators }) => {
       ...getColumnSearchProps('identification', 'identificación')
     },
     {
-      title: 'Tipo docente',
+      title: <div className="text-stone-700">Tipo docente</div>,
       dataIndex: 'docentType',
       key: 'docentType',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
@@ -137,7 +137,7 @@ const DocentTable = ({ educators }) => {
       className: 'hidden'
     },
     {
-      title: 'Estado',
+      title: <div className="text-stone-700">Estado</div>,
       dataIndex: 'isActive',
       key: 'title',
       sorter: (a, b) =>
@@ -154,7 +154,7 @@ const DocentTable = ({ educators }) => {
       )
     },
     {
-      title: 'Acciones',
+      title: <div className="text-stone-700">Acciones</div>,
       key: 'actions',
 
       render: (_, record) => (

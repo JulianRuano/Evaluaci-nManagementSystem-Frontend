@@ -59,13 +59,13 @@ const AssignLabourModal = ({
         {({ isSubmitting, setFieldValue }) => (
           <Form className=" space-y-6">
             <div className="text-center">
-              <h1 className="font-bold text-3xl text-gray-900 ">
+              <h1 className="font-bold text-2xl text-stone-700 ">
                 Asignar labores
               </h1>
-              <p className="pt-3">
+              <p className="pt-2">
                 A continuacion eliga las labores que se asignarán al docente
                 <p className="text-zinc-400">
-                  (sólo se mostrarán las que cumplen con el tipo de docente)
+                  sólo se mostrarán las que cumplen con el tipo de docente
                 </p>
               </p>
             </div>

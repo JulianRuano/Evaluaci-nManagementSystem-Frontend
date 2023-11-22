@@ -1,4 +1,4 @@
-import { Table, Space, Modal } from 'antd'
+import { Table, Space, Modal, Tag } from 'antd'
 import PropTypes from 'prop-types'
 import { EyeOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
@@ -18,37 +18,43 @@ const DocentAutoEvaluations = ({ autoevaluations }) => {
 
   const columns = [
     {
-      title: 'Labor',
+      title: <div className="text-stone-700">Labor</div>,
       dataIndex: ['labour', 'nameWork'],
       key: 'nameWork'
     },
     {
-      title: 'Periodo',
+      title: <div className="text-stone-700">Periodo</div>,
       dataIndex: ['period', 'semester'],
       key: 'semester'
     },
     {
-      title: 'Resultado',
+      title: <div className="text-stone-700">Resultado</div>,
       dataIndex: 'results',
       key: 'results'
     },
     {
-      title: 'Fecha',
+      title: <div className="text-stone-700">Fecha</div>,
       dataIndex: 'date',
       key: 'date'
     },
     {
-      title: 'Puntuación',
+      title: <div className="text-stone-700">Puntuación</div>,
       dataIndex: 'puntuation',
       key: 'puntuation'
     },
     {
-      title: 'Estado',
-      dataIndex: 'state',
-      key: 'state'
+      title: <div className="text-stone-700">Estado</div>,
+      key: 'state',
+      render: (_, record) => (
+        <Space size="middle">
+          <a className="text-highlightColor">
+            <Tag color="green">En ejecución</Tag>
+          </a>
+        </Space>
+      )
     },
     {
-      title: 'Acciones',
+      title: <div className="text-stone-700">Acciones</div>,
       key: 'acciones',
       render: (_, record) => (
         <Space size="middle">
