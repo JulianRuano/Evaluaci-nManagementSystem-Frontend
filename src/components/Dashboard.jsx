@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Header from './shared/Header'
 import ProSidebar from './shared/ProSidebar'
 import { Outlet } from 'react-router-dom'
+import { Skeleton } from 'antd'
 
 const Dashboard = () => {
   const [toggled, setToggled] = React.useState(false)
@@ -14,7 +15,19 @@ const Dashboard = () => {
       >
         <ProSidebar toggled={toggled} setToggled={setToggled} />
         <div style={{ flexGrow: 1, overflow: 'auto' }}>
-          <Outlet />
+          <Suspense
+            fallback={
+              <div className="px-5 py-5">
+                <Skeleton active />
+                <br />
+                <Skeleton active />
+                <br />
+                <Skeleton active />
+              </div>
+            }
+          >
+            <Outlet />
+          </Suspense>
         </div>
       </div>
     </div>

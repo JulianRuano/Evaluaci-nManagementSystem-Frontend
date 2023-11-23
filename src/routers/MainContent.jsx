@@ -1,32 +1,32 @@
 import { Routes, Route } from 'react-router-dom'
 import LoginScreen from '../components/auth/LoginScreen'
-import React from 'react'
+import React, { lazy, startTransition } from 'react'
 import PublicRoute from './PublicRoute'
 import { useSelector } from 'react-redux'
+
 import PrivateRoute from './PrivateRoute'
 import Dashboard from '../components/Dashboard'
 import HomePage from '../components/HomePage'
 import AutoEvaluation from '../components/AutoEvaluation'
-import Labour from '../components/Labour'
 import Period from '../components/Period'
-import Docent from '../components/Docent'
 import DocentInfo from '../components/DocentInfo'
-import DocentRoute from './DocentRoute'
 import NotFoundPage from '../components/NotFoundPage'
-import AssignLabours from '../components/AssignLabourModal'
 import CheckRole from './CheckRole'
-import Reports from '../components/Reports'
+import DocentRoute from './DocentRoute'
 
 const Roles = {
   Coordinador: 'Coordinador',
   Decano: 'Decano',
   Docente: 'Docente'
 }
+const Labour = lazy(() => import('../components/Labour'))
+const Reports = lazy(() => import('../components/Reports'))
+const Docent = lazy(() => import('../components/Docent'))
+const AssignLabours = lazy(() => import('../components/AssignLabourModal'))
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const role = useSelector((state) => state.auth?.user?.role)
-
   return (
     <Routes>
       <Route
