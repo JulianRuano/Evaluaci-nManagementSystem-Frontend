@@ -2,7 +2,7 @@ import React from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Modal, Skeleton } from 'antd'
 import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { labourSchema } from '../helpers/formikSchemas/labourSchema'
 import { LoadingOutlined } from '@ant-design/icons'
 
@@ -64,7 +64,7 @@ const EditLabourModal = ({
         {({ isSubmitting, setFieldValue }) => (
           <Form className=" space-y-6">
             <div className="text-center">
-              <h1 className="font-bold text-3xl text-gray-900 ">
+              <h1 className="font-bold text-2xl text-stone-700">
                 Actualizar labor
               </h1>
               <p>A continuacion ingrese los datos de la labor</p>

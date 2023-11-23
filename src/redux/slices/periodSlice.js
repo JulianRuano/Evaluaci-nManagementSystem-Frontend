@@ -12,7 +12,9 @@ const periodSlice = createSlice({
       return { ...state, periods: action.payload }
     },
     clearPeriods: (state) => {
-      return { ...state, periods: [] }
+      Object.keys(initialState).forEach((key) => {
+        state[key] = initialState[key]
+      })
     },
     updatePeriod: (state, action) => {
       const { id, values } = action.payload

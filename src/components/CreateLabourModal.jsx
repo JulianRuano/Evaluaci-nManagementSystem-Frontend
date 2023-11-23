@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Modal } from 'antd'
 import { labourSchema } from '../helpers/formikSchemas/labourSchema'
 import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const CreateLabourModal = ({
   isModalOpen,

@@ -13,7 +13,6 @@ import {
 import { Menu } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import RoleTag from './RoleTag'
 
 const ProSidebar = ({ toggled, setToggled }) => {
   const role = useSelector((state) => state.auth.user.role)
