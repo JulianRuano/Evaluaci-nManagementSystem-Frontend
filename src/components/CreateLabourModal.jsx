@@ -100,8 +100,14 @@ const CreateLabourModal = ({
                       placeholder="2-18"
                       onChange={(event) => {
                         const value = event.target.value
-                        const intValue = parseInt(value, 10)
-                        setFieldValue('assignedHours', intValue)
+                        if (value === '') {
+                          setFieldValue('assignedHours', null)
+                        } else {
+                          const intValue = parseInt(value, 10)
+                          if (!isNaN(intValue)) {
+                            setFieldValue('assignedHours', intValue)
+                          }
+                        }
                       }}
                     />
                     <ErrorMessage
