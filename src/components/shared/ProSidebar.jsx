@@ -46,7 +46,7 @@ const ProSidebar = ({ toggled, setToggled }) => {
               }
             ]
           : []),
-        ...(role !== 'Decano'
+        ...(role === 'Docente'
           ? [
               getItem(
                 <NavLink
@@ -62,6 +62,20 @@ const ProSidebar = ({ toggled, setToggled }) => {
           : []),
         ...(role === 'Coordinador'
           ? [
+              getItem(
+                <NavLink
+                  to="gestionar-autoevaluaciones"
+                  onClick={() => setToggled(false)}
+                >
+                  Gestionar AutoEvaluacion
+                </NavLink>,
+                '15',
+                <AuditOutlined />
+              )
+            ]
+          : []),
+        ...(role === 'Coordinador'
+          ? [
               {
                 type: 'divider'
               },
@@ -69,7 +83,7 @@ const ProSidebar = ({ toggled, setToggled }) => {
                 <NavLink to="labores" onClick={() => setToggled(false)}>
                   Labores
                 </NavLink>,
-                '15',
+                '16',
                 <BookOutlined />
               ),
               {
@@ -83,7 +97,7 @@ const ProSidebar = ({ toggled, setToggled }) => {
                 <NavLink to="periodos" onClick={() => setToggled(false)}>
                   Periodo académico
                 </NavLink>,
-                '16',
+                '17',
                 <InsertRowBelowOutlined />
               ),
               {
@@ -97,7 +111,7 @@ const ProSidebar = ({ toggled, setToggled }) => {
                 <NavLink to="reportes" onClick={() => setToggled(false)}>
                   Reportes
                 </NavLink>,
-                '16',
+                '18',
                 <SnippetsOutlined />
               ),
               {
@@ -109,9 +123,9 @@ const ProSidebar = ({ toggled, setToggled }) => {
       'group'
     ),
     getItem('Configuración', 'sub5', <SettingOutlined />, [
-      getItem('Cambiar contraseña', '17'),
-      getItem('Cambiar correo electrónico', '18'),
-      getItem('Subir foto de perfil', '19')
+      getItem('Cambiar contraseña', '19'),
+      getItem('Cambiar correo electrónico', '20'),
+      getItem('Subir foto de perfil', '21')
     ])
   ].filter((item) => item !== null && item !== false)
 

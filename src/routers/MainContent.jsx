@@ -16,6 +16,7 @@ import NotFoundPage from '../components/NotFoundPage'
 import AssignLabours from '../components/AssignLabourModal'
 import CheckRole from './CheckRole'
 import Reports from '../components/Reports'
+import ManageAutoevaluation from '../components/ManageAutoEvaluation'
 
 const Roles = {
   Coordinador: 'Coordinador',
@@ -44,8 +45,18 @@ const MainContent = () => {
           element={
             <CheckRole
               role={role}
-              expectedRoles={[Roles.Docente, Roles.Coordinador]}
+              expectedRoles={[Roles.Docente]}
               element={<AutoEvaluation />}
+            />
+          }
+        />
+        <Route
+          path="gestionar-autoevaluaciones"
+          element={
+            <CheckRole
+              role={role}
+              expectedRoles={[Roles.Coordinador, Roles.Decano]}
+              element={<ManageAutoevaluation />}
             />
           }
         />
