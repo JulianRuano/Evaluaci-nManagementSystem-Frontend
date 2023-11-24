@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Modal } from 'antd'
 import { labourSchema } from '../helpers/formikSchemas/labourSchema'
 import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const CreateLabourModal = ({
   isModalOpen,
@@ -100,8 +100,14 @@ const CreateLabourModal = ({
                       placeholder="2-18"
                       onChange={(event) => {
                         const value = event.target.value
-                        const intValue = parseInt(value, 10)
-                        setFieldValue('assignedHours', intValue)
+                        if (value === '') {
+                          setFieldValue('assignedHours', null)
+                        } else {
+                          const intValue = parseInt(value, 10)
+                          if (!isNaN(intValue)) {
+                            setFieldValue('assignedHours', intValue)
+                          }
+                        }
                       }}
                     />
                     <ErrorMessage

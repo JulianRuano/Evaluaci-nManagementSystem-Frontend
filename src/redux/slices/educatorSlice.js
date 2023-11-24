@@ -14,7 +14,9 @@ const educatorSlice = createSlice({
       return { ...state, educators: action.payload }
     },
     clearEducators: (state) => {
-      return { ...state, educators: [] }
+      Object.keys(initialState).forEach((key) => {
+        state[key] = initialState[key]
+      })
     },
     updateEducator: (state, action) => {
       const { id, values } = action.payload

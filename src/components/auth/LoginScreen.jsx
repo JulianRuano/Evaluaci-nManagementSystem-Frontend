@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { login } from '../../redux/slices/authSlice'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const LoginScreen = () => {
   const navigate = useNavigate()
@@ -132,11 +133,17 @@ const LoginScreen = () => {
                         <button
                           type="submit"
                           disabled={loginMutation.isPending}
-                          className={`block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold ${
+                          className={`block w-full max-w-xs mx-auto  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg py-2  font-semibold ${
                             loginMutation.isPending ? 'opacity-50' : ''
                           }`}
                         >
-                          Iniciar Sesión
+                          {loginMutation.isPending ? (
+                            <p>
+                              Iniciando sesión <LoadingOutlined />
+                            </p>
+                          ) : (
+                            'Inciar sesión'
+                          )}
                         </button>
                       </div>
                     </div>

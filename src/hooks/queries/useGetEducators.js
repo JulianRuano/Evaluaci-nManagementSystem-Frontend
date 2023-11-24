@@ -12,7 +12,7 @@ export async function fetchEducators(role) {
     `${apiUrl}/educators/getEducators/${role}`,
     config
   )
-
+  console.log('se llamo')
   return response.data
 }
 

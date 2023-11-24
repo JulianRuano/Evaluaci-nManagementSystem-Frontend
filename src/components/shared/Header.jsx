@@ -1,12 +1,14 @@
 import React from 'react'
 import { DownOutlined, BellOutlined } from '@ant-design/icons'
-import { Dropdown, Space } from 'antd'
+import { Dropdown } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import propTypes from 'prop-types'
 import { startHandleLogout } from '../actions/auth'
 import RoleTag from './RoleTag'
+import { useQueryClient } from '@tanstack/react-query'
 
 const Header = ({ toggleSidebar }) => {
+  const queryClient = useQueryClient()
   const userName = useSelector(
     (state) => state.auth?.user?.firstName || 'Usuario'
   )
@@ -14,8 +16,9 @@ const Header = ({ toggleSidebar }) => {
 
   const dispatch = useDispatch()
 
-  const handleSignOut = () => {
-    dispatch(startHandleLogout())
+  const handleSignOut = async () => {
+    await dispatch(startHandleLogout())
+    queryClient.removeQueries()
   }
   const items = [
     {
@@ -31,7 +34,15 @@ const Header = ({ toggleSidebar }) => {
       key: '0'
     },
     {
-      label: <p onClick={handleSignOut}>Cerrar sesión</p>,
+      label: (
+        <p
+          onClick={() => {
+            handleSignOut()
+          }}
+        >
+          Cerrar sesión
+        </p>
+      ),
       key: '1'
     },
     {

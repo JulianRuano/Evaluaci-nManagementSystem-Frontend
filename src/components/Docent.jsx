@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { DatePicker, Modal, Skeleton } from 'antd'
+import { Modal, Skeleton } from 'antd'
 import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { docentSchema } from '../helpers/formikSchemas/docentSchema'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -12,7 +12,6 @@ import { setEducators } from '../redux/slices/educatorSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { startHandleLogout } from './actions/auth'
 import 'react-datepicker/dist/react-datepicker.css'
-import DocentNav from './DocentNav'
 import { LoadingOutlined } from '@ant-design/icons'
 
 const Docent = () => {

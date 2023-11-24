@@ -23,7 +23,9 @@ const labourSlice = createSlice({
       state.labourTypeUidToEdit = action.payload
     },
     clearLabourState: (state) => {
-      state = initialState
+      Object.keys(initialState).forEach((key) => {
+        state[key] = initialState[key]
+      })
     }
   }
 })
