@@ -222,7 +222,6 @@ const Period = () => {
                     >
                       Fecha de inicio
                     </label>
-                    .startDate
                     <div className="flex flex-col">
                       <DatePicker
                         onChange={(value) =>

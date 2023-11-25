@@ -105,7 +105,7 @@ const DocentTable = ({ educators }) => {
       title: <div className="text-stone-700">Apellidos</div>,
       dataIndex: 'lastName',
       key: 'lastName',
-      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sorter: (a, b) => a.lastName.localeCompare(b.lastName),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('lastName', 'apellidos')
     },
@@ -113,14 +113,14 @@ const DocentTable = ({ educators }) => {
       title: <div className="text-stone-700">Tipo ID</div>,
       dataIndex: 'idType',
       key: 'idType',
-      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sorter: (a, b) => a.idType.localeCompare(b.idType),
       sortDirections: ['descend', 'ascend']
     },
     {
       title: <div className="text-stone-700">Identificación</div>,
       dataIndex: 'identification',
       key: 'identification',
-      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sorter: (a, b) => a.identification.localeCompare(b.identification),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('identification', 'identificación')
     },
@@ -128,7 +128,7 @@ const DocentTable = ({ educators }) => {
       title: <div className="text-stone-700">Tipo docente</div>,
       dataIndex: 'docentType',
       key: 'docentType',
-      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sorter: (a, b) => a.docentType.localeCompare(b.docentType),
       sortDirections: ['descend', 'ascend']
     },
     {
@@ -171,18 +171,20 @@ const DocentTable = ({ educators }) => {
   ]
 
   return (
-    <Table
-      locale={{
-        triggerDesc: 'Orden descendente',
-        triggerAsc: 'Orden ascendente',
-        cancelSort: 'Desactivar orden'
-      }}
-      pagination={{
-        position: ['topRight']
-      }}
-      columns={columns}
-      dataSource={educators}
-    />
+    <>
+      <Table
+        locale={{
+          triggerDesc: 'Orden descendente',
+          triggerAsc: 'Orden ascendente',
+          cancelSort: 'Desactivar orden'
+        }}
+        pagination={{
+          position: ['bottomRight']
+        }}
+        columns={columns}
+        dataSource={educators}
+      />
+    </>
   )
 }
 

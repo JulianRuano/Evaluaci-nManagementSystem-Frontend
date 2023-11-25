@@ -63,7 +63,6 @@ const Docent = () => {
   const docentMutation = useMutation({
     mutationFn: createDocentFunction,
     onSuccess: (data) => {
-      console.log(data)
       queryClient.invalidateQueries('docents')
       setIsModalOpen(false)
       notifySuccess('Docente creado con éxito')
@@ -73,7 +72,7 @@ const Docent = () => {
         await dispatch(startHandleLogout())
         return
       }
-      console.log(error)
+
       notifyError(error.response.data.message)
     }
   })
@@ -118,14 +117,17 @@ const Docent = () => {
       <div className="flex justify-between px-2 mb-2  md:pl-12">
         <h1 className="font-semibold pt-1 text-2xl text-stone-700">Docentes</h1>
         {role === 'Coordinador' ? (
-          <button
-            className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 md:mr-20 font-semibold text-sm"
-            onClick={showModal}
-          >
-            Crear nuevo
-          </button>
+          <div>
+            <button
+              className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-2 mr-5 font-semibold text-sm"
+              onClick={showModal}
+            >
+              Crear nuevo
+            </button>
+          </div>
         ) : null}
       </div>
+
       <DocentTable educators={data} />
       <Modal
         open={isModalOpen}

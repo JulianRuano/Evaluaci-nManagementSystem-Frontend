@@ -19,8 +19,9 @@ const educatorSlice = createSlice({
       })
     },
     updateEducator: (state, action) => {
-      const { id, values } = action.payload
+      const { id, data: values } = action.payload
       const index = state.educators.findIndex((docent) => docent.uid === id)
+
       const newEducators = [...state.educators]
       newEducators[index] = { ...newEducators[index], ...values }
       return { ...state, educators: newEducators }
@@ -34,6 +35,7 @@ const educatorSlice = createSlice({
     clearSelectedLabours: (state) => {
       state.selectedLabours = []
     },
+
     setSelectedEducatorToEdit: (state, action) => {
       state.selectedEducatorToEdit = action.payload
     }

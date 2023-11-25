@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { apiUrl } from '../../helpers/apiUrl'
 
-export async function createAutoEvaluationFunction(body) {
+export async function assignAutoEvaluationFunction(body) {
   const config = {
     withCredentials: true
   }

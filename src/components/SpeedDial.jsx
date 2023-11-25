@@ -9,11 +9,38 @@ import {
   FundOutlined
 } from '@ant-design/icons'
 import propTypes from 'prop-types'
+import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 export default function BasicSpeedDial({
   showEditModal,
-  showAssignLabourModal
+  showAssignLabourModal,
+  showAssignAutoEvalModal
 }) {
+  const { id } = useParams()
+  const notifyError = (message) =>
+    toast.error(message, {
+      position: 'bottom-left',
+      autoClose: 3000,
+      hideProgressBar: true,
+      pauseOnHover: false
+    })
+
+  const hasLabours = useSelector((state) =>
+    state.educators.educators
+      .filter((educator) => educator.uid === id)
+      .map((educator) => educator.labours)
+  )
+  const handleClickAssignAutoEval = () => {
+    console.log(hasLabours)
+    if (hasLabours[0].length === 0) {
+      notifyError('El docente no tiene labores asignadas')
+      return
+    }
+
+    showAssignAutoEvalModal()
+  }
   const actions = [
     {
       icon: <FileTextOutlined />,
@@ -27,7 +54,8 @@ export default function BasicSpeedDial({
     },
     {
       icon: <FundOutlined />,
-      name: 'Autoevaluaciones'
+      name: 'Asignar Autoevaluacion',
+      onClick: () => handleClickAssignAutoEval()
     }
   ]
   return (
@@ -67,5 +95,6 @@ export default function BasicSpeedDial({
 
 BasicSpeedDial.propTypes = {
   showEditModal: propTypes.func,
-  showAssignLabourModal: propTypes.func
+  showAssignLabourModal: propTypes.func,
+  showAssignAutoEvalModal: propTypes.func
 }

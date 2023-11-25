@@ -12,7 +12,6 @@ import Period from '../components/Period'
 import DocentInfo from '../components/DocentInfo'
 import NotFoundPage from '../components/NotFoundPage'
 import CheckRole from './CheckRole'
-import ManageAutoevaluation from '../components/ManageAutoEvaluation'
 import DocentRoute from './DocentRoute'
 
 const Roles = {
@@ -50,7 +49,7 @@ const MainContent = () => {
             />
           }
         />
-        <Route
+        {/* <Route
           path="gestionar-autoevaluaciones"
           element={
             <CheckRole
@@ -59,7 +58,7 @@ const MainContent = () => {
               element={<ManageAutoevaluation />}
             />
           }
-        />
+        /> */}
         <Route
           path="labores"
           element={

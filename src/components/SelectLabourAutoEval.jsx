@@ -4,25 +4,23 @@ import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { setSelectedLabours } from '../redux/slices/educatorSlice'
 
-const SelectLaboursInput = ({ data, setFieldValue, initialSelectedItems }) => {
-  const [selectedItems, setSelectedItems] = useState(initialSelectedItems || [])
+const SelectLabourAutoEval = ({ data, setFieldValue }) => {
+  const [selectedItems, setSelectedItems] = useState([])
   const dispatch = useDispatch()
   const handleChange = (value) => {
     setSelectedItems(value)
-    dispatch(setSelectedLabours(value))
-    setFieldValue('labours', value)
+    // dispatch(setSelectedLabours(value))
+    setFieldValue('labour', value)
   }
-  console.log(initialSelectedItems)
+
   return (
     <Select
-      mode="multiple"
       placeholder="Seleccione las labores"
       value={selectedItems}
       onChange={handleChange}
       style={{
         width: '100%'
       }}
-      maxTagCount="responsive"
       options={data.map((item) => ({
         value: item.uid,
         label: item.nameWork
@@ -31,15 +29,14 @@ const SelectLaboursInput = ({ data, setFieldValue, initialSelectedItems }) => {
   )
 }
 
-SelectLaboursInput.propTypes = {
+SelectLabourAutoEval.propTypes = {
   data: propTypes.arrayOf(
     propTypes.shape({
       uid: propTypes.string.isRequired,
       namework: propTypes.string.isRequired
     })
   ).isRequired,
-  setFieldValue: propTypes.func.isRequired,
-  initialSelectedItems: propTypes.arrayOf(propTypes.string)
+  setFieldValue: propTypes.func.isRequired
 }
 
-export default SelectLaboursInput
+export default SelectLabourAutoEval

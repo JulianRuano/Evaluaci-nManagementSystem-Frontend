@@ -15,19 +15,34 @@ import BasicSpeedDial from './SpeedDial'
 import AssignLabourModal from './AssignLabourModal'
 import { assignLabourFunction } from '../hooks/mutations/useAssignLabour'
 import { useGetEducator } from '../hooks/queries/useGetEducator'
-import { updateEducator } from '../redux/slices/educatorSlice'
+import {
+  clearSelectedLabours,
+  updateEducator
+} from '../redux/slices/educatorSlice'
+import AssignAutoEvaluation from './AssignAutoEvaluation'
 
 const DocentInfo = () => {
   const role = useSelector((state) => state.auth.user.role)
 
+  const [isAssignAutoEvalModalOpen, setIsAssignAutoEvalModalOpen] =
+    useState(false)
   const { id } = useParams()
   const dispatch = useDispatch()
-
+  const showAssignAutoEvalModal = () => {
+    setIsAssignAutoEvalModalOpen(true)
+  }
   // useQuery hook to fetch the educator from the backend
   const { data, isLoading, isError } = useGetEducator(id)
   useEffect(() => {
-    console.log(data)
+    console.log('se actualizo')
+    dispatch(
+      updateEducator({
+        id,
+        data
+      })
+    )
   }, [data])
+
   const formEditInitialValuesRef = useRef({
     firstName: data?.firstName,
     lastName: data?.lastName,
@@ -85,10 +100,10 @@ const DocentInfo = () => {
   const labourAssignMutation = useMutation({
     mutationFn: assignLabourFunction,
     onSuccess: (data) => {
-      console.log(data)
       queryClient.invalidateQueries('docent')
       setIsModalOpenLabourDocent(false)
       notifySuccess('Docente actualizado con éxito')
+      dispatch(clearSelectedLabours())
     },
     onError: async (error) => {
       if (error?.response?.status === 401) {
@@ -103,7 +118,6 @@ const DocentInfo = () => {
   const docentUpdateMutation = useMutation({
     mutationFn: updateDocentFunction,
     onSuccess: (data) => {
-      console.log(data)
       queryClient.invalidateQueries('docent')
       // dispatch(addEducators(data.payload))
       notifySuccess('Docente actualizado con éxito')
@@ -124,7 +138,7 @@ const DocentInfo = () => {
       notifyError('No se han modificado datos')
       return
     }
-    console.log(values)
+
     docentUpdateMutation.mutate(
       { id, values },
       {
@@ -160,9 +174,7 @@ const DocentInfo = () => {
     )
   }
 
-  console.log(data)
   const handleAssignLabours = (values) => {
-    console.log('labores:', values)
     labourAssignMutation.mutate(values)
   }
 
@@ -246,6 +258,10 @@ const DocentInfo = () => {
         Información del docente
       </h1>
       <Descriptions items={items} />
+      <AssignAutoEvaluation
+        isAssignAutoEvalModalOpen={isAssignAutoEvalModalOpen}
+        setIsAssignAutoEvalModalOpen={setIsAssignAutoEvalModalOpen}
+      />
       <EditDocentModal
         isModalOpen={isModalOpenEditDocentOpen}
         handleOk={handleOkEditDocent}
@@ -266,6 +282,7 @@ const DocentInfo = () => {
         <BasicSpeedDial
           showEditModal={showEditModal}
           showAssignLabourModal={showAssignLabourModal}
+          showAssignAutoEvalModal={showAssignAutoEvalModal}
         />
       )}
     </div>
