@@ -24,14 +24,16 @@ const EditLabourModal = ({
   if (labourTypesLoading)
     return (
       <div className="px-5 py-5">
-        <Skeleton active />
-        <br />
-        <Skeleton active />
-        <br />
-        <Skeleton active />
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div key={i}>
+            <Skeleton active />
+            <br />
+          </div>
+        ))}
       </div>
     )
   if (labourTypesError) return <p>Ha ocurrido un error</p>
+
   return (
     <Modal
       open={isModalOpen}

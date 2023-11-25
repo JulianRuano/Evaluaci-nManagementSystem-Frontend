@@ -25,11 +25,13 @@ const Docent = () => {
 
   const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetEducators('docente')
+
   useEffect(() => {
     dispatch(setEducators(data))
   }, [data])
 
   const queryClient = useQueryClient()
+
   const notifySuccess = (message) =>
     toast.success(message, {
       position: 'bottom-right',
@@ -37,6 +39,7 @@ const Docent = () => {
       hideProgressBar: true,
       pauseOnHover: false
     })
+
   const notifyError = (message) =>
     toast.error(message, {
       position: 'bottom-right',
@@ -44,6 +47,7 @@ const Docent = () => {
       hideProgressBar: true,
       pauseOnHover: false
     })
+
   const showModal = () => {
     setIsModalOpen(true)
   }
@@ -51,9 +55,11 @@ const Docent = () => {
   const handleOk = () => {
     setIsModalOpen(false)
   }
+
   const handleCancel = () => {
     setIsModalOpen(false)
   }
+
   const docentMutation = useMutation({
     mutationFn: createDocentFunction,
     onSuccess: (data) => {
@@ -92,16 +98,19 @@ const Docent = () => {
       }
     })
   }
+
   if (isLoading)
     return (
       <div className="px-5 py-5">
-        <Skeleton active />
-        <br />
-        <Skeleton active />
-        <br />
-        <Skeleton active />
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i}>
+            <Skeleton active />
+            <br />
+          </div>
+        ))}
       </div>
     )
+
   if (isError) return <p>Ha ocurrido un error</p>
 
   return (
@@ -117,9 +126,7 @@ const Docent = () => {
           </button>
         ) : null}
       </div>
-
       <DocentTable educators={data} />
-
       <Modal
         open={isModalOpen}
         onOk={handleOk}
