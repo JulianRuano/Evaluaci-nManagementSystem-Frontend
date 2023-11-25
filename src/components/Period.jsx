@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Modal, Skeleton } from 'antd'
+import { DatePicker, Modal, Skeleton } from 'antd'
 import { Formik, ErrorMessage, Field, Form } from 'formik'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
@@ -11,8 +11,6 @@ import { setPeriods } from '../redux/slices/periodSlice'
 import { createPeriodFunction } from '../hooks/mutations/useCreatePeriod'
 import PeriodTable from './tables/PeriodTable'
 import { periodSchema } from '../helpers/formikSchemas/periodSchema'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
 
 const Period = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -224,9 +222,12 @@ const Period = () => {
                     </label>
                     <div className="flex flex-col">
                       <DatePicker
-                        onChange={(value) =>
-                          setFieldValue('startDate', new Date(value))
-                        }
+                        onChange={(date, dateString) => {
+                          setFieldValue(
+                            'startDate',
+                            date.toDate().toISOString()
+                          )
+                        }}
                         selected={values.startDate}
                       />
                       <ErrorMessage
@@ -247,9 +248,9 @@ const Period = () => {
                     </label>
                     <div className="flex flex-col">
                       <DatePicker
-                        onChange={(value) =>
-                          setFieldValue('endDate', new Date(value))
-                        }
+                        onChange={(date, dateString) => {
+                          setFieldValue('endDate', date.toDate().toISOString())
+                        }}
                         selected={values.endDate}
                       />
                       <ErrorMessage

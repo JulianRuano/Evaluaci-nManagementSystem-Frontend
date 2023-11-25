@@ -2,6 +2,7 @@ import React from 'react'
 import { Space, Table } from 'antd'
 import propTypes from 'prop-types'
 import { EyeOutlined } from '@ant-design/icons'
+import { format } from 'date-fns'
 // import { useNavigate } from 'react-router-dom'
 
 const PeriodTable = ({ periods }) => {
@@ -25,12 +26,22 @@ const PeriodTable = ({ periods }) => {
     {
       title: <div className="text-stone-700">Fecha inicio</div>,
       dataIndex: 'startDate',
-      key: 'startDate'
+      key: 'startDate',
+      render: (_, record) => (
+        <Space size="middle">
+          {format(new Date(record.startDate), 'dd/MM/yyyy')}
+        </Space>
+      )
     },
     {
       title: <div className="text-stone-700">Fecha fin</div>,
       dataIndex: 'endDate',
-      key: 'endDate'
+      key: 'endDate',
+      render: (_, record) => (
+        <Space size="middle">
+          {format(new Date(record.endDate), 'dd/MM/yyyy')}
+        </Space>
+      )
     },
     {
       dataIndex: 'uid',
