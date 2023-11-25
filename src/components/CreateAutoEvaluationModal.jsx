@@ -1,10 +1,22 @@
 import Modal from 'antd/es/modal/Modal'
 import { ErrorMessage, Formik, Form, Field } from 'formik'
 import React from 'react'
-
-const CreateAutoEvaluationModal = () => {
+import propTypes from 'prop-types'
+const CreateAutoEvaluationModal = ({ isModalOpen, handleOk, handleCancel }) => {
   return (
-    <Modal>
+    <Modal
+      open={isModalOpen}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      okButtonProps={{
+        hidden: true
+      }}
+      cancelButtonProps={{
+        hidden: true
+      }}
+      width={800}
+      centered={true}
+    >
       <Formik>
         {({ isSubmitting, setFieldValue }) => (
           <Form className=" space-y-6">
@@ -158,6 +170,26 @@ const CreateAutoEvaluationModal = () => {
                     />
                   </div>
                 </div>
+
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="evaluatedName"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Evaluado
+                  </label>
+                  <div className="mt-2">
+                    <select
+                      id="evaluated"
+                      name="evaluated"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                      <option>United States</option>
+                      <option>Canada</option>
+                      <option>Mexico</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </Form>
@@ -165,4 +197,10 @@ const CreateAutoEvaluationModal = () => {
       </Formik>
     </Modal>
   )
+}
+export default CreateAutoEvaluationModal
+CreateAutoEvaluationModal.propTypes = {
+  isModalOpen: propTypes.bool.isRequired,
+  handleOk: propTypes.func.isRequired,
+  handleCancel: propTypes.func.isRequired
 }
