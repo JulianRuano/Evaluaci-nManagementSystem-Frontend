@@ -93,19 +93,33 @@ const ReportTable = ({ autoEvaluations }) => {
   }*/
   const columns = [
     {
+      title: <div className="text-stone-700">Identificación</div>,
+      dataIndex: ['evaluated', 'identification'],
+      key: 'identification',
+      sorter: (a, b) => a.identification.localeCompare(b.identification),
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('identification', 'identificación')
+    },
+    {
       title: <div className="text-stone-700">Apellidos</div>,
-      dataIndex: 'lastName',
-      key: 'lastName'
+      dataIndex: ['evaluated', 'firstName'],
+      key: 'firstName',
+      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('firstName', 'nombres')
+    },
+    {
+      title: <div className="text-stone-700">Apellidos</div>,
+      dataIndex: ['evaluated', 'lastName'],
+      key: 'lastName',
+      sorter: (a, b) => a.lastName.localeCompare(b.lastName),
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('lastName', 'apellidos')
     },
     {
       title: <div className="text-stone-700">Tipo ID</div>,
       dataIndex: 'idType',
       key: 'idType'
-    },
-    {
-      title: <div className="text-stone-700">Identificación</div>,
-      dataIndex: 'identification',
-      key: 'identification'
     },
     {
       title: <div className="text-stone-700">Tipo docente</div>,
@@ -121,6 +135,11 @@ const ReportTable = ({ autoEvaluations }) => {
       title: <div className="text-stone-700">Estado</div>,
       dataIndex: 'isActive',
       key: 'title'
+    },
+    {
+      title: <div className="text-stone-700">Puntuacion</div>,
+      dataIndex: 'puntuation',
+      key: 'puntuation'
     }
   ]
   return (
