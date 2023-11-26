@@ -19,7 +19,7 @@ async function fetchEducator(uid) {
 
 export function useGetEducator(uid) {
   return useQuery({
-    queryKey: ['docent'],
+    queryKey: ['docent', uid],
     queryFn: () => fetchEducator(uid)
   })
 }

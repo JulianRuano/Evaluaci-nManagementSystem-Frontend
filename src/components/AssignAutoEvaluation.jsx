@@ -15,7 +15,7 @@ const AssignAutoEvaluation = ({
   const dispatch = useDispatch()
   const notifySuccess = (message) =>
     toast.success(message, {
-      position: 'bottom-right',
+      position: 'bottom-left',
       autoClose: 3000,
       hideProgressBar: true,
       pauseOnHover: false
@@ -29,7 +29,7 @@ const AssignAutoEvaluation = ({
 
   const notifyError = (message) =>
     toast.error(message, {
-      position: 'bottom-right',
+      position: 'bottom-left',
       autoClose: 3000,
       hideProgressBar: true,
       pauseOnHover: false
@@ -50,7 +50,7 @@ const AssignAutoEvaluation = ({
     mutationFn: assignAutoEvaluationFunction,
     onSuccess: (data) => {
       setIsAssignAutoEvalModalOpen(false)
-      notifySuccess('Docente creado con éxito')
+      notifySuccess('Autoevaluación asignada con éxito')
     },
     onError: async (error) => {
       if (error?.response?.status === 401) {
@@ -62,7 +62,10 @@ const AssignAutoEvaluation = ({
     }
   })
   const handleAssignAutoEval = (values, actions) => {
-    assignAutoEvalMutation.mutate(values)
+    const { periodId, labour: labourId, act, evaluated } = values
+    const filteredObject = { periodId, labourId, act, evaluated }
+    console.log(filteredObject)
+    assignAutoEvalMutation.mutate(filteredObject)
   }
 
   return (

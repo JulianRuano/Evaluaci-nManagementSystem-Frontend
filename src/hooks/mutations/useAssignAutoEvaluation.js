@@ -6,7 +6,7 @@ export async function assignAutoEvaluationFunction(body) {
     withCredentials: true
   }
   const response = await axios.post(
-    `${apiUrl}/createAutoEvaluation`,
+    `${apiUrl}/educators/addAutoEvaluation`,
     body,
     config
   )

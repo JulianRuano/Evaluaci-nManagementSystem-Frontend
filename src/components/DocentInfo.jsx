@@ -23,6 +23,7 @@ import AssignAutoEvaluation from './AssignAutoEvaluation'
 
 const DocentInfo = () => {
   const role = useSelector((state) => state.auth.user.role)
+  const queryClient = useQueryClient()
 
   const [isAssignAutoEvalModalOpen, setIsAssignAutoEvalModalOpen] =
     useState(false)
@@ -32,16 +33,21 @@ const DocentInfo = () => {
     setIsAssignAutoEvalModalOpen(true)
   }
   // useQuery hook to fetch the educator from the backend
-  const { data, isLoading, isError } = useGetEducator(id)
+  const { data, isLoading, isError, isFetched } = useGetEducator(id)
   useEffect(() => {
     console.log('se actualizo')
-    dispatch(
-      updateEducator({
-        id,
-        data
-      })
-    )
-  }, [data])
+    if (isFetched) {
+      dispatch(
+        updateEducator({
+          id,
+          data
+        })
+      )
+    }
+  }, [data, id])
+  useEffect(() => {
+    queryClient.invalidateQueries('docent')
+  }, [])
 
   const formEditInitialValuesRef = useRef({
     firstName: data?.firstName,
@@ -92,7 +98,6 @@ const DocentInfo = () => {
   const showEditModal = () => {
     setIsModalOpenEditDocentOpen(true)
   }
-  const queryClient = useQueryClient()
   const showAssignLabourModal = () => {
     setIsModalOpenLabourDocent(true)
   }
