@@ -11,11 +11,12 @@ const SelectLabourAutoEval = ({ data, setFieldValue }) => {
     setSelectedItems(value)
     // dispatch(setSelectedLabours(value))
     setFieldValue('labour', value)
+    setFieldValue('labourName', 'ok')
   }
 
   return (
     <Select
-      placeholder="Seleccione las labores"
+      placeholder="Seleccione la labor"
       value={selectedItems}
       onChange={handleChange}
       style={{

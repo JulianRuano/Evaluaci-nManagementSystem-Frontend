@@ -20,11 +20,17 @@ const educatorSlice = createSlice({
     },
     updateEducator: (state, action) => {
       const { id, data: values } = action.payload
+      console.log('values', values)
       const index = state.educators.findIndex((docent) => docent.uid === id)
+      console.log(index)
+      if (index !== -1) {
+        const newEducators = [...state.educators]
+        newEducators[index] = values
+        return { ...state, educators: newEducators }
+      }
 
-      const newEducators = [...state.educators]
-      newEducators[index] = { ...newEducators[index], ...values }
-      return { ...state, educators: newEducators }
+      // If no match is found, return the state as is
+      return state
     },
     addEducator: (state, action) => {
       state.educators = [...state.educators, action.payload]

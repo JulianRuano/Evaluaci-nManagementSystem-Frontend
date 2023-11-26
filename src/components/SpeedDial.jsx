@@ -28,13 +28,11 @@ export default function BasicSpeedDial({
     })
 
   const hasLabours = useSelector((state) =>
-    state.educators.educators
-      .filter((educator) => educator.uid === id)
-      .map((educator) => educator.labours)
-  )
+    state.educators.educators.find((e) => e.uid === id)
+  ).labours
   const handleClickAssignAutoEval = () => {
-    console.log(hasLabours)
-    if (hasLabours[0].length === 0) {
+    console.log('labores', hasLabours)
+    if (hasLabours.length === 0) {
       notifyError('El docente no tiene labores asignadas')
       return
     }

@@ -6,6 +6,10 @@ import { autoEvaluationSchema } from '../helpers/formikSchemas/autoEvaluationSch
 import { LoadingOutlined } from '@ant-design/icons'
 import { DatePicker } from 'antd'
 import SelectLabourAutoEval from './SelectLabourAutoEval'
+import { useGetPeriods } from '../hooks/queries/useGetPeriod'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import SelectPeriodAutoEval from './SelectPeriodAutoEval'
 
 const AssignAutoEvaluationModal = ({
   isModalOpen,
@@ -15,11 +19,18 @@ const AssignAutoEvaluationModal = ({
   assignAutoEvalMutation,
   docentLabours
 }) => {
-  const uidAndLabourName = docentLabours[0].map((labor) => ({
+  const { data: periods, isLoading, isError } = useGetPeriods()
+  const uidAndLabourName = docentLabours[0]?.map((labor) => ({
     uid: labor.uid,
     nameWork: labor.nameWork
   }))
-
+  const idAndPeriodName = periods?.map((period) => ({
+    id: period.id,
+    name: period.name
+  }))
+  const params = useParams()
+  const { id: docentId } = params
+  console.log(periods)
   return (
     <Modal
       open={isModalOpen}
@@ -36,16 +47,16 @@ const AssignAutoEvaluationModal = ({
     >
       <Formik
         initialValues={{
-          period: {
-            name: '',
-            year: '',
-            semester: '',
-            startDate: '',
-            endDate: ''
-          },
-          evaluated: '',
-          act: '',
-          labour: ''
+          evaluated: docentId,
+          periodId: '',
+          periodName: '',
+          labourName: '',
+          act: null,
+          labour: '',
+          startDate: null,
+          endDate: null,
+          semester: null,
+          year: null
         }}
         validationSchema={autoEvaluationSchema}
         onSubmit={handleAssignAutoEval}
@@ -56,7 +67,7 @@ const AssignAutoEvaluationModal = ({
               <h1 className="font-bold text-2xl text-stone-700 ">
                 Asignar Autoevaluación
               </h1>
-              <p>A continuacion ingrese los datos del docente</p>
+              <p>A continuacion ingrese los datos de la autoevaluación</p>
             </div>
             <div>
               <div className="flex flex-wrap -mx-3">
@@ -65,81 +76,97 @@ const AssignAutoEvaluationModal = ({
                     htmlFor="firstName"
                     className="text-xs font-semibold px-1"
                   >
-                    Nombre labor
+                    Labor
                   </label>
                   <div className="flex flex-col">
                     <SelectLabourAutoEval
                       data={uidAndLabourName}
                       setFieldValue={setFieldValue}
                     />
+                    <ErrorMessage
+                      className="text-red-600 text-sm pt-1"
+                      name="labourName"
+                      component="div"
+                    />
                   </div>
                 </div>
                 <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label htmlFor="title" className="text-xs font-semibold px-1">
-                    Fecha de inicio
+                  <label
+                    htmlFor="firstName"
+                    className="text-xs font-semibold px-1"
+                  >
+                    Periodo
                   </label>
                   <div className="flex flex-col">
-                    <div className="flex flex-col">
-                      <DatePicker />
-                      <ErrorMessage
-                        className="text-red-600 text-sm  pt-1"
-                        name="startDate"
-                        component="div"
-                      />
-                    </div>
+                    <SelectPeriodAutoEval
+                      data={idAndPeriodName}
+                      setFieldValue={setFieldValue}
+                      periods={periods}
+                    />
+                    <ErrorMessage
+                      className="text-red-600 text-sm pt-1"
+                      name="periodName"
+                      component="div"
+                    />
                   </div>
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3">
                 <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label htmlFor="title" className="text-xs font-semibold px-1">
-                    Fecha de fin
+                  <label htmlFor="id" className="text-xs font-semibold px-1">
+                    Fecha de inicio
                   </label>
-
                   <div className="flex flex-col">
-                    <DatePicker
-                      onChange={(date, dateString) => {
-                        setFieldValue('endDate', date.toDate())
-                      }}
-                    />
-                    <ErrorMessage
-                      className="text-red-600 text-sm  pt-1"
-                      name="endDate"
-                      component="div"
+                    <Field
+                      type="text"
+                      id="startDate"
+                      name="startDate"
+                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      disabled
                     />
                   </div>
                 </div>
-
                 <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label
-                    htmlFor="period.year"
-                    className="text-xs font-semibold px-1"
-                  >
+                  <label htmlFor="id" className="text-xs font-semibold px-1">
+                    Fecha de fin
+                  </label>
+                  <div className="flex flex-col">
+                    <Field
+                      type="text"
+                      id="endDate"
+                      name="endDate"
+                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3">
+                <div className="sm:w-1/2 w-full px-3 mb-2">
+                  <label htmlFor="id" className="text-xs font-semibold px-1">
+                    Semestre
+                  </label>
+                  <div className="flex flex-col">
+                    <Field
+                      type="text"
+                      id="semester"
+                      name="semester"
+                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="sm:w-1/2 w-full px-3 mb-2">
+                  <label htmlFor="id" className="text-xs font-semibold px-1">
                     Año
                   </label>
                   <div className="flex flex-col">
                     <Field
                       type="text"
-                      id="period.year"
-                      name="period.year"
-                      onChange={(event) => {
-                        const value = event.target.value
-                        if (value === '') {
-                          setFieldValue('period.year', null)
-                        } else {
-                          const intValue = parseInt(value, 10)
-                          if (!isNaN(intValue)) {
-                            setFieldValue('period.year', intValue)
-                          }
-                        }
-                      }}
+                      id="year"
+                      name="year"
                       className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="2023"
-                    />
-                    <ErrorMessage
-                      className="text-red-600 text-sm  pt-1"
-                      name="period.year"
-                      component="div"
+                      disabled
                     />
                   </div>
                 </div>
@@ -158,7 +185,7 @@ const AssignAutoEvaluationModal = ({
                       onChange={(event) => {
                         const value = event.target.value
                         const booleanValue = value === 'true'
-                        setFieldValue('isActive', booleanValue)
+                        setFieldValue('act', booleanValue)
                       }}
                     >
                       <option value="">Elige una opción</option>
@@ -173,30 +200,7 @@ const AssignAutoEvaluationModal = ({
                     />
                   </div>
                 </div>
-                <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label htmlFor="id" className="text-xs font-semibold px-1">
-                    Semestre
-                  </label>
-                  <div className="flex flex-col">
-                    <Field
-                      as="select"
-                      id="period.semester"
-                      name="period.semester"
-                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                    >
-                      <option value="">Elige un semestre</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </Field>
-                    <ErrorMessage
-                      className="text-red-600 text-sm py-1"
-                      name="period.semester"
-                      component="div"
-                    />
-                  </div>
-                </div>
               </div>
-              <div className="flex flex-wrap -mx-3"></div>
               <div className="w-full mt-2">
                 <button
                   type="submit"
