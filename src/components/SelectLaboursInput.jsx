@@ -1,11 +1,20 @@
 import React, { useState } from 'react'
 import { Select } from 'antd'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedLabours } from '../redux/slices/educatorSlice'
+import { useParams } from 'react-router-dom'
 
 const SelectLaboursInput = ({ data, setFieldValue, initialSelectedItems }) => {
   const [selectedItems, setSelectedItems] = useState(initialSelectedItems || [])
+  const params = useParams()
+  const { id } = params
+  const laboursAutoEval = useSelector((state) =>
+    state.educators.educators
+      .find((e) => e.uid === id)
+      .autoEvaluations.map((autoEval) => autoEval.labour.uid)
+  )
+  console.log(laboursAutoEval)
   const dispatch = useDispatch()
   const handleChange = (value) => {
     setSelectedItems(value)
@@ -25,7 +34,8 @@ const SelectLaboursInput = ({ data, setFieldValue, initialSelectedItems }) => {
       maxTagCount="responsive"
       options={data.map((item) => ({
         value: item.uid,
-        label: item.nameWork
+        label: item.nameWork,
+        disabled: laboursAutoEval.includes(item.uid)
       }))}
     />
   )

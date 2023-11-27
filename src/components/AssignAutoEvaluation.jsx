@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AssignAutoEvaluationModal from './AssignAutoEvaluationModal'
 import { toast } from 'react-toastify'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { startHandleLogout } from './actions/auth'
 import { assignAutoEvaluationFunction } from '../hooks/mutations/useAssignAutoEvaluation'
@@ -12,6 +12,7 @@ const AssignAutoEvaluation = ({
   isAssignAutoEvalModalOpen,
   setIsAssignAutoEvalModalOpen
 }) => {
+  const queryClient = useQueryClient()
   const dispatch = useDispatch()
   const notifySuccess = (message) =>
     toast.success(message, {
@@ -51,6 +52,7 @@ const AssignAutoEvaluation = ({
     onSuccess: (data) => {
       setIsAssignAutoEvalModalOpen(false)
       notifySuccess('Autoevaluación asignada con éxito')
+      queryClient.invalidateQueries('docent')
     },
     onError: async (error) => {
       if (error?.response?.status === 401) {
