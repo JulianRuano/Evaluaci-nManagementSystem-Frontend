@@ -120,12 +120,7 @@ const ProSidebar = ({ toggled, setToggled }) => {
           : [])
       ].flat(),
       'group'
-    ),
-    getItem('Configuración', 'sub5', <SettingOutlined />, [
-      getItem('Cambiar contraseña', '19'),
-      getItem('Cambiar correo electrónico', '20'),
-      getItem('Subir foto de perfil', '21')
-    ])
+    )
   ].filter((item) => item !== null && item !== false)
 
   // Si el rol es 'admin', añadir opciones de administrador

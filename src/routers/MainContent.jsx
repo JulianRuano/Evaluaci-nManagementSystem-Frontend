@@ -14,6 +14,7 @@ import NotFoundPage from '../components/NotFoundPage'
 import CheckRole from './CheckRole'
 import DocentRoute from './DocentRoute'
 import AutoEvaluationInfo from '../components/AutoEvaluationInfo'
+import CheckRoleAutoEval from './CheckRoleAutoEval'
 
 const Roles = {
   Coordinador: 'Coordinador',
@@ -42,13 +43,7 @@ const MainContent = () => {
         <Route index element={<HomePage />} />
         <Route
           path="autoevaluaciones"
-          element={
-            <CheckRole
-              role={role}
-              expectedRoles={[Roles.Docente, Roles.Coordinador]}
-              element={<AutoEvaluation />}
-            />
-          }
+          element={<CheckRoleAutoEval role={role} />}
         />
         <Route
           path="autoevaluaciones/:id"

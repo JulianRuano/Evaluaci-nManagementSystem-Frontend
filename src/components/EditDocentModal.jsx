@@ -32,7 +32,6 @@ const EditDocentModal = ({
           firstName: educator.firstName,
           lastName: educator.lastName,
           title: educator.title,
-          identification: educator.identification,
           idType: educator.idType,
           email: educator.email,
           docentType: educator.docentType,
@@ -141,68 +140,6 @@ const EditDocentModal = ({
               </div>
               <div className="flex flex-wrap -mx-3">
                 <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label htmlFor="id" className="text-xs font-semibold px-1">
-                    Identificación
-                  </label>
-                  <div className="flex flex-col">
-                    <Field
-                      type="text"
-                      id="identification"
-                      name="identification"
-                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="100986587"
-                    />
-                    <ErrorMessage
-                      className="text-red-600 text-sm  pt-1"
-                      name="identification"
-                      component="div"
-                    />
-                  </div>
-                </div>
-                <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label
-                    htmlFor="idType"
-                    className="text-xs font-semibold px-1"
-                  >
-                    Tipo de identificación
-                  </label>
-                  <div className="flex flex-col">
-                    <Field
-                      type="text"
-                      id="idType"
-                      name="idType"
-                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="CC"
-                    />
-                    <ErrorMessage
-                      className="text-red-600 text-sm pt-1"
-                      name="idType"
-                      component="div"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap -mx-3">
-                <div className="sm:w-1/2 w-full px-3 mb-2">
-                  <label htmlFor="email" className="text-xs font-semibold px-1">
-                    Email
-                  </label>
-                  <div className="flex flex-col">
-                    <Field
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="jdoe@gmail.com"
-                    />
-                    <ErrorMessage
-                      className="text-red-600 text-sm pt-1"
-                      name="email"
-                      component="div"
-                    />
-                  </div>
-                </div>
-                <div className="sm:w-1/2 w-full px-3 mb-2">
                   <label htmlFor="email" className="text-xs font-semibold px-1">
                     Activo
                   </label>
@@ -230,6 +167,54 @@ const EditDocentModal = ({
                     <ErrorMessage
                       className="text-red-600 text-sm pt-1"
                       name="isActive"
+                      component="div"
+                    />
+                  </div>
+                </div>
+                <div className="sm:w-1/2 w-full px-3 mb-2">
+                  <label
+                    htmlFor="idType"
+                    className="text-xs font-semibold px-1"
+                  >
+                    Tipo de identificación
+                  </label>
+                  <div className="flex flex-col">
+                    <Field
+                      as="select"
+                      id="idType"
+                      name="idType"
+                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      placeholder="CC"
+                    >
+                      <option value="">Elige una opción</option>
+                      <option value="CC">CC</option>
+                      <option value="CE">Cédula extranjera</option>
+                      <option value="PA">Pasaporte</option>
+                    </Field>
+                    <ErrorMessage
+                      className="text-red-600 text-sm pt-1"
+                      name="idType"
+                      component="div"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3">
+                <div className="sm:w-1/2 w-full px-3 mb-2">
+                  <label htmlFor="email" className="text-xs font-semibold px-1">
+                    Email
+                  </label>
+                  <div className="flex flex-col">
+                    <Field
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      placeholder="jdoe@gmail.com"
+                    />
+                    <ErrorMessage
+                      className="text-red-600 text-sm pt-1"
+                      name="email"
                       component="div"
                     />
                   </div>

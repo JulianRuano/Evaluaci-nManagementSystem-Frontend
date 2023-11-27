@@ -16,8 +16,7 @@ export const docentSchema = Yup.object().shape({
     ),
   idType: Yup.string()
     .required('El tipo de ID es obligatorio')
-    .min(2, 'El tipo de ID debe tener al menos 2 caracteres')
-    .max(10, 'El tipo de ID debe tener como máximo 10 caracteres'),
+    .oneOf(['CC', 'PA', 'CE', 'Otro'], 'El tipo de docente no es válido'),
   title: Yup.string().required('El título es obligatorio'),
   firstName: Yup.string()
     .required('El nombre es obligatorio')
@@ -34,10 +33,6 @@ export const docentSchema = Yup.object().shape({
 })
 
 export const updateDocentSchema = Yup.object().shape({
-  identification: Yup.string()
-    .required('El numero de identificación es obligatorio')
-    .min(5, 'La identificación debe tener al menos 5 caracteres')
-    .max(11, 'La identificación debe tener como máximo 11 caracteres'),
   email: Yup.string()
     .required('El email es obligatorio')
     .email('No es un correo electrónico válido'),

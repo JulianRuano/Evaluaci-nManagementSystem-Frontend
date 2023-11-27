@@ -7,10 +7,13 @@ import RecordTag from './shared/RecordTag'
 import AutoEvalInfoModal from './AutoEvalInfoModal'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { startHandleLogout } from './actions/auth'
 import { updateAutoEvalFunction } from '../hooks/mutations/useUpdateAutoEval'
+import AssignAutoEvaluationModal from './AssignAutoEvaluationModal'
+import ModalUpdateAutoEvalDocent from './ModalUpdateAutoEvalDocent'
 const AutoEvaluationInfo = () => {
+  const role = useSelector((state) => state.auth.user.role)
   const { id } = useParams()
   const {
     data: autoEvaluation,
@@ -34,9 +37,11 @@ const AutoEvaluationInfo = () => {
       pauseOnHover: false
     })
   const [isEditAutoEvalModalOpen, setIsEditAutoEvalModalOpen] = useState(false)
+
   const showModal = () => {
     setIsEditAutoEvalModalOpen(true)
   }
+
   const handleOk = () => {
     setIsEditAutoEvalModalOpen(false)
   }
@@ -65,6 +70,7 @@ const AutoEvaluationInfo = () => {
   })
 
   const handleUpdateAutoEvalMutation = (values) => {
+    console.log(values)
     AutoEvalUpdateMutation.mutate({ values, id })
   }
   if (isLoading) {
@@ -129,7 +135,7 @@ const AutoEvaluationInfo = () => {
     },
     {
       key: '9',
-      label: 'Observación',
+      label: 'Puntuación',
       children: `${
         autoEvaluation.puntuation ? autoEvaluation.puntuation : 'N/A'
       }`
@@ -149,6 +155,7 @@ const AutoEvaluationInfo = () => {
         <h1 className="mb-3 text-2xl text-stone-700 font-semibold">
           Información de la autoevaluación
         </h1>
+
         <button
           className="  max-w-xs  bg-indigo-500 hover:bg-indigo-700  text-white rounded-lg px-2 py-1 mr-5 font-semibold text-sm"
           onClick={showModal}
@@ -156,7 +163,7 @@ const AutoEvaluationInfo = () => {
           Editar estado
         </button>
       </div>
-      {isEditAutoEvalModalOpen && (
+      {role === 'Coordinador' ? (
         <AutoEvalInfoModal
           isModalOpen={isEditAutoEvalModalOpen}
           handleOk={handleOk}
@@ -165,7 +172,17 @@ const AutoEvaluationInfo = () => {
           AutoEvalUpdateMutation={AutoEvalUpdateMutation}
           handleUpdateAutoEvalMutation={handleUpdateAutoEvalMutation}
         />
+      ) : (
+        <ModalUpdateAutoEvalDocent
+          isModalOpen={isEditAutoEvalModalOpen}
+          handleOk={handleOk}
+          handleCancel={handleCancel}
+          autoEvaluation={autoEvaluation}
+          AutoEvalUpdateMutation={AutoEvalUpdateMutation}
+          handleUpdateAutoEvalMutation={handleUpdateAutoEvalMutation}
+        />
       )}
+
       <Descriptions layout="vertical" items={items} />
     </div>
   )

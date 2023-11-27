@@ -44,14 +44,6 @@ const Header = ({ toggleSidebar }) => {
         </p>
       ),
       key: '1'
-    },
-    {
-      type: 'divider'
-    },
-    {
-      label: 'Opcion deshabilitada',
-      key: '3',
-      disabled: true
     }
   ]
 

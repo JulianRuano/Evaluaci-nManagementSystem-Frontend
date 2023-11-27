@@ -29,7 +29,24 @@ const AutoEvaluationTable = ({
       dataIndex: ['labour', 'nameWork'],
       key: 'nameWork'
     },
-
+    {
+      title: <div className="text-stone-700">Horas</div>,
+      dataIndex: ['labour', 'assignedHours'],
+      key: 'assignedhours'
+    },
+    {
+      title: <div className="text-stone-700">Acto</div>,
+      dataIndex: 'act',
+      key: 'act',
+      render: (_, record) => (
+        <Space size="middle">{record.act ? 'Sí' : 'No'}</Space>
+      )
+    },
+    {
+      title: <div className="text-stone-700">Tipo labor</div>,
+      dataIndex: ['labour', 'labourType', 'description'],
+      key: 'labourType'
+    },
     {
       title: <div className="text-stone-700">Estado</div>,
       dataIndex: 'isActive',
@@ -62,26 +79,6 @@ const AutoEvaluationTable = ({
     }
   ]
 
-  if (canEdit) {
-    columns.push({
-      title: <div className="text-stone-700">Acciones</div>,
-      key: 'actions',
-      width: 5,
-      render: (_, record) => (
-        <div>
-          <a
-            className="text-highlightColor"
-            onClick={() => {
-              dispatch(setlabourTypeUidToEdit(record.uid))
-              setIsEditModalOpen(true)
-            }}
-          >
-            <EditOutlined /> Editar
-          </a>
-        </div>
-      )
-    })
-  }
   return (
     <Table
       pagination={isPaginated ? { position: ['topleft'] } : false}

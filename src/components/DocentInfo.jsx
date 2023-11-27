@@ -44,20 +44,6 @@ const DocentInfo = () => {
   )
   // useQuery hook to fetch the educator from the backend
   const { data, isLoading, isError, isFetched } = useGetEducator(id)
-  useEffect(() => {
-    console.log('se actualizo')
-    if (isFetched) {
-      dispatch(
-        updateEducator({
-          id,
-          data
-        })
-      )
-    }
-  }, [data, id])
-  useEffect(() => {
-    queryClient.invalidateQueries('docent')
-  }, [])
 
   const formEditInitialValuesRef = useRef({
     firstName: data?.firstName,
@@ -134,7 +120,7 @@ const DocentInfo = () => {
     mutationFn: updateDocentFunction,
     onSuccess: (data) => {
       queryClient.invalidateQueries('docent')
-      // dispatch(addEducators(data.payload))
+      queryClient.invalidateQueries('docents')
       notifySuccess('Docente actualizado con éxito')
       setIsModalOpenEditDocentOpen(false)
     },
@@ -159,7 +145,6 @@ const DocentInfo = () => {
       {
         onSuccess: () => {
           formEditInitialValuesRef.current = values
-          dispatch(updateEducator({ id, values }))
         }
       }
     )
@@ -190,7 +175,11 @@ const DocentInfo = () => {
   }
 
   const handleAssignLabours = (values) => {
-    labourAssignMutation.mutate(values)
+    labourAssignMutation.mutate(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('docents')
+      }
+    })
   }
 
   const items = [
