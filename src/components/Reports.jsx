@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useGetAutoEvaluations } from '../hooks/queries/useGetAutoEvaluation'
-
+import { useGetAutoEvaluations } from '../hooks/queries/useGetAllAutoEvaluations'
 import ReportTable from './tables/ReportTable'
 import GraphicReport from './tables/GraphicReport'
 import { Skeleton } from 'antd'
