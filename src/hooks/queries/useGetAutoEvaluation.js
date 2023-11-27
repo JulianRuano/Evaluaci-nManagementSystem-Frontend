@@ -7,10 +7,12 @@ async function fetchAutoEvaluation(year, semester) {
     withCredentials: true
   }
   const response = await axios.get(
-    `${apiUrl}/autoEvaluations/getAutoEvaluations?year=2023&semester=1`,
+    `${apiUrl}/autoEvaluations/getPercentageAutoEvaluations?year=${year}&semester=${semester}`,
     config
   )
-  console.log(response.data)
+  console.log('****')
+  console.log(response)
+
   return response.data
 }
 export function useGetAutoEvaluations(year, semester) {

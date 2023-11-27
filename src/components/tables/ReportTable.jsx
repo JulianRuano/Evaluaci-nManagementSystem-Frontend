@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Space, Table, Input, Button } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
 import Highlighter from 'react-highlight-words'
 import propTypes from 'prop-types'
 
@@ -9,18 +8,18 @@ const ReportTable = ({ autoEvaluations }) => {
   const searchInput = useRef(null)
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
-  console.log('aca estoy gran hpta')
-  console.log(autoEvaluations)
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm()
-    console.log(selectedKeys[0])
     setSearchText(selectedKeys[0])
     setSearchedColumn(dataIndex)
   }
+
   const handleReset = (clearFilters) => {
     clearFilters()
     setSearchText('')
   }
+
   const getColumnSearchProps = (dataIndex, title) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -44,15 +43,12 @@ const ReportTable = ({ autoEvaluations }) => {
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
             size="small"
-            style={{ width: 90 }}
-            className="bg-highlightColor text-white"
           >
             Search
           </Button>
           <Button
             onClick={() => clearFilters && handleReset(clearFilters)}
             size="small"
-            style={{ width: 90 }}
           >
             Reset
           </Button>
@@ -62,13 +58,14 @@ const ReportTable = ({ autoEvaluations }) => {
     filterIcon: (filtered) => (
       <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
-        : '',
+    onFilter: (value, record) => {
+      const nestedValue = dataIndex
+        .split('.')
+        .reduce((obj, key) => obj[key], record)
+      return nestedValue
+        ? nestedValue.toString().toLowerCase().includes(value.toLowerCase())
+        : ''
+    },
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current.select(), 100)
@@ -86,62 +83,58 @@ const ReportTable = ({ autoEvaluations }) => {
         text
       )
   })
-  /*
-  const navigate = useNavigate()
-  const handleSelectEducator = async (uid) => {
-    navigate(uid)
-  }*/
+
+  // Calcular el porcentaje completado dentro de la función map
+  const dataSource = autoEvaluations.evaluated.map((item, index) => ({
+    ...item,
+    number: index + 1,
+    completedPercentage: (item.completed / item.total) * 100
+  }))
+
   const columns = [
     {
+      title: <div className="text-stone-700">#</div>,
+      dataIndex: 'number',
+      key: 'number'
+    },
+    {
       title: <div className="text-stone-700">Identificación</div>,
-      dataIndex: ['evaluated', 'identification'],
+      dataIndex: 'identification',
       key: 'identification',
       sorter: (a, b) => a.identification.localeCompare(b.identification),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('identification', 'identificación')
     },
     {
-      title: <div className="text-stone-700">Apellidos</div>,
-      dataIndex: ['evaluated', 'firstName'],
+      title: <div className="text-stone-700">Nombres</div>,
+      dataIndex: 'firstName',
       key: 'firstName',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('firstName', 'nombres')
     },
     {
-      title: <div className="text-stone-700">Apellidos</div>,
-      dataIndex: ['evaluated', 'lastName'],
-      key: 'lastName',
-      sorter: (a, b) => a.lastName.localeCompare(b.lastName),
+      title: <div className="text-stone-700">Rol</div>,
+      dataIndex: 'role',
+      key: 'role',
+      sorter: (a, b) => a.role.localeCompare(b.role),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('lastName', 'apellidos')
+      ...getColumnSearchProps('role', 'rol')
     },
     {
-      title: <div className="text-stone-700">Tipo ID</div>,
-      dataIndex: 'idType',
-      key: 'idType'
+      title: <div className="text-stone-700">Total</div>,
+      dataIndex: 'total',
+      key: 'total'
     },
     {
-      title: <div className="text-stone-700">Tipo docente</div>,
-      dataIndex: 'docentType',
-      key: 'docentType'
-    },
-    {
-      dataIndex: 'uid',
-      key: 'uid',
-      className: 'hidden'
-    },
-    {
-      title: <div className="text-stone-700">Estado</div>,
-      dataIndex: 'isActive',
-      key: 'title'
-    },
-    {
-      title: <div className="text-stone-700">Puntuacion</div>,
-      dataIndex: 'puntuation',
-      key: 'puntuation'
+      title: <div className="text-stone-700">Completado (%)</div>,
+      dataIndex: 'completedPercentage',
+      key: 'completedPercentage',
+      sorter: (a, b) => a.completedPercentage - b.completedPercentage,
+      sortDirections: ['descend', 'ascend']
     }
   ]
+
   return (
     <>
       <Table
@@ -154,13 +147,14 @@ const ReportTable = ({ autoEvaluations }) => {
           position: ['bottomRight']
         }}
         columns={columns}
-        dataSource={autoEvaluations}
+        dataSource={dataSource}
       />
     </>
   )
 }
 
 export default ReportTable
+
 ReportTable.propTypes = {
   autoEvaluations: propTypes.array.isRequired
 }
