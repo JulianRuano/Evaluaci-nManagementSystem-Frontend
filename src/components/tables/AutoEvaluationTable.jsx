@@ -1,10 +1,11 @@
 import React from 'react'
 import { Space, Table, Tag } from 'antd'
 import propTypes from 'prop-types'
-import { EditOutlined } from '@ant-design/icons'
+import { EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { setlabourTypeUidToEdit } from '../../redux/slices/labourSlice'
 import RecordTag from '../shared/RecordTag'
+import { useNavigate } from 'react-router-dom'
 
 const AutoEvaluationTable = ({
   autoEvaluations,
@@ -12,6 +13,10 @@ const AutoEvaluationTable = ({
   canEdit = true,
   isPaginated = false
 }) => {
+  const navigate = useNavigate()
+  const handleSelectAutoEvaluation = async (uid) => {
+    navigate(`/autoevaluaciones/${uid}`)
+  }
   const dispatch = useDispatch()
   const columns = [
     {
@@ -39,6 +44,21 @@ const AutoEvaluationTable = ({
       dataIndex: '_id',
       key: '_id',
       className: 'hidden'
+    },
+    {
+      title: <div className="text-stone-700">Acciones</div>,
+      key: 'actions',
+
+      render: (_, record) => (
+        <Space size="middle">
+          <a
+            onClick={() => handleSelectAutoEvaluation(record.uid)}
+            className="text-highlightColor"
+          >
+            <EyeOutlined /> Ver
+          </a>
+        </Space>
+      )
     }
   ]
 
@@ -48,15 +68,17 @@ const AutoEvaluationTable = ({
       key: 'actions',
       width: 5,
       render: (_, record) => (
-        <a
-          className="text-highlightColor"
-          onClick={() => {
-            dispatch(setlabourTypeUidToEdit(record.uid))
-            setIsEditModalOpen(true)
-          }}
-        >
-          <EditOutlined /> Editar
-        </a>
+        <div>
+          <a
+            className="text-highlightColor"
+            onClick={() => {
+              dispatch(setlabourTypeUidToEdit(record.uid))
+              setIsEditModalOpen(true)
+            }}
+          >
+            <EditOutlined /> Editar
+          </a>
+        </div>
       )
     })
   }

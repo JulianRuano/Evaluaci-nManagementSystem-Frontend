@@ -254,11 +254,14 @@ const DocentInfo = () => {
       <h1 className="text-2xl pb-6 font-semibold text-stone-700">
         Información del docente
       </h1>
-      <Descriptions items={items} />
-      <AssignAutoEvaluation
-        isAssignAutoEvalModalOpen={isAssignAutoEvalModalOpen}
-        setIsAssignAutoEvalModalOpen={setIsAssignAutoEvalModalOpen}
-      />
+      <Descriptions layout="vertical" items={items} />
+
+      {isAssignAutoEvalModalOpen && (
+        <AssignAutoEvaluation
+          isAssignAutoEvalModalOpen={isAssignAutoEvalModalOpen}
+          setIsAssignAutoEvalModalOpen={setIsAssignAutoEvalModalOpen}
+        />
+      )}
       <EditDocentModal
         isModalOpen={isModalOpenEditDocentOpen}
         handleOk={handleOkEditDocent}
@@ -267,14 +270,18 @@ const DocentInfo = () => {
         handleUpdateDocentMutation={handleUpdateDocentMutation}
         docentUpdateMutation={docentUpdateMutation}
       />
-      <AssignLabourModal
-        isModalOpen={isModalOpenLabourDocentOpen}
-        handleOk={handleOkAssignLabour}
-        handleCancel={handleCancelAssignLabour}
-        handleAssignLabours={handleAssignLabours}
-        labourAssignMutation={labourAssignMutation}
-        educator={data}
-      />
+
+      {isModalOpenLabourDocentOpen && (
+        <AssignLabourModal
+          isModalOpen={isModalOpenLabourDocentOpen}
+          handleOk={handleOkAssignLabour}
+          handleCancel={handleCancelAssignLabour}
+          handleAssignLabours={handleAssignLabours}
+          labourAssignMutation={labourAssignMutation}
+          educator={data}
+        />
+      )}
+
       <h1 className="text-lg pb-2 mt-5 font-semibold text-stone-700">
         Labores asignadas
       </h1>

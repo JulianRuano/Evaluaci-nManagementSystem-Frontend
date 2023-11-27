@@ -63,10 +63,10 @@ const ProSidebar = ({ toggled, setToggled }) => {
           ? [
               getItem(
                 <NavLink
-                  to="gestionar-autoevaluaciones"
+                  to="autoevaluaciones"
                   onClick={() => setToggled(false)}
                 >
-                  Gestionar AutoEvaluacion
+                  Autoevaluaciones
                 </NavLink>,
                 '15',
                 <AuditOutlined />

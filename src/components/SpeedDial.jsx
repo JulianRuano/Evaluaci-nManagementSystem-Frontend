@@ -64,9 +64,9 @@ export default function BasicSpeedDial({
         bottom: 20,
         right: 26,
         zIndex: 1,
-        '@media (min-width:1750px)': {
-          right: 'calc(50% - 350px)',
-          bottom: 'calc(70% - 20px)'
+        '@media (min-width:3500px)': {
+          right: '1000px',
+          bottom: '1200px'
         }
       }}
       icon={

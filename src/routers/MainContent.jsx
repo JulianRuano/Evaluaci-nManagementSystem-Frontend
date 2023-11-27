@@ -13,6 +13,7 @@ import DocentInfo from '../components/DocentInfo'
 import NotFoundPage from '../components/NotFoundPage'
 import CheckRole from './CheckRole'
 import DocentRoute from './DocentRoute'
+import AutoEvaluationInfo from '../components/AutoEvaluationInfo'
 
 const Roles = {
   Coordinador: 'Coordinador',
@@ -44,21 +45,21 @@ const MainContent = () => {
           element={
             <CheckRole
               role={role}
-              expectedRoles={[Roles.Docente]}
+              expectedRoles={[Roles.Docente, Roles.Coordinador]}
               element={<AutoEvaluation />}
             />
           }
         />
-        {/* <Route
-          path="gestionar-autoevaluaciones"
+        <Route
+          path="autoevaluaciones/:id"
           element={
             <CheckRole
               role={role}
-              expectedRoles={[Roles.Coordinador, Roles.Decano]}
-              element={<ManageAutoevaluation />}
+              expectedRoles={[Roles.Docente, Roles.Coordinador]}
+              element={<AutoEvaluationInfo />}
             />
           }
-        /> */}
+        />
         <Route
           path="labores"
           element={

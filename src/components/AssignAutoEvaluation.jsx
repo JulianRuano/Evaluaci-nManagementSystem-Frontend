@@ -79,6 +79,7 @@ const AssignAutoEvaluation = ({
         handleAssignAutoEval={handleAssignAutoEval}
         assignAutoEvalMutation={assignAutoEvalMutation}
         docentLabours={docentLabours}
+        setIsAssignAutoEvalModalOpen={setIsAssignAutoEvalModalOpen}
       />
     </div>
   )
