@@ -10,20 +10,21 @@ export function sendNotification(event){
 }
 
 // La función init se ejecuta cuando termina de cargarse la página
-function init() {
+export function init(id) {
     // Conexión con el servidor de websocket
-    wsConnect();
+    wsConnect(id);
+    console.log("Página cargada");
 }
 
 
 // Invoca esta función para conectar con el servidor de WebSocket
-function wsConnect() {
+function wsConnect(id) {
     // Connect to WebSocket server   
-    websocket = new WebSocket("ws://localhost:3001");
+    websocket = new WebSocket("ws://localhost:3001?id="+id);
 
     // Asignación de callbacks
     websocket.onopen = function (evt) {
-        onOpen(evt)
+        onOpen(evt, id)
     };
     websocket.onclose = function (evt) {
         onClose(evt)
@@ -37,9 +38,9 @@ function wsConnect() {
 }
 
 // Se ejecuta cuando se establece la conexión Websocket con el servidor
-function onOpen(evt) {
+function onOpen(evt, id) {
     // Enviamos el saludo inicial al servidor
-    doSend("Hola");
+    doSend(id);
 }
 
 // Se ejecuta cuando la conexión con el servidor se cierra
@@ -67,4 +68,4 @@ function doSend(message) {
     websocket.send(message);
 }
 
-window.addEventListener("load", init, false);
+// window.addEventListener("load", init, false);

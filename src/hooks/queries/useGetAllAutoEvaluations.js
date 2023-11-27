@@ -21,3 +21,21 @@ export function useGetAutoEvaluations(year, semester) {
     queryFn: () => fetchAutoEvaluation(year, semester)
   })
 }
+
+async function fetchAutoEvaluationById(id) {
+  const config = {
+    withCredentials: true
+  }
+  console.log(id)
+  const response = await axios.get(
+    `${apiUrl}/autoEvaluations/getAutoEvaluations/${id}`,
+    config
+  )
+  return response.data
+}
+export function useGetAutoEvaluationById(id) {
+  return useQuery({
+    queryKey: ['autoEvaluation', id],
+    queryFn: () => fetchAutoEvaluationById(id)
+  })
+}

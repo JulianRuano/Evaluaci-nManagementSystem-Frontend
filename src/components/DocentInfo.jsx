@@ -20,6 +20,8 @@ import {
   updateEducator
 } from '../redux/slices/educatorSlice'
 import AssignAutoEvaluation from './AssignAutoEvaluation'
+import LabourTable from './tables/LabourTable'
+import AutoEvaluationTable from './tables/AutoEvaluationTable'
 
 const DocentInfo = () => {
   const role = useSelector((state) => state.auth.user.role)
@@ -32,6 +34,14 @@ const DocentInfo = () => {
   const showAssignAutoEvalModal = () => {
     setIsAssignAutoEvalModalOpen(true)
   }
+  const assignedLabours = useSelector(
+    (state) => state.educators.educators.find((e) => e.uid === id).labours
+  )
+
+  const assignedAutoEvaluations = useSelector(
+    (state) =>
+      state.educators.educators.find((e) => e.uid === id).autoEvaluations
+  )
   // useQuery hook to fetch the educator from the backend
   const { data, isLoading, isError, isFetched } = useGetEducator(id)
   useEffect(() => {
@@ -237,36 +247,21 @@ const DocentInfo = () => {
       key: '10',
       label: 'Fecha de creación',
       children: `${format(new Date(data.joinDate), 'dd/MM/yyyy')}`
-    },
-    {
-      key: '13',
-      label: 'Labores asignadas',
-      children: (
-        <>
-          {data.labours.length > 0 ? (
-            data.labours.map((labour) => (
-              <>
-                {labour.nameWork}
-                <br />
-              </>
-            ))
-          ) : (
-            <div>Ninguna</div>
-          )}
-        </>
-      )
     }
   ]
   return (
-    <div className="px-4 pt-6 md:pl-12">
+    <div className="px-4 pt-6 md:pl-12 mb-8">
       <h1 className="text-2xl pb-6 font-semibold text-stone-700">
         Información del docente
       </h1>
-      <Descriptions items={items} />
-      <AssignAutoEvaluation
-        isAssignAutoEvalModalOpen={isAssignAutoEvalModalOpen}
-        setIsAssignAutoEvalModalOpen={setIsAssignAutoEvalModalOpen}
-      />
+      <Descriptions layout="vertical" items={items} />
+
+      {isAssignAutoEvalModalOpen && (
+        <AssignAutoEvaluation
+          isAssignAutoEvalModalOpen={isAssignAutoEvalModalOpen}
+          setIsAssignAutoEvalModalOpen={setIsAssignAutoEvalModalOpen}
+        />
+      )}
       <EditDocentModal
         isModalOpen={isModalOpenEditDocentOpen}
         handleOk={handleOkEditDocent}
@@ -275,14 +270,43 @@ const DocentInfo = () => {
         handleUpdateDocentMutation={handleUpdateDocentMutation}
         docentUpdateMutation={docentUpdateMutation}
       />
-      <AssignLabourModal
-        isModalOpen={isModalOpenLabourDocentOpen}
-        handleOk={handleOkAssignLabour}
-        handleCancel={handleCancelAssignLabour}
-        handleAssignLabours={handleAssignLabours}
-        labourAssignMutation={labourAssignMutation}
-        educator={data}
-      />
+
+      {isModalOpenLabourDocentOpen && (
+        <AssignLabourModal
+          isModalOpen={isModalOpenLabourDocentOpen}
+          handleOk={handleOkAssignLabour}
+          handleCancel={handleCancelAssignLabour}
+          handleAssignLabours={handleAssignLabours}
+          labourAssignMutation={labourAssignMutation}
+          educator={data}
+        />
+      )}
+
+      <h1 className="text-lg pb-2 mt-5 font-semibold text-stone-700">
+        Labores asignadas
+      </h1>
+      {assignedLabours.length > 0 ? (
+        <LabourTable
+          labours={assignedLabours}
+          canEdit={false}
+          isPaginated={false}
+        />
+      ) : (
+        <p>Ninguna</p>
+      )}
+
+      <h1 className="text-lg pb-2 mt-5 font-semibold text-stone-700">
+        Autoevaluaciones asignadas
+      </h1>
+      {assignedAutoEvaluations.length > 0 ? (
+        <AutoEvaluationTable
+          autoEvaluations={assignedAutoEvaluations}
+          canEdit={false}
+          isPaginated={false}
+        />
+      ) : (
+        <p>Ninguna</p>
+      )}
       {role === 'Coordinador' && (
         <BasicSpeedDial
           showEditModal={showEditModal}

@@ -5,7 +5,12 @@ import { EditOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { setlabourTypeUidToEdit } from '../../redux/slices/labourSlice'
 
-const LabourTable = ({ labours, setIsEditModalOpen }) => {
+const LabourTable = ({
+  labours,
+  setIsEditModalOpen,
+  canEdit = true,
+  isPaginated = true
+}) => {
   const dispatch = useDispatch()
   const columns = [
     {
@@ -40,11 +45,9 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
       key: 'isActive',
       render: (_, record) => (
         <Space size="middle">
-          <a className="text-highlightColor">
-            <Tag color={record.isActive ? 'green' : 'red'}>
-              {record.isActive ? 'Activa' : 'Inactiva'}
-            </Tag>
-          </a>
+          <Tag color={record.isActive ? 'green' : 'red'}>
+            {record.isActive ? 'Activa' : 'Inactiva'}
+          </Tag>
         </Space>
       )
     },
@@ -52,8 +55,11 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
       dataIndex: '_id',
       key: '_id',
       className: 'hidden'
-    },
-    {
+    }
+  ]
+
+  if (canEdit) {
+    columns.push({
       title: <div className="text-stone-700">Acciones</div>,
       key: 'actions',
       width: 5,
@@ -68,13 +74,11 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
           <EditOutlined /> Editar
         </a>
       )
-    }
-  ]
+    })
+  }
   return (
     <Table
-      pagination={{
-        position: ['topRight']
-      }}
+      pagination={isPaginated ? { position: ['topleft'] } : false}
       columns={columns}
       dataSource={labours}
     />
@@ -84,5 +88,7 @@ const LabourTable = ({ labours, setIsEditModalOpen }) => {
 export default LabourTable
 LabourTable.propTypes = {
   labours: propTypes.array.isRequired,
-  setIsEditModalOpen: propTypes.func.isRequired
+  setIsEditModalOpen: propTypes.func,
+  canEdit: propTypes.bool,
+  isPaginated: propTypes.bool
 }
