@@ -289,12 +289,18 @@ const Docent = () => {
                     </label>
                     <div className="flex flex-col">
                       <Field
-                        type="text"
+                        as="select"
                         id="idType"
                         name="idType"
                         className="w-full  pl-3 pr-3 py-0.5  rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="CC"
-                      />
+                      >
+                        <option value="">Elige una opción</option>
+                        <option value="CC">CC</option>
+                        <option value="CE">Cédula extranjera</option>
+                        <option value="PA">Pasaporte</option>
+                      </Field>
+
                       <ErrorMessage
                         className="text-red-600 text-sm pt-1"
                         name="idType"

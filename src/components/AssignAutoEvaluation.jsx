@@ -10,7 +10,8 @@ import { useParams } from 'react-router-dom'
 
 const AssignAutoEvaluation = ({
   isAssignAutoEvalModalOpen,
-  setIsAssignAutoEvalModalOpen
+  setIsAssignAutoEvalModalOpen,
+  docentLabours
 }) => {
   const queryClient = useQueryClient()
   const dispatch = useDispatch()
@@ -22,11 +23,6 @@ const AssignAutoEvaluation = ({
       pauseOnHover: false
     })
   const { id: docentId } = useParams()
-  const docentLabours = useSelector((state) =>
-    state.educators.educators
-      .filter((educator) => educator.uid === docentId)
-      .map((educator) => educator.labours)
-  )
 
   const notifyError = (message) =>
     toast.error(message, {
@@ -89,5 +85,6 @@ export default AssignAutoEvaluation
 
 AssignAutoEvaluation.propTypes = {
   isAssignAutoEvalModalOpen: propTypes.bool.isRequired,
-  setIsAssignAutoEvalModalOpen: propTypes.func.isRequired
+  setIsAssignAutoEvalModalOpen: propTypes.func.isRequired,
+  docentLabours: propTypes.array.isRequired
 }

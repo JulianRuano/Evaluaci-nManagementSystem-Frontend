@@ -22,7 +22,7 @@ const AssignAutoEvaluationModal = ({
   setIsAssignAutoEvalModalOpen
 }) => {
   const { data: periods, isLoading, isError } = useGetPeriods()
-  const uidAndLabourName = docentLabours[0]?.map((labor) => ({
+  const uidAndLabourName = docentLabours.map((labor) => ({
     uid: labor.uid,
     nameWork: labor.nameWork
   }))

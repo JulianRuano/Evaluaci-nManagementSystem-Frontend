@@ -34,16 +34,12 @@ const DocentInfo = () => {
   const showAssignAutoEvalModal = () => {
     setIsAssignAutoEvalModalOpen(true)
   }
-  const assignedLabours = useSelector(
-    (state) => state.educators.educators.find((e) => e.uid === id).labours
-  )
 
-  const assignedAutoEvaluations = useSelector(
-    (state) =>
-      state.educators.educators.find((e) => e.uid === id).autoEvaluations
-  )
   // useQuery hook to fetch the educator from the backend
-  const { data, isLoading, isError, isFetched } = useGetEducator(id)
+  const { data, isLoading, isError, refetch } = useGetEducator(id)
+  const assignedLabours = data?.labours
+
+  const assignedAutoEvaluations = data?.autoEvaluations
 
   const formEditInitialValuesRef = useRef({
     firstName: data?.firstName,
@@ -145,6 +141,7 @@ const DocentInfo = () => {
       {
         onSuccess: () => {
           formEditInitialValuesRef.current = values
+          queryClient.invalidateQueries(['docent', 'docents'])
         }
       }
     )
@@ -177,7 +174,7 @@ const DocentInfo = () => {
   const handleAssignLabours = (values) => {
     labourAssignMutation.mutate(values, {
       onSuccess: () => {
-        queryClient.invalidateQueries('docents')
+        queryClient.invalidateQueries('docent')
       }
     })
   }
@@ -249,6 +246,7 @@ const DocentInfo = () => {
         <AssignAutoEvaluation
           isAssignAutoEvalModalOpen={isAssignAutoEvalModalOpen}
           setIsAssignAutoEvalModalOpen={setIsAssignAutoEvalModalOpen}
+          docentLabours={assignedLabours}
         />
       )}
       <EditDocentModal
